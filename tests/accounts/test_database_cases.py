@@ -6,9 +6,12 @@ from accounts.models import CustomUser
 
 from django.db import IntegrityError, transaction
 
-# using testcase with factoryboy for testing updates to the database
-# run as one test to minimize database setup and teardown
 class UserModelsTestCase(TestCase):
+    '''using testcase with factoryboy for testing updates to the database.
+
+    - run as large test to minimize database setup and teardown
+
+    '''
     def setUp(self):
         # Setup run before every test method.
         pass
@@ -17,12 +20,14 @@ class UserModelsTestCase(TestCase):
         # Clean up run after every test method.
         pass
 
-    # test to make sure that
-    # - soft deletes and undeletes update the database properly,
-    # - emails are ensured to be unique,
-    # - CustomUser prints out as expected,
-    # - all_deleted (custom function) return the deleted custom users
     def test_user_soft_delete(self):
+        '''Endure soft deletes and undeletes update the database properly
+
+            - emails are ensured to be unique,
+            - CustomUser prints out as expected,
+            - all_deleted (custom function) return the deleted custom users
+
+        '''
         # get starting user record count
         count = CustomUser.objects.count()
         # confirm no users

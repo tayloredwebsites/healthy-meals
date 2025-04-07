@@ -8,7 +8,7 @@
   <title>tests.accounts.factories &mdash; Healthy Meals Diet Assistant  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=de96878a" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
@@ -86,6 +86,7 @@
 <a class="viewcode-back" href="../../../tests.accounts.html#tests.accounts.factories.CustomUserFactory">[docs]</a>
 <span class="nd">@register</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">CustomUserFactory</span><span class="p">(</span><span class="n">django</span><span class="o">.</span><span class="n">DjangoModelFactory</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Create a Custom User (Account)&#39;&#39;&#39;</span>
     <span class="k">class</span><span class="w"> </span><span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CustomUser</span>
     <span class="n">username</span> <span class="o">=</span> <span class="n">Faker</span><span class="p">(</span><span class="s1">&#39;user_name&#39;</span><span class="p">)</span> <span class="c1"># see accounts/signals.py to override this.</span>

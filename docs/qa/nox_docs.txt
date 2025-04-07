@@ -1,0 +1,26 @@
+INFO: Inside an active virtualenv /Users/dave/works/python/healthy-meals/.venv, reusing it.
+Set env var PDM_IGNORE_ACTIVE_VENV to ignore it.
+Sessions defined in /Users/dave/works/python/healthy-meals/noxfile.py:
+
+* setupEnv -> Set up external environment as needed (no venv)).
+* goodToGo -> Check to confirm that all is good to go (for push / commit / etc.).
+* localUp -> Bring up Healthy Meals in local server.
+* genNoxDocs -> Generate nox documentation into a file for inclusion into Sphinx.
+* sphinxDocs -> Rebuild all documentation to Sphinx (cleans up old docs).
+* testing -> Run automated tests (with test coverage) through docker.
+* dockerUpBg -> Bring up Healthy Meals in docker in background.
+* dockerUpLog -> Bring up Healthy Meals in docker, with log to console.
+* dockerEnsureUp -> Only bring up Healthy Meals in docker if not up already.
+* dockerExecSh -> Open shell in web container.
+* dockerExecPsql -> Open psql in db container.
+* dockerDown -> Bring down Healthy Meals in docker.
+* dockerClear -> Clear out entire docker system.
+* dockerMakeDocs -> Generate the documentation using Sphinx through docker.
+* dockerRemakeDocs -> Regenerate the documentation using Sphinx through docker (cleans up old docs).
+* dockerLogs -> Output docker logs out to console. (hit <ctrl>c to stop).
+* dockerTesting -> Run automated tests (localtest) through docker.
+* ruff -> run the ruff code standards tool
+* mypy -> run the mypy type checker
+* flake8 -> run the flake8 code standards tool
+
+sessions marked with * are selected, sessions marked with - are skipped.

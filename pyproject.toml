@@ -1,7 +1,144 @@
+
+[project]
+name = "healthy-meals"
+version = "2025.03.31"
+description = "Meet your Dietary Goals with Healthier Meals."
+readme = "README.md"
+keywords = [
+  "python",
+  "django",
+  "nutrition",
+  "goals",
+  "bodybuilding",
+  "health",
+  "antinflammatory",
+  "autoimmunity",
+  "glycemia",
+  "diet",
+  "planning",
+  "recipes",
+  "preparation",
+  "cooking",
+]
+license = { text = "AGPL-3.0-only" }
+authors = [
+  { name = "David Andrews Taylor", email = "tayloredwebsites@me.com" },
+]
+requires-python = "==3.12.*"
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Web",
+  "Framework :: Django :: 5.0",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: AGPL-3.0-only",
+  "Natural Language :: English",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Health",
+]
+dependencies = [
+  # To Do: update this
+  "asgiref",
+  # "binaryornot==0.4.4",
+  "certifi",
+  "cffi",
+  "charset-normalizer",
+  "crispy-bootstrap5",
+  "cryptography==39.0.1",
+  "defusedxml==0.7.1",
+  "django>=5.1.7",
+  "django-allauth==65.0.2",
+  "django-auditlog==3.0.0",
+  "django_compressor==4.5.1",
+  "django_coverage_plugin==3.1.0",
+  "django-crispy-forms==2.3",
+  "django-debug-toolbar==4.4.6",
+  # "django-libsass==0.9",
+  # "djangorestframework==3.15.2" # See utils/functions exception handling
+  "django-safedelete==1.4.0",
+  # "django-upgrade==1.22.2",
+  # "gitpython==3.1.43",
+  "gunicorn==23.0.0",
+  "idna==3.4",
+  "ipython==8.31.0",
+  "nox==2024.10.9",
+  "oauthlib==3.2.2",
+  "packaging==23.1",
+  # "pre-commit==4.1.0",
+  "psycopg==3.2.3",
+  "psycopg-binary==3.2.3",
+  "pycparser==2.21",
+  # "pygithub==2.5",
+  "PyJWT==2.6.0",
+  "python3-openid==3.2.0",
+  "python-decouple==3.8",
+  # "pyyaml==6.0.2",
+  "requests==2.32.3",
+  "requests-oauthlib==1.3.1",
+  # "ruff==0.11.2",
+  # "sh==2.1; sys_platform!='win23'",
+  "sqlparse==0.4.3",
+  # "tox==4.23.2",
+  # "tox-uv>=1.17",
+  "typing_extensions==4.9.0",
+  "urllib3==1.26.14",
+  "whitenoise==6.7.0",
+  "sphinx-mdinclude>=0.6.2",
+]
+urls = { Repository = "https://github.com/tayloredwebsites/healthy-meals" }
+
+[project.optional-dependencies]
+dev = [
+]
+
+[dependency-groups]
+lint = [
+  # "black",
+  # "djlint==1.36.4",
+  # "flake8",
+]
+test = [
+  "beautifulsoup4==4.12.3",
+  "coverage==7.6.10",
+  "factory_boy==3.3.1",
+  "genbadge==1.1.1",
+  "pytest==8.3.4",
+  "pytest-django==4.9.0",
+  # "pytest-cookies==0.7",
+  "pytest-factoryboy==2.7.0",
+  "pytest-html==4.1.1",
+  # "pytest-instafail==0.5",
+  # "pytest-xdist==3.6.1",
+]
+docs = [
+  # "myst-parser>=4",
+  "sphinx>=8.2.3",
+  # "sphinx-autobuild>=2024.10.3",
+  "sphinx-rtd-theme>=3.0.2",
+  "sphinxcontrib-django==2.5",
+]
+
+
+[tool.pdm]
+distribution = false
+
+
+
 # ==== pytest ====
 [tool.pytest.ini_options]
 minversion = "6.0"
 # addopts = "--ds=config.settings.test --reuse-db --import-mode=importlib"
+# addopts = "-v --tb=short"
+norecursedirs = [
+  ".nox",
+  ".git",
+  "*/migrations/*",
+  "*/static/*",
+  "docs",
+  ".venv",
+  "*/__pycache__/*",
+]
 DJANGO_SETTINGS_MODULE = "django_project.settings"
 python_files = [
     "tests.py",
@@ -26,10 +163,11 @@ omit = [
     ".venv/*",
     "*LICENSE.txt",
     "*README.txt",
-    "requirements.txt",
+    "requirements*.txt",
     "docs/*",
     ".nox/*",
-    "noxfile.py"
+    "noxfile.py",
+    "*/__init__.py"
 ]
 plugins = ["django_coverage_plugin"] # include .html and .txt files
 data_file = "docs/qa/coverage/.coverage"

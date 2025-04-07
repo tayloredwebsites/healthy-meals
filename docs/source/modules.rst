@@ -1,5 +1,5 @@
-healthy_meals_5
-===============
+healthy-meals
+=============
 
 .. toctree::
    :maxdepth: 4

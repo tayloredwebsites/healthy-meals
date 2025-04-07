@@ -44,6 +44,7 @@ extensions = [
     "sphinx.ext.intersphinx", # provides links to other .rst files
     "sphinx.ext.viewcode",
     "sphinxcontrib_django", # https://pypi.org/project/sphinxcontrib-django/
+    "sphinx_mdinclude", # https://pypi.org/project/sphinx_mdinclude/
 ]
 
 '''Configure the path to the Django settings module'''

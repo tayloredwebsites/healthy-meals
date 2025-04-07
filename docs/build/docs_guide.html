@@ -9,7 +9,7 @@
   <title>Documentation Guide &mdash; Healthy Meals Diet Assistant  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=de96878a" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -20,7 +20,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="noxfile module" href="noxfile.html" /> 
+    <link rel="prev" title="Read Me File" href="prog_readme.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -52,9 +52,9 @@
 <li class="toctree-l1"><a class="reference internal" href="tests.html">Tests Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prog_guide.html">Programmers Guide</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Documentation Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#procedure-to-regenerate-the-documentation-to-the-docs-build-html-folder">Procedure to regenerate the documentation to the docs/build/html folder.</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#code-documentation">Code Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#code-documentation-philosophy">Code Documentation Philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#code-documentation-process-overview">Code Documentation Process Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generation-of-the-documentation">Generation of the Documentation.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#understanding-the-custom-rst-anc-config-files-docs-guide-rst-index-rst-and-conf-py">Understanding the custom .rst anc config files (docs_guide.rst, index.rst, and conf.py)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#the-index-rst-file-is-a-customized-version-of-the-initial-one-created-by-sphinx-quickstart">The index.rst file is a customized version of the initial one created by sphinx-quickstart.</a></li>
 </ul>
@@ -90,13 +90,42 @@
              
   <section id="documentation-guide">
 <h1>Documentation Guide<a class="headerlink" href="#documentation-guide" title="Link to this heading"></a></h1>
-<section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
-<p>Documentation has been developed using the defacto standard (for django/python) <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> toolset. To automatically update all module, class, and function documentation, the following procedure can be used.</p>
-<p>The following documentation standards are recognized by this toolset configuration: <a class="reference external" href="https://numpy.org/doc/stable/">NumPy</a> , <a class="reference external" href="https://google.github.io/styleguide/pyguide.html">Google</a> , and <a class="reference external" href="https://peps.python.org/pep-0287/">rst</a>  by using the <a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/">Napoleon</a> extension to Sphinx.</p>
+<section id="code-documentation-philosophy">
+<h2>Code Documentation Philosophy<a class="headerlink" href="#code-documentation-philosophy" title="Link to this heading"></a></h2>
+<p>The philosophy of documentation in the Healthy Meals project is to have the documentation be part of what is being documented (aka: <a class="reference external" href="https://www.writethedocs.org/guide/docs-as-code/">Docs as Code</a>).</p>
+<p>The choice to use the google style documentation was motivated by an sphinx article on <a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/#google-vs-numpy">napoleon legible docstrings</a>.  It is recommended to use one style through out a project, and the <a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html">google style</a> seems to be more popular, especially for non-scientific applications.</p>
+<p>Using docstrings for code documentation:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html">Google Style Python Docstrings</a>.</p></li>
+<li><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/tutorial/describing-code.html">Describing code in Sphinx</a>.</p></li>
+</ul>
 </section>
-<section id="procedure-to-regenerate-the-documentation-to-the-docs-build-html-folder">
-<h2>Procedure to regenerate the documentation to the docs/build/html folder.<a class="headerlink" href="#procedure-to-regenerate-the-documentation-to-the-docs-build-html-folder" title="Link to this heading"></a></h2>
+<section id="code-documentation-process-overview">
+<h2>Code Documentation Process Overview<a class="headerlink" href="#code-documentation-process-overview" title="Link to this heading"></a></h2>
+<p>Code is being documented using the <a class="reference external" href="https://www.sphinx-doc.org/">Sphinx</a> toolset, which is the defacto standard tool for documenting django/python.  The Sphinx toolset recognizes <a class="reference external" href="https://numpy.org/doc/stable/">NumPy</a> , <a class="reference external" href="https://google.github.io/styleguide/pyguide.html">Google</a> , and <a class="reference external" href="https://peps.python.org/pep-0287/">rst</a> code documentation standards.  This is achieved by using the <a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/">Napoleon</a> extension to Sphinx.  When code has docstrings appropriately placed within it, Sphinx will automatically pull them into the documentation in the docs directory.  The healthy-meals github repository has been set up to automatically deliver the documentation to a <a class="reference external" href="https://tayloredwebsites.github.io/healthy-meals/build/index.html">github pages site on the internet</a>.</p>
+</section>
+<section id="generation-of-the-documentation">
+<h2>Generation of the Documentation.<a class="headerlink" href="#generation-of-the-documentation" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://nox.thea.codes/en/stable/tutorial.html">nox</a> is the automation tool we use generate or update the documentation that will eventually produce HTML documentation in the docs/build folder.  See our  <a class="reference internal" href="prog_nox_docs.html"><span class="doc">nox guide</span></a> about our use of nox in healthy-meals.  We use the <a class="reference external" href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site">github pages</a> style of docstrings for the documentation of healthy-meals.  The details of the steps that we follow to generate the documentation are:</p>
+<ol class="arabic">
+<li><p>Sphinx is used to generate the documentation, which ends up as HTML pages in the docs directory.  We have a nox automation command that does all of this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;nox -s sphinxDocs&quot;</span>
+</pre></div>
+</div>
+<p>The sphinxDocs nox session (script) does the following:</p>
+<ol class="arabic">
+<li><p>Remove all prior versions of the documentation from the docs directory:</p>
+<div class="highlight-nox notranslate"><div class="highlight"><pre><span></span>session.run(&quot;pdm&quot;, &quot;run&quot;, &quot;rm&quot;, &quot;-fr&quot;, &quot;./docs/build&quot;)
+session.run(&quot;pdm&quot;, &quot;run&quot;, &quot;rm&quot;, &quot;-fr&quot;, &quot;./docs/source&quot;)
+session.run(&quot;pdm&quot;, &quot;run&quot;, &quot;cp&quot;, &quot;-R&quot;, &quot;./docs/sphinx_src/&quot;, &quot;./docs/source/&quot;)
+</pre></div>
+</div>
+<p>These commands first remove the source and build directories from the docs directory.  We then copy all of the files in the docs/sphinx_src directory into a new clean docs/source directory.</p>
+</li>
+<li></li>
+</ol>
+</li>
+</ol>
 <dl>
 <dt>First, confirm you are in the root directory (directory containing manage.py)</dt><dd><p>Note: The Sphinx setup was initially run with the command <cite>sphinx-quickstart docs</cite>, making <cite>docs/</cite> as the documentation folder.
 This means that when generating the documentation you should:</p>
@@ -112,16 +141,23 @@ All exclusions are listed after the ‘.’ (the root folder) see <cite>docs/Mak
 </dd>
 </dl>
 <p>To Build the Documentation:</p>
+<p>We will use nox to run the sphinxDocs automation session, which will:
+- remove the build and source directories within docs
+- copy in our manually created rst files into a new docs/source directory from docs/sphinx_src
+- run nox -s testing to run all of the tests, coverage and generate their badges
+- run nox -s genNoxDocs to list all of the automations that nox can do.</p>
 <blockquote>
-<div><p>CAUTION: Do not remove the following files in the docs/source directory, as these are custom files:</p>
-<ul class="simple">
-<li><p>conf.py</p></li>
-<li><p>docs_guide.rst</p></li>
-<li><p>index.rst</p></li>
-<li><p>qa.rst</p></li>
+<div><ul class="simple">
+<li><p>note we create a text file of the nox –list command to display all of the commands (sessions)</p></li>
+<li><p>Note: we need to do this because sphinx autodoc does not extract the docstrings from noxfile.py.</p></li>
 </ul>
 </div></blockquote>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>nox<span class="w"> </span>-s<span class="w"> </span>makeDocs
+<ul class="simple">
+<li><p>run sphinx-apidoc to extract docstrings from the project source files into .rst files in the docs/source directory.</p></li>
+<li><p>run the sphinx-build to generate html in the docs/build directory from the .rst files in the docs/source directory.</p></li>
+<li><p>This is all done by the following nox command:</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>nox<span class="w"> </span>-s<span class="w"> </span>sphinxDocs
 
 <span class="c1"># or using Docker</span>
 nox<span class="w"> </span>-s<span class="w"> </span>dockerMakeDocs
@@ -159,19 +195,13 @@ make html -C docs</p>
 - you may want to review the output of the make for warnings or errors
 - If you have added any new apps, you should add them to the index.rst file, so they are available at the top level of documentation.
 - They will automatically show up in docs/source/modules.rst without titles like the ones in docs/source/index.rst</p>
-</section>
-<section id="code-documentation">
-<h2>Code Documentation<a class="headerlink" href="#code-documentation" title="Link to this heading"></a></h2>
-<p>The philosophy of documentation in the Healthy Meals project is to have the documentation be part of what is being documented.
-The Sphinx toolset provides the capability of doing this using:</p>
+<p>The Sphinx toolset provides the capability of doing this using:</p>
 <ul class="simple">
 <li><p>the <a class="reference external" href="https://documentation.help/Sphinx/toctree.html">Toc Tree &#64; documentation.help</a> extension to manage a Table of Contents.</p></li>
 <li><p>the <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html">sphinx autodoc</a> extension to extract the documentation as well as extract documentation from the code itself.</p></li>
 <li><p>the <a class="reference external" href="https://www.sphinx-doc.org/en/master/man/sphinx-apidoc.html">sphinx apidoc</a> extension to generate the documentation in the form of .rst (<a class="reference external" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html">restructured text</a> files).</p></li>
 <li><p>the <a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/">sphinx napoleon</a> extension to allow for rst, google or numpy style documentation.</p></li>
 </ul>
-<p>The choice to use the google style documentation was motivated by an sphinx article on <a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/#google-vs-numpy">napoleon legible docstrings</a>.  It is recommended to use one style through out a project, and the <a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html">google style</a> seems to be more popular, especially for non-scientific applications.</p>
-<p>See this excellent <a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html">Google Style Python Docstrings</a> for examples of google style code docstrings.</p>
 </section>
 <section id="understanding-the-custom-rst-anc-config-files-docs-guide-rst-index-rst-and-conf-py">
 <h2>Understanding the custom .rst anc config files (docs_guide.rst, index.rst, and conf.py)<a class="headerlink" href="#understanding-the-custom-rst-anc-config-files-docs-guide-rst-index-rst-and-conf-py" title="Link to this heading"></a></h2>
@@ -203,7 +233,7 @@ Documentation Guide&lt;/docs_guide&gt;
 <li><p>the <code class="docutils literal notranslate"><span class="pre">/accounts</span></code> apidoc generated file (<code class="docutils literal notranslate"><span class="pre">User</span> <span class="pre">Accounts</span></code>) module for the Custom User accounts.</p></li>
 <li><p>the <code class="docutils literal notranslate"><span class="pre">/pages</span></code> apidoc generated file (<code class="docutils literal notranslate"><span class="pre">Misc.</span> <span class="pre">Pages</span></code>) module for simple pages such as home, or about.</p></li>
 <li><p>the <code class="docutils literal notranslate"><span class="pre">/tests</span></code> apidoc generated file (<code class="docutils literal notranslate"><span class="pre">Tests</span></code>, automated testing doc strings generated documentation.</p></li>
-<li><p>the custom <code class="docutils literal notranslate"><span class="pre">/docs_guide</span></code> (this Documentation Guide file) is added to provide guide(s) to nox, …</p></li>
+<li><p>the custom <code class="docutils literal notranslate"><span class="pre">/docs_guide</span></code> (this Documentation Guide file) is added to introduce the documentation philosophy of healthy-meals, and provide a step by step breakdown of the documentation process.</p></li>
 </ul>
 <p>Note the format of the entries in the TOC is as follows:  “The Name With Spaces&lt;[optional /]rst_filename_without_extension&gt;”</p>
 <ul class="simple">
@@ -247,7 +277,7 @@ used to have custom HTML for linked images placed initially  for the Quality Ass
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="noxfile.html" class="btn btn-neutral float-left" title="noxfile module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="prog_readme.html" class="btn btn-neutral float-left" title="Read Me File" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

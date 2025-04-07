@@ -18,6 +18,7 @@
 - Test and coverage badges displayed in documentation and in README.md
 - Internationalization (i18n) of strings in code
 - Soft Delete functionality of database records
+- Sphinx documentation tool
 - Base HTML Template
   - sub-template blocks for pages and partial pages
   - SCSS translation to CSS
@@ -28,7 +29,6 @@
 ### Base Project Features coming soon:
 - Internationalization (i18n) of strings in database
 - Static typing checks with MyPy
-- Sphinx documentation tool
 - HTMX ?
 
 ### Application Features coming soon:
@@ -52,41 +52,55 @@ see: [Fork a Github Repo](https://docs.github.com/en/pull-requests/collaborating
 
 see: [Clone a Github Repo](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 
-    #confirm you are in your projects parent directory
-    $ pwd #confirm you are in your projects parent directory
+    * Note: <code folder> is your projects parent directory
+    $ cd <code folder>
     $ git clone git@github.com:<yourGithubUsername>/healthy_meals.git
     $ cd healthy_meals
     $ git remote add upstream git@github.com:tayloredwebsites/healthy_meals.git
 
-###  2) Installation of ASDF
+###  2) ASDF Installation
+
+See: [ASDF install](https://asdf-vm.com/guide/getting-started.html), and [ASDF configuration](https://asdf-vm.com/manage/configuration.html)
 
     $ cat .tool-versions
-      # you should see (with possible version differences):
-      #    python 3.12.6
-      #    direnv 2.34.0
+      * you should see (with possible version differences):
+      *    python 3.12.6
+      *    direnv 2.34.0
 
 ### 3) installation of venv and direnv (working with asdf)
 
 see: # [https://mdaverde.com/posts/python-venv-direnv-asdf/](https://mdaverde.com/posts/python-venv-direnv-asdf/)
 
-    $ cd <code folder>
-    $ cd healthy_meals  # see clone repo from github
+
+    * Note: <code folder> is your projects parent directory
+    $ cd <code folder>/healthy-meals  # see clone repo from github
     $ python -m venv .venv
-    $ echo "export VIRTUAL_ENV=$PWD/.venv\nexport PATH=$PWD/.venv/bin:\$PATH" > .envrc
-      # you should get: error ... .envrc is blocked. Run `direnv allow` to approve its content
+    $ echo "export VIRTUAL_ENV=$PWD/.venv\nexport PATH=$PWD/.venv/bin:\$PATH\nexport PYTHONPATH=$PWD" > .envrc
+      * You should get: "direnv: error <code folder>/healthy-meals/.envrc is blocked. Run `direnv allow` to approve its content"
     $ direnv allow
-    $ which python3
-      # you should see python3 3 running from the .venv directory
-      #   .../healthy_meals/.venv/bin/python3
+    $ which python
+      * you should see python3 running from the .venv directory
+      *   <code folder>/healthy_meals/.venv/bin/python3
     $ cd ..
     $ cd healthy_meals
-      # you will see the following messages entering your directory
-      #   direnv: loading .../.envrc
-      #   direnv: export +VIRTUAL_ENV ~PATH
+      * you will see the following messages entering your directory
+      *   direnv: loading .../.envrc
+      *   direnv: export +PYTHONPATH +VIRTUAL_ENV ~PATH
+    $ cat .envrc
+      * You should see the following listing for your .envrc file
+      * export VIRTUAL_ENV=<code folder>/healthy-meals/.venv
+      * export PATH=<code folder>/healthy-meals/.venv/bin:$PATH
+      * export PYTHONPATH=<code folder>/healthy-meals/.venv/bin
+
 
 ### 4) install required software into .venv
 
-    $ pip install -r requirements.txt
+
+Note: We use [nox](https://nox.thea.codes/en/stable/index.html) for automation of tasks
+
+Instructions:
+
+    $ nox -s setupEnv
 
 ### 5) install postgres locally
 
@@ -102,7 +116,7 @@ Note: If you are having problems with installing postgres onto your computer, co
 
 ### 6) install docker desktop
 
-Note: You may skip this step if you are only developing locally, or have the Docker Daemon installed already.
+Note: You may skip this step if you are only developing locally, or have the Docker Daemon or Desktop installed already.
 
 ### 7) install dart sass
 
@@ -128,7 +142,7 @@ See: [https://snapcraft.io/dart-sass](https://snapcraft.io/dart-sass)
 
 #### docker
 
-Note: Dockerfile now downloads dart-sass and adds it to the path
+Note: Our Dockerfile downloads dart-sass and adds it to the path
 
 ## Development Environment Guide
 

@@ -2,14 +2,13 @@ Programmers Guide
 ===================
 
 
-Overview
---------
-
-
-
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   Nox Automations</noxfile>
+   Nox Automation</prog_nox_docs>
+   Pull Requests</prog_prs>
+   PDM</prog_pdm>
+   Continuous Integration</prog_ci>
+   Readme File</prog_readme>

@@ -1,5 +1,5 @@
 # .gitignore
-''' QA BRANCH version of .gitignore
+''' docs branch version of .gitignore
 
 Main branch pushes should not update the /docs folder, thus:
 - there will be a .gitignore in the docs folder that will:
@@ -10,7 +10,7 @@ Main branch pushes should not update the /docs folder, thus:
     - thus we put .gitignore into the repo
     - thus we ensure that the other files are not put into the repo.
 
-Only the QA branch should update the /docs folder
+Only the docs branch should update the /docs folder
 - there will be no ignored files in its version of .gitignore
 - the docs folder is deployed to a github page.
 '''

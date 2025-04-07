@@ -3,7 +3,8 @@
 
 # You can set these variables from the command line, and also
 # from the environment for the first two.
-SPHINXOPTS    ?=
+# see: https://www.sphinx-doc.org/en/master/man/sphinx-build.html
+SPHINXOPTS    ?= --conf-dir .
 SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = source
 BUILDDIR      = build

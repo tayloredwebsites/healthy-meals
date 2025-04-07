@@ -8,7 +8,7 @@
   <title>noxfile &mdash; Healthy Meals Diet Assistant  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=de96878a" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
@@ -79,7 +79,11 @@
   <h1>Source code for noxfile</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">nox</span>
+
+
+
 
 <div class="viewcode-block" id="NoxfileDocs">
 <a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs">[docs]</a>
@@ -154,88 +158,108 @@
     <span class="c1"># Local Server tasks</span>
 
 
+<div class="viewcode-block" id="NoxfileDocs.setupEnv">
+<a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.setupEnv">[docs]</a>
+    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;3.12&quot;</span><span class="p">),</span> <span class="n">venv_backend</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setupEnv</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Set up external environment as needed (no venv)).&#39;&#39;&#39;</span>
+        <span class="c1"># os.environ.update({&quot;PDM_IGNORE_SAVED_PYTHON&quot;: &quot;1&quot;})</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;NOX_DEFAULT_VENV_BACKEND&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">})</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">run_always</span><span class="p">(</span><span class="s1">&#39;pdm&#39;</span><span class="p">,</span> <span class="s1">&#39;install&#39;</span><span class="p">,</span> <span class="s1">&#39;-G&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">)</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;manage.py&quot;</span><span class="p">,</span> <span class="s2">&quot;makemigrations&quot;</span><span class="p">)</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;manage.py&quot;</span><span class="p">,</span> <span class="s2">&quot;migrate&quot;</span><span class="p">)</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span><span class="s2">&quot;sass&quot;</span><span class="p">,</span> <span class="s2">&quot;static/scss:static/css&quot;</span><span class="p">)</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;manage.py&quot;</span><span class="p">,</span> <span class="s2">&quot;collectstatic&quot;</span><span class="p">,</span> <span class="s2">&quot;--noinput&quot;</span><span class="p">)</span></div>
+
+
+
+
+<div class="viewcode-block" id="NoxfileDocs.goodToGo">
+<a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.goodToGo">[docs]</a>
+    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;3.12&quot;</span><span class="p">),</span> <span class="n">venv_backend</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">goodToGo</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+        <span class="c1">#: testing goodToGo docs</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39; Check to confirm that all is good to go (for push / commit / etc.).&#39;&#39;&#39;</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;nox&quot;</span><span class="p">,</span> <span class="s2">&quot;-s&quot;</span><span class="p">,</span> <span class="s2">&quot;setupEnv&quot;</span><span class="p">)</span> <span class="c1"># make sure pdm session is set up if needed</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;nox&quot;</span><span class="p">,</span> <span class="s2">&quot;-s&quot;</span><span class="p">,</span> <span class="s2">&quot;remakeDocs&quot;</span><span class="p">)</span> <span class="c1"># generate docs locally</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;nox&quot;</span><span class="p">,</span> <span class="s2">&quot;-s&quot;</span><span class="p">,</span> <span class="s2">&quot;testing&quot;</span><span class="p">)</span> <span class="c1"># run all current qa checks</span></div>
+
+
+
 <div class="viewcode-block" id="NoxfileDocs.localUp">
 <a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.localUp">[docs]</a>
-    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span>
+    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;3.12&quot;</span><span class="p">),</span> <span class="n">venv_backend</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">localUp</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
-        <span class="c1">#: Bring up Healthy Meals locally.</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39; Bring up Healthy Meals in local server.&#39;&#39;&#39;</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;python3&quot;</span><span class="p">,</span> <span class="s2">&quot;managepy&quot;</span><span class="p">,</span> <span class="s2">&quot;runserver&quot;</span><span class="p">)</span></div>
+        <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;manage.py&quot;</span><span class="p">,</span> <span class="s2">&quot;runserver&quot;</span><span class="p">,</span> <span class="s2">&quot;0.0.0.0:8000&quot;</span><span class="p">)</span></div>
 
 
 
-<div class="viewcode-block" id="NoxfileDocs.makeDocs">
-<a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.makeDocs">[docs]</a>
-    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">makeDocs</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build documentation locally to Sphinx.</span>
-
-<span class="sd">       Note: ignore modules.rst warnings (they are manually in index.rst).</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;make&quot;</span><span class="p">,</span> <span class="s2">&quot;apidocs&quot;</span><span class="p">,</span> <span class="s2">&quot;--directory=docs&quot;</span><span class="p">)</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;make&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="s2">&quot;--directory=docs&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="NoxfileDocs.genNoxDocs">
+<a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.genNoxDocs">[docs]</a>
+    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;3.12&quot;</span><span class="p">),</span> <span class="n">venv_backend</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">genNoxDocs</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39; Generate nox documentation into a file for inclusion into Sphinx.&#39;&#39;&#39;</span>
+        <span class="k">with</span> <span class="n">Path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;./docs/qa/nox_docs.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out</span><span class="p">:</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;nox&quot;</span><span class="p">,</span> <span class="s2">&quot;--list&quot;</span><span class="p">,</span>
+                <span class="n">stdout</span><span class="o">=</span><span class="n">out</span><span class="p">,</span> <span class="c1"># output to nox_docs.txt</span>
+            <span class="p">)</span></div>
 
 
 
-<div class="viewcode-block" id="NoxfileDocs.remakeDocs">
-<a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.remakeDocs">[docs]</a>
-    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">remakeDocs</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+<div class="viewcode-block" id="NoxfileDocs.sphinxDocs">
+<a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.sphinxDocs">[docs]</a>
+    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;3.12&quot;</span><span class="p">),</span> <span class="n">venv_backend</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sphinxDocs</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Rebuild all documentation to Sphinx (cleans up old docs).</span>
 
 <span class="sd">        Ignore the warning about modules.rst not included in the toctree,</span>
 <span class="sd">        as modules are manually entered into index.rst</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;rm&quot;</span><span class="p">,</span> <span class="s2">&quot;-fr&quot;</span><span class="p">,</span> <span class="s2">&quot;docs/build&quot;</span><span class="p">)</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;make&quot;</span><span class="p">,</span> <span class="s2">&quot;apidocs&quot;</span><span class="p">,</span> <span class="s2">&quot;--directory=docs&quot;</span><span class="p">)</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;make&quot;</span><span class="p">,</span> <span class="s2">&quot;allhtml&quot;</span><span class="p">,</span> <span class="s2">&quot;--directory=docs&quot;</span><span class="p">)</span></div>
+        <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;rm&quot;</span><span class="p">,</span> <span class="s2">&quot;-fr&quot;</span><span class="p">,</span> <span class="s2">&quot;./docs/build&quot;</span><span class="p">)</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;rm&quot;</span><span class="p">,</span> <span class="s2">&quot;-fr&quot;</span><span class="p">,</span> <span class="s2">&quot;./docs/source&quot;</span><span class="p">)</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;cp&quot;</span><span class="p">,</span> <span class="s2">&quot;-R&quot;</span><span class="p">,</span> <span class="s2">&quot;./docs/sphinx_src/&quot;</span><span class="p">,</span> <span class="s2">&quot;./docs/source/&quot;</span><span class="p">)</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;nox&quot;</span><span class="p">,</span> <span class="s2">&quot;-s&quot;</span><span class="p">,</span> <span class="s2">&quot;testing&quot;</span><span class="p">)</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;nox&quot;</span><span class="p">,</span> <span class="s2">&quot;-s&quot;</span><span class="p">,</span> <span class="s2">&quot;genNoxDocs&quot;</span><span class="p">)</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;make&quot;</span><span class="p">,</span> <span class="s2">&quot;apidocs&quot;</span><span class="p">,</span> <span class="s2">&quot;--directory=docs&quot;</span><span class="p">)</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;make&quot;</span><span class="p">,</span> <span class="s2">&quot;allhtml&quot;</span><span class="p">,</span> <span class="s2">&quot;--directory=docs&quot;</span><span class="p">)</span></div>
 
+        <span class="c1"># session.run(&quot;pdm&quot;, &quot;run&quot;, &quot;mv&quot;, &quot;./docs/build/*&quot;, &quot;./docs/&quot;)</span>
 
 
 <div class="viewcode-block" id="NoxfileDocs.testing">
 <a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.testing">[docs]</a>
-    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span>
+    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;3.12&quot;</span><span class="p">),</span> <span class="n">venv_backend</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">testing</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Run automated tests (with test coverage) through docker.&quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">Path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;./docs/qa/coverage_run.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out</span><span class="p">:</span>
 
-            <span class="c1"># ensure session is all set up</span>
-            <span class="n">session</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="s2">&quot;requirements.txt&quot;</span><span class="p">)</span>
-            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;python3&#39;</span><span class="p">,</span> <span class="s1">&#39;manage.py&#39;</span><span class="p">,</span> <span class="s1">&#39;makemigrations&#39;</span><span class="p">)</span>
-            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;python3&#39;</span><span class="p">,</span> <span class="s1">&#39;manage.py&#39;</span><span class="p">,</span> <span class="s1">&#39;migrate&#39;</span><span class="p">)</span>
-            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;sass&#39;</span><span class="p">,</span> <span class="s1">&#39;static/scss:static/css&#39;</span><span class="p">)</span>
-            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;python3&#39;</span><span class="p">,</span> <span class="s1">&#39;manage.py&#39;</span><span class="p">,</span> <span class="s1">&#39;collectstatic&#39;</span><span class="p">,</span> <span class="s1">&#39;--noinput&#39;</span><span class="p">)</span>
-
             <span class="c1"># empty out tests and coverage directories</span>
-            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;rm&quot;</span><span class="p">,</span> <span class="s2">&quot;-fr&quot;</span><span class="p">,</span> <span class="s2">&quot;./docs/qa/tests&quot;</span><span class="p">)</span>
-            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;rm&quot;</span><span class="p">,</span> <span class="s2">&quot;-fr&quot;</span><span class="p">,</span> <span class="s2">&quot;./docs/qa/coverage&quot;</span><span class="p">)</span>
-            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;mkdir&quot;</span><span class="p">,</span> <span class="s2">&quot;-p&quot;</span><span class="p">,</span> <span class="s2">&quot;./docs/qa/tests/&quot;</span><span class="p">)</span>
-            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;mkdir&quot;</span><span class="p">,</span> <span class="s2">&quot;-p&quot;</span><span class="p">,</span> <span class="s2">&quot;./docs/qa/coverage/&quot;</span><span class="p">)</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;rm&quot;</span><span class="p">,</span> <span class="s2">&quot;-fr&quot;</span><span class="p">,</span> <span class="s2">&quot;./docs/qa&quot;</span><span class="p">)</span>
 
-            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;coverage&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pytest&quot;</span><span class="p">,</span> <span class="s2">&quot;tests&quot;</span><span class="p">,</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;coverage&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pytest&quot;</span><span class="p">,</span> <span class="s2">&quot;tests&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;--junitxml=./docs/qa/tests/junit.xml&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;--html=./docs/qa/tests/index.html&quot;</span><span class="p">,</span>
                 <span class="n">stdout</span><span class="o">=</span><span class="n">out</span><span class="p">,</span> <span class="c1"># output to ran_coverage.txt</span>
             <span class="p">)</span> <span class="c1"># run tests with coverage</span>
-            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;genbadge&quot;</span><span class="p">,</span> <span class="s2">&quot;tests&quot;</span><span class="p">,</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;genbadge&quot;</span><span class="p">,</span> <span class="s2">&quot;tests&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;--input-file&quot;</span><span class="p">,</span> <span class="s2">&quot;./docs/qa/tests/junit.xml&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;--output-file&quot;</span><span class="p">,</span> <span class="s2">&quot;./docs/qa/tests/tests_badge.svg&quot;</span><span class="p">,</span>
                 <span class="n">stdout</span><span class="o">=</span><span class="n">out</span><span class="p">,</span> <span class="c1"># output to ran_coverage.txt</span>
             <span class="p">)</span> <span class="c1"># create tests badge</span>
-            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;coverage&quot;</span><span class="p">,</span> <span class="s2">&quot;xml&quot;</span><span class="p">,</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;coverage&quot;</span><span class="p">,</span> <span class="s2">&quot;xml&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="s2">&quot;./docs/qa/coverage/coverage.xml&quot;</span><span class="p">,</span> <span class="c1"># xml output file</span>
                 <span class="n">stdout</span><span class="o">=</span><span class="n">out</span><span class="p">,</span> <span class="c1"># output to ran_coverage.txt</span>
             <span class="p">)</span> <span class="c1"># create coverage.xml file</span>
-            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;coverage&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">,</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;coverage&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;-d&quot;</span><span class="p">,</span> <span class="s2">&quot;./docs/qa/coverage/html/&quot;</span><span class="p">,</span> <span class="c1"># html output directory</span>
                 <span class="n">stdout</span><span class="o">=</span><span class="n">out</span><span class="p">,</span> <span class="c1"># output to ran_coverage.txt</span>
             <span class="p">)</span> <span class="c1"># create coverage HTML files</span>
-            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;rm&quot;</span><span class="p">,</span> <span class="s2">&quot;-f&quot;</span><span class="p">,</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;rm&quot;</span><span class="p">,</span> <span class="s2">&quot;-f&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;./docs/qa/coverage/html/.gitignore&quot;</span><span class="p">,</span> <span class="c1"># ensure all files go to repo</span>
             <span class="p">)</span>
-            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;genbadge&quot;</span><span class="p">,</span> <span class="s2">&quot;coverage&quot;</span><span class="p">,</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pdm&quot;</span><span class="p">,</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="s2">&quot;genbadge&quot;</span><span class="p">,</span> <span class="s2">&quot;coverage&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;--input-file&quot;</span><span class="p">,</span> <span class="s2">&quot;./docs/qa/coverage/coverage.xml&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;--output-file&quot;</span><span class="p">,</span> <span class="s2">&quot;./docs/qa/coverage/coverage_badge.svg&quot;</span><span class="p">,</span>
                 <span class="n">stdout</span><span class="o">=</span><span class="n">out</span><span class="p">,</span> <span class="c1"># output to ran_coverage.txt</span>
@@ -248,7 +272,7 @@
 
 <div class="viewcode-block" id="NoxfileDocs.dockerUpBg">
 <a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.dockerUpBg">[docs]</a>
-    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span>
+    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;3.12&quot;</span><span class="p">),</span> <span class="n">venv_backend</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">dockerUpBg</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Bring up Healthy Meals in docker in background.&#39;&#39;&#39;</span>
         <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;docker&quot;</span><span class="p">,</span> <span class="s2">&quot;compose&quot;</span><span class="p">,</span> <span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;--build&quot;</span><span class="p">,</span> <span class="s2">&quot;--detach&quot;</span><span class="p">)</span></div>
@@ -256,7 +280,7 @@
 
 <div class="viewcode-block" id="NoxfileDocs.dockerUpLog">
 <a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.dockerUpLog">[docs]</a>
-    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span>
+    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;3.12&quot;</span><span class="p">),</span> <span class="n">venv_backend</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">dockerUpLog</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Bring up Healthy Meals in docker, with log to console.&#39;&#39;&#39;</span>
         <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;docker&quot;</span><span class="p">,</span> <span class="s2">&quot;compose&quot;</span><span class="p">,</span> <span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;--build&quot;</span><span class="p">)</span></div>
@@ -264,7 +288,7 @@
 
 <div class="viewcode-block" id="NoxfileDocs.dockerEnsureUp">
 <a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.dockerEnsureUp">[docs]</a>
-    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span>
+    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;3.12&quot;</span><span class="p">),</span> <span class="n">venv_backend</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">dockerEnsureUp</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Only bring up Healthy Meals in docker if not up already.&#39;&#39;&#39;</span>
         <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;docker&quot;</span><span class="p">,</span> <span class="s2">&quot;compose&quot;</span><span class="p">,</span> <span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="s2">&quot;--build&quot;</span><span class="p">,</span> <span class="s2">&quot;--detach&quot;</span><span class="p">,</span> <span class="s2">&quot;--no-recreate&quot;</span><span class="p">)</span></div>
@@ -272,7 +296,7 @@
 
 <div class="viewcode-block" id="NoxfileDocs.dockerExecSh">
 <a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.dockerExecSh">[docs]</a>
-    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span>
+    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;3.12&quot;</span><span class="p">),</span> <span class="n">venv_backend</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">dockerExecSh</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Open shell in web container.&#39;&#39;&#39;</span>
         <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;docker&quot;</span><span class="p">,</span> <span class="s2">&quot;exec&quot;</span><span class="p">,</span> <span class="s2">&quot;-it&quot;</span><span class="p">,</span> <span class="s2">&quot;hm_web_image&quot;</span><span class="p">,</span> <span class="s2">&quot;sh&quot;</span><span class="p">)</span></div>
@@ -280,7 +304,7 @@
 
 <div class="viewcode-block" id="NoxfileDocs.dockerExecPsql">
 <a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.dockerExecPsql">[docs]</a>
-    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span>
+    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;3.12&quot;</span><span class="p">),</span> <span class="n">venv_backend</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">dockerExecPsql</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Open psql in db container.&#39;&#39;&#39;</span>
         <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;docker&quot;</span><span class="p">,</span> <span class="s2">&quot;exec&quot;</span><span class="p">,</span> <span class="s2">&quot;-it&quot;</span><span class="p">,</span> <span class="s2">&quot;healthy_meals_5-pg_db-1&quot;</span><span class="p">,</span> <span class="s2">&quot;psql&quot;</span><span class="p">,</span> <span class="s2">&quot;--dbname=healthy_meals&quot;</span><span class="p">,</span> <span class="s2">&quot;--username=healthy_meals&quot;</span><span class="p">)</span></div>
@@ -288,7 +312,7 @@
 
 <div class="viewcode-block" id="NoxfileDocs.dockerDown">
 <a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.dockerDown">[docs]</a>
-    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span>
+    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;3.12&quot;</span><span class="p">),</span> <span class="n">venv_backend</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">dockerDown</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Bring down Healthy Meals in docker.&#39;&#39;&#39;</span>
         <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;docker&quot;</span><span class="p">,</span> <span class="s2">&quot;stop&quot;</span><span class="p">,</span> <span class="s2">&quot;hm_web_image&quot;</span><span class="p">)</span>
@@ -297,7 +321,7 @@
 
 <div class="viewcode-block" id="NoxfileDocs.dockerClear">
 <a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.dockerClear">[docs]</a>
-    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span>
+    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;3.12&quot;</span><span class="p">),</span> <span class="n">venv_backend</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">dockerClear</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Clear out entire docker system.&#39;&#39;&#39;</span>
         <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;docker&quot;</span><span class="p">,</span> <span class="s2">&quot;ps&quot;</span><span class="p">,</span> <span class="s2">&quot;-aq&quot;</span><span class="p">,</span> <span class="s2">&quot;|&quot;</span><span class="p">,</span> <span class="s2">&quot;xargs&quot;</span><span class="p">,</span> <span class="s2">&quot;docker&quot;</span><span class="p">,</span> <span class="s2">&quot;stop&quot;</span><span class="p">,</span> <span class="s2">&quot;|&quot;</span><span class="p">,</span> <span class="s2">&quot;xargs&quot;</span><span class="p">,</span> <span class="s2">&quot;docker&quot;</span><span class="p">,</span> <span class="s2">&quot;rm&quot;</span><span class="p">)</span>
@@ -307,7 +331,7 @@
 
 <div class="viewcode-block" id="NoxfileDocs.dockerMakeDocs">
 <a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.dockerMakeDocs">[docs]</a>
-    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span>
+    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;3.12&quot;</span><span class="p">),</span> <span class="n">venv_backend</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">dockerMakeDocs</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate the documentation using Sphinx through docker.&quot;&quot;&quot;</span>
         <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;docker&quot;</span><span class="p">,</span> <span class="s2">&quot;exec&quot;</span><span class="p">,</span> <span class="s2">&quot;-it&quot;</span><span class="p">,</span> <span class="s2">&quot;hm_web_image&quot;</span><span class="p">,</span> <span class="s2">&quot;toc&quot;</span><span class="p">,</span> <span class="s2">&quot;-s&quot;</span><span class="p">,</span> <span class="s2">&quot;makeDocs&quot;</span><span class="p">)</span></div>
@@ -316,7 +340,7 @@
 
 <div class="viewcode-block" id="NoxfileDocs.dockerRemakeDocs">
 <a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.dockerRemakeDocs">[docs]</a>
-    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span>
+    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;3.12&quot;</span><span class="p">),</span> <span class="n">venv_backend</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">dockerRemakeDocs</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Regenerate the documentation using Sphinx through docker (cleans up old docs).&quot;&quot;&quot;</span>
         <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;docker&quot;</span><span class="p">,</span> <span class="s2">&quot;exec&quot;</span><span class="p">,</span> <span class="s2">&quot;-it&quot;</span><span class="p">,</span> <span class="s2">&quot;hm_web_image&quot;</span><span class="p">,</span> <span class="s2">&quot;toc&quot;</span><span class="p">,</span> <span class="s2">&quot;-s&quot;</span><span class="p">,</span> <span class="s2">&quot;remakeDocs&quot;</span><span class="p">)</span></div>
@@ -325,7 +349,7 @@
 
 <div class="viewcode-block" id="NoxfileDocs.dockerLogs">
 <a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.dockerLogs">[docs]</a>
-    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span>
+    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;3.12&quot;</span><span class="p">),</span> <span class="n">venv_backend</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">dockerLogs</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Output docker logs out to console. (hit &lt;ctrl&gt;c to stop).&quot;&quot;&quot;</span>
         <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;docker&quot;</span><span class="p">,</span> <span class="s2">&quot;compose&quot;</span><span class="p">,</span> <span class="s2">&quot;logs&quot;</span><span class="p">,</span> <span class="s2">&quot;--follow&quot;</span><span class="p">)</span></div>
@@ -334,7 +358,7 @@
 
 <div class="viewcode-block" id="NoxfileDocs.dockerTesting">
 <a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.dockerTesting">[docs]</a>
-    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span>
+    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;3.12&quot;</span><span class="p">),</span> <span class="n">venv_backend</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">dockerTesting</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Run automated tests (localtest) through docker.&quot;&quot;&quot;</span>
         <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;docker&quot;</span><span class="p">,</span> <span class="s2">&quot;exec&quot;</span><span class="p">,</span> <span class="s2">&quot;-it&quot;</span><span class="p">,</span> <span class="s2">&quot;hm_web_image&quot;</span><span class="p">,</span> <span class="s2">&quot;nox&quot;</span><span class="p">,</span> <span class="s2">&quot;-s&quot;</span><span class="p">,</span> <span class="s2">&quot;testing&quot;</span><span class="p">)</span></div>
@@ -348,7 +372,7 @@
 
 <div class="viewcode-block" id="NoxfileDocs.ruff">
 <a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.ruff">[docs]</a>
-    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span>
+    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;3.12&quot;</span><span class="p">),</span> <span class="n">venv_backend</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">ruff</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; run the ruff code standards tool &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">Path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;./docs/qa/ruff_run.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out</span><span class="p">:</span>
@@ -357,7 +381,7 @@
 
 <div class="viewcode-block" id="NoxfileDocs.mypy">
 <a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.mypy">[docs]</a>
-    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span>
+    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;3.12&quot;</span><span class="p">),</span> <span class="n">venv_backend</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">mypy</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; run the mypy type checker &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">Path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;./docs/qa/mypy_run.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out</span><span class="p">:</span>
@@ -371,7 +395,7 @@
 
 <div class="viewcode-block" id="NoxfileDocs.flake8">
 <a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.flake8">[docs]</a>
-    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span>
+    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;3.12&quot;</span><span class="p">),</span> <span class="n">venv_backend</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">flake8</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; run the flake8 code standards tool &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">Path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;./docs/qa/flake8_run.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out</span><span class="p">:</span>
@@ -394,26 +418,20 @@
                 <span class="s2">&quot;--output-file&quot;</span><span class="p">,</span> <span class="s2">&quot;./docs/qa/flake8/flake8_badge.svg&quot;</span><span class="p">,</span>
                 <span class="n">stdout</span><span class="o">=</span><span class="n">out</span><span class="p">,</span>
             <span class="p">)</span> <span class="c1"># create coverage badge</span></div>
-
-
-<div class="viewcode-block" id="NoxfileDocs.djlint">
-<a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.djlint">[docs]</a>
-    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span>  <span class="c1"># noqa: ERA001</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">djlint</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>  <span class="c1"># noqa: ERA001</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; run the djlint code standards tool &quot;&quot;&quot;</span>  <span class="c1"># noqa: ERA001</span>
-        <span class="k">with</span> <span class="n">Path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;./docs/qa/djlint_run.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out</span><span class="p">:</span>
-            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;djlint&quot;</span><span class="p">,</span> <span class="s2">&quot;./healthymeals&quot;</span><span class="p">)</span>  <span class="c1"># noqa: ERA001</span></div>
-
-
-<div class="viewcode-block" id="NoxfileDocs.pylint">
-<a class="viewcode-back" href="../noxfile.html#noxfile.NoxfileDocs.pylint">[docs]</a>
-    <span class="nd">@nox</span><span class="o">.</span><span class="n">session</span>  <span class="c1"># noqa: ERA001</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">pylint</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>  <span class="c1"># noqa: ERA001</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; run the pylint code standards tool &quot;&quot;&quot;</span>  <span class="c1"># noqa: ERA001</span>
-        <span class="k">with</span> <span class="n">Path</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;./docs/qa/pylint_run.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">out</span><span class="p">:</span>
-            <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;pylint&quot;</span><span class="p">,</span> <span class="s2">&quot;./healthymeals&quot;</span><span class="p">)</span>  <span class="c1"># noqa: ERA001</span></div>
 </div>
 
+
+    <span class="c1"># @nox.session(python=(&quot;3.12&quot;), venv_backend=&quot;none&quot;)  # noqa: ERA001</span>
+    <span class="c1"># def djlint(session):  # noqa: ERA001</span>
+    <span class="c1">#     &quot;&quot;&quot; run the djlint code standards tool &quot;&quot;&quot;  # noqa: ERA001</span>
+    <span class="c1">#     with Path.open(&quot;./docs/qa/djlint_run.txt&quot;, &quot;w&quot;) as out:</span>
+    <span class="c1">#         session.run(&quot;djlint&quot;, &quot;./healthymeals&quot;)  # noqa: ERA001</span>
+
+    <span class="c1"># @nox.session(python=(&quot;3.12&quot;), venv_backend=&quot;none&quot;)  # noqa: ERA001</span>
+    <span class="c1"># def pylint(session):  # noqa: ERA001</span>
+    <span class="c1">#     &quot;&quot;&quot; run the pylint code standards tool &quot;&quot;&quot;  # noqa: ERA001</span>
+    <span class="c1">#     with Path.open(&quot;./docs/qa/pylint_run.txt&quot;, &quot;w&quot;) as out:</span>
+    <span class="c1">#         session.run(&quot;pylint&quot;, &quot;./healthymeals&quot;)  # noqa: ERA001</span>
 </pre></div>
 
            </div>
