@@ -9,7 +9,7 @@ from django.db import IntegrityError, transaction
 
 @pytest.mark.django_db
 def test_user_soft_delete():
-    '''Endure soft deletes and undeletes update the database properly
+    '''Ensure soft deletes and undeletes update the database properly
 
         - emails are ensured to be unique,
         - CustomUser prints out as expected,
@@ -71,4 +71,4 @@ def test_user_soft_delete():
     assert CustomUser.objects.all_deleted().count() == 0
     print(f'Restored: {test_users[0].email}: {test_users[0].username}, {test_users[0].deleted}')
 
-    # To Do: test to make sure that undeleted users can still log into the system and function properly
+    ''' .. :todo: test to make sure that undeleted users can still log into the system and function properly'''

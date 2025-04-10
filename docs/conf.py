@@ -45,6 +45,7 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinxcontrib_django", # https://pypi.org/project/sphinxcontrib-django/
     "sphinx_mdinclude", # https://pypi.org/project/sphinx_mdinclude/
+    "sphinx.ext.todo", # see: https://www.sphinx-doc.org/en/master/usage/extensions/todo.htm
 ]
 
 '''Configure the path to the Django settings module'''
@@ -68,3 +69,5 @@ autosummary_generate = True
 django_show_db_tables = True                # Boolean, default: False
 # Add abstract database tables names (only takes effect if django_show_db_tables is True)
 django_show_db_tables_abstract = True       # Boolean, default: False
+todo_include_todos = True   # see: https://www.sphinx-doc.org/en/master/usage/extensions/todo.htm
+# todo_emit_warnings = False   # see: https://github.com/sphinx-doc/sphinx/issues/2680

@@ -60,13 +60,13 @@
 <li class="toctree-l4"><a class="reference internal" href="#notes">Notes:</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#to-do">To Do:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#to-do-for-next-pull-request">To Do for next pull request:</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="prog_pdm.html">PDM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="prog_ci.html">Continuous Integration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="prog_readme.html">Read Me File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="prog_readme.html#healthy-meals-meet-your-dietary-goals-with-healthier-meals">healthy_meals: Meet your Dietary Goals with Healthier Meals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prog_readme.html">Readme File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="todos.html">All To Do Items</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="docs_guide.html">Documentation Guide</a></li>
@@ -268,47 +268,44 @@
 </ul>
 </section>
 </section>
-<section id="to-do">
-<h2>To Do:<a class="headerlink" href="#to-do" title="Link to this heading"></a></h2>
+<section id="to-do-for-next-pull-request">
+<h2>To Do for next pull request:<a class="headerlink" href="#to-do-for-next-pull-request" title="Link to this heading"></a></h2>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Enhance Sphinx generated documentation as we go.</p>
+</div>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>docs branch pull requests Step 1:</p>
 <ul class="simple">
-<li><p>get doc working and clean (can gradually update as we go)</p></li>
-<li><p>push up docs branch when:</p>
-<ul>
 <li><p>nox commands work in docker</p></li>
 <li><p>all of docs are going to docs</p></li>
-<li><p>circle ci validation</p></li>
-<li><p>other ci from github working</p></li>
-<li><p>deploy to pages</p></li>
+<li><p>turn on circle ci validation</p></li>
+<li><p>turn on other ci from github</p></li>
+<li><p>confirm docs/.gitignore is correct for docs branch</p></li>
 </ul>
-</li>
-<li><p>Docs branch setup</p>
-<ul>
-<li><p>.gitignore to ignore anything built by sphinx</p></li>
-<li><p>build directory</p></li>
-<li><p>github action to build sphinx html and other needed files</p></li>
-<li><p>github action to build and run tests, coverage, and badges</p></li>
-<li><p>coverage ignore: {.nox, .venv, migrations, docs}</p></li>
-</ul>
-</li>
-<li><p>confirm website link to docs works with styles working</p>
-<ul>
-<li><p><a class="reference external" href="https://www.docslikecode.com/articles/github-pages-python-sphinx/">https://www.docslikecode.com/articles/github-pages-python-sphinx/</a></p></li>
-</ul>
-</li>
-<li><p>confirm all nox items work, including docker</p></li>
-<li><p>confirm docker, test and dev all work correctly</p></li>
-<li><p>commit for pdm (python dependency manager)</p></li>
-<li><p>check git gui  for other outstanding changes</p>
-<ul>
-<li><p>prs if necessary</p></li>
-</ul>
-</li>
+</div>
+<div class="admonition-todo admonition" id="id3">
+<p class="admonition-title">Todo</p>
+<p>docs branch pull requests Step 2:</p>
+<ul class="simple">
+<li><p>confirm docs branch deploys to pages</p></li>
+<li><p>confirm top  nav to docs works</p></li>
+<li><p>consider putting index page at root of docs?</p></li>
+<li><p>confirm website link to docs works with styles working</p></li>
+<li><p>consider fixing all nox items, especially docker (with PDM changes)</p></li>
 <li><p>turn on and get circle  CI going again</p></li>
 <li><p>turn on github actions and get github CI going again</p></li>
-<li><p>ensure that docs branch update github pages</p></li>
-<li><p>research pre-commits to prevent problems with docs/.gitignore - <a class="reference external" href="https://pre-commit.com/">https://pre-commit.com/</a></p></li>
-<li><p>consider system testing of docker  environment</p></li>
+<li><p>consider pre-commits to prevent problems with docs/.gitignore - <a class="reference external" href="https://pre-commit.com/">https://pre-commit.com/</a></p></li>
 </ul>
+</div>
+<div class="admonition-todo admonition" id="id4">
+<p class="admonition-title">Todo</p>
+<p>research:</p>
+<ul class="simple">
+<li><p>consider validation of docker environment before pull request merges</p></li>
+</ul>
+</div>
 </section>
 </section>
 

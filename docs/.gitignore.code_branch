@@ -22,5 +22,5 @@
 #   - make sure that all files in the /docs/ folder are committed
 #   - thus the docs/.gitignore records are commented out to ensure all files in the /docs folder are committed
 
-# *
-# !.gitignore
+*
+!.gitignore

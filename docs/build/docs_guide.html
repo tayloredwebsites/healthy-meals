@@ -20,7 +20,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Read Me File" href="prog_readme.html" /> 
+    <link rel="prev" title="To Do List" href="todos.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -115,7 +115,7 @@
 <p>The sphinxDocs nox session (script) does the following:</p>
 <ol class="arabic">
 <li><p>Remove all prior versions of the documentation from the docs directory:</p>
-<div class="highlight-nox notranslate"><div class="highlight"><pre><span></span>session.run(&quot;pdm&quot;, &quot;run&quot;, &quot;rm&quot;, &quot;-fr&quot;, &quot;./docs/build&quot;)
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>session.run(&quot;pdm&quot;, &quot;run&quot;, &quot;rm&quot;, &quot;-fr&quot;, &quot;./docs/build&quot;)
 session.run(&quot;pdm&quot;, &quot;run&quot;, &quot;rm&quot;, &quot;-fr&quot;, &quot;./docs/source&quot;)
 session.run(&quot;pdm&quot;, &quot;run&quot;, &quot;cp&quot;, &quot;-R&quot;, &quot;./docs/sphinx_src/&quot;, &quot;./docs/source/&quot;)
 </pre></div>
@@ -127,8 +127,8 @@ session.run(&quot;pdm&quot;, &quot;run&quot;, &quot;cp&quot;, &quot;-R&quot;, &q
 </li>
 </ol>
 <dl>
-<dt>First, confirm you are in the root directory (directory containing manage.py)</dt><dd><p>Note: The Sphinx setup was initially run with the command <cite>sphinx-quickstart docs</cite>, making <cite>docs/</cite> as the documentation folder.
-This means that when generating the documentation you should:</p>
+<dt>First, confirm you are in the root directory (directory containing manage.py)</dt><dd><p><code class="docutils literal notranslate"><span class="pre">Caution</span></code>: The Sphinx setup was initially run with the command <cite>sphinx-quickstart docs</cite>, making <cite>docs/</cite> as the documentation folder.
+If you are not using the <cite>nox</cite> automations generating the documentation you should:</p>
 <ul class="simple">
 <li><p>be in the root directory of the project (where manage.py exists).</p></li>
 <li><p>specify the doc directory location ( –directory=docs, or -C docs)</p></li>
@@ -148,7 +148,7 @@ All exclusions are listed after the ‘.’ (the root folder) see <cite>docs/Mak
 - run nox -s genNoxDocs to list all of the automations that nox can do.</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>note we create a text file of the nox –list command to display all of the commands (sessions)</p></li>
+<li><p>Note: we create a text file of the nox –list command to display all of the commands (sessions)</p></li>
 <li><p>Note: we need to do this because sphinx autodoc does not extract the docstrings from noxfile.py.</p></li>
 </ul>
 </div></blockquote>
@@ -179,18 +179,19 @@ make<span class="w"> </span>allhtml<span class="w"> </span>--directory<span clas
 </pre></div>
 </div>
 <p>The final HTML documention main index page is generated to: <cite>docs/build/html/index.html</cite></p>
-<blockquote>
-<div><p># or alternatively
-make -C docs</p>
-<p># or alternatively
-make html –directory=docs</p>
-<p># or alternatively
-make html -C docs</p>
-<dl class="simple">
-<dt># or manually</dt><dd><p>sphinx-build -M html docs/source docs/build</p>
-</dd>
-</dl>
-</div></blockquote>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># or alternatively</span>
+make<span class="w"> </span>-C<span class="w"> </span>docs
+
+<span class="c1"># or alternatively</span>
+make<span class="w"> </span>html<span class="w"> </span>--directory<span class="o">=</span>docs
+
+<span class="c1"># or alternatively</span>
+make<span class="w"> </span>html<span class="w"> </span>-C<span class="w"> </span>docs
+
+<span class="c1"># or manually</span>
+<span class="w"> </span>sphinx-build<span class="w"> </span>-M<span class="w"> </span>html<span class="w"> </span>docs/source<span class="w"> </span>docs/build
+</pre></div>
+</div>
 <p>Notes:
 - you may want to review the output of the make for warnings or errors
 - If you have added any new apps, you should add them to the index.rst file, so they are available at the top level of documentation.
@@ -201,6 +202,7 @@ make html -C docs</p>
 <li><p>the <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html">sphinx autodoc</a> extension to extract the documentation as well as extract documentation from the code itself.</p></li>
 <li><p>the <a class="reference external" href="https://www.sphinx-doc.org/en/master/man/sphinx-apidoc.html">sphinx apidoc</a> extension to generate the documentation in the form of .rst (<a class="reference external" href="https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html">restructured text</a> files).</p></li>
 <li><p>the <a class="reference external" href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/">sphinx napoleon</a> extension to allow for rst, google or numpy style documentation.</p></li>
+<li><p>the <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/todo.html">sphinx todo</a> extension allows for the accumulation of all doc strings (or entries in .rst files) marked as <code class="code docutils literal notranslate"><span class="pre">..</span> <span class="pre">:todo:</span></code> to be automatically included into a <cite>To Do List</cite>.</p></li>
 </ul>
 </section>
 <section id="understanding-the-custom-rst-anc-config-files-docs-guide-rst-index-rst-and-conf-py">
@@ -208,21 +210,21 @@ make html -C docs</p>
 <section id="the-index-rst-file-is-a-customized-version-of-the-initial-one-created-by-sphinx-quickstart">
 <h3>The index.rst file is a customized version of the initial one created by sphinx-quickstart.<a class="headerlink" href="#the-index-rst-file-is-a-customized-version-of-the-initial-one-created-by-sphinx-quickstart" title="Link to this heading"></a></h3>
 <p>It has a table of contents that looks like:</p>
-<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span> Table of Contents
- -----------------
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="gh">Table of Contents</span>
+<span class="gh">-----------------</span>
 
-<span class="p"> ..</span> <span class="ow">toctree</span><span class="p">::</span>
- <span class="nc">:maxdepth:</span> 2
- <span class="nc">:caption:</span> Contents:
+<span class="p">..</span> <span class="ow">toctree</span><span class="p">::</span>
+  <span class="nc">:maxdepth:</span> 2
+  <span class="nc">:caption:</span> Contents:
 
-Quality Assurance&lt;/qa&gt;
-Index&lt;genindex&gt;
-Module Index&lt;modindex&gt;
-User Accounts Module&lt;/accounts&gt;
-Misc. Pages Module&lt;/pages&gt;
-Tests Module&lt;/tests&gt;
-Programmers Guide&lt;prog_guide&gt;
-Documentation Guide&lt;/docs_guide&gt;
+  Quality Assurance&lt;/qa&gt;
+  Index&lt;genindex&gt;
+  Module Index&lt;modindex&gt;
+  User Accounts Module&lt;/accounts&gt;
+  Misc. Pages Module&lt;/pages&gt;
+  Tests Module&lt;/tests&gt;
+  Programmers Guide&lt;prog_guide&gt;
+  Documentation Guide&lt;/docs_guide&gt;
 </pre></div>
 </div>
 <p>The Table of Contents (TOC) is what shows up in the sidebar navigation.  It has been customized in the following ways:</p>
@@ -233,23 +235,18 @@ Documentation Guide&lt;/docs_guide&gt;
 <li><p>the <code class="docutils literal notranslate"><span class="pre">/accounts</span></code> apidoc generated file (<code class="docutils literal notranslate"><span class="pre">User</span> <span class="pre">Accounts</span></code>) module for the Custom User accounts.</p></li>
 <li><p>the <code class="docutils literal notranslate"><span class="pre">/pages</span></code> apidoc generated file (<code class="docutils literal notranslate"><span class="pre">Misc.</span> <span class="pre">Pages</span></code>) module for simple pages such as home, or about.</p></li>
 <li><p>the <code class="docutils literal notranslate"><span class="pre">/tests</span></code> apidoc generated file (<code class="docutils literal notranslate"><span class="pre">Tests</span></code>, automated testing doc strings generated documentation.</p></li>
+<li><p>the custom <code class="docutils literal notranslate"><span class="pre">/prog_guide</span></code> (<cite>Programmers Guide</cite>) includes many technical details about how this project has been programmed, philosophy, standards, and the To Do list pulled from the code base and documentation.</p></li>
 <li><p>the custom <code class="docutils literal notranslate"><span class="pre">/docs_guide</span></code> (this Documentation Guide file) is added to introduce the documentation philosophy of healthy-meals, and provide a step by step breakdown of the documentation process.</p></li>
 </ul>
-<p>Note the format of the entries in the TOC is as follows:  “The Name With Spaces&lt;[optional /]rst_filename_without_extension&gt;”</p>
+<p>Note: the format of the entries in the TOC is as follows:  “The Name With Spaces&lt;[optional /]rst_filename_without_extension&gt;”</p>
 <ul class="simple">
 <li><p>The name to display in the TOC.</p></li>
 <li><p>the name of the .rst file (without the .rst extension) is contained within “&lt;” and “&gt;”.</p></li>
 <li><p>the name may have a leading optional “/” to ensure that it is always in the (main) TOC.</p></li>
 </ul>
 <p>We build the sphinx .rst files in the docs/source, then build html into the docs/build/html directory.</p>
-<p>CAUTION: Do not remove the following files in the docs/source directory, as these are custom files:</p>
-<ul class="simple">
-<li><p>conf.py - is the configuration file for Sphinx.</p></li>
-<li><p>docs_guide.rst - is this document.</p></li>
-<li><p>index.rst - is the parent .rst providing the TOC for all documentation.</p></li>
-<li><p>prog_guide.rst - is the start of programmer documentation, starting with the nox automation documentation.</p></li>
-<li><p>qa.rst is a custom .rst file to integrate in the pytest reports</p></li>
-</ul>
+<p><code class="docutils literal notranslate"><span class="pre">Note</span></code>: Sphinx requires that all of the .rst files used to build the documentation reside in the <cite>source</cite> directory.  Because we are using both our custom .rst files (including the <cite>index.rst</cite> file) and the files generated from the code using the <cite>autodoc</cite> toolset, this directory is a mix of files that are regenerated, as well as files that are permanent custom files.  To prevent accidental loss of any of the permanent custom files (including <cite>index.rst</cite>), these files are now kept in the <cite>docs/sphinx_src</cite> directory, and copied into the source directory when using the <cite>nox</cite> documentation automations.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Caution</span></code>: Be sure to edit your .rst files in the sphinx_src directory, not the source directory.</p>
 <hr class="docutils" />
 <p>The <a class="reference external" href="https://sphinxfeatures.readthedocs.io/en/latest/Raw%20Directive.html">Sphinx Raw Directive</a> is
 used to have custom HTML for linked images placed initially  for the Quality Assurance page.</p>
@@ -277,7 +274,7 @@ used to have custom HTML for linked images placed initially  for the Quality Ass
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="prog_readme.html" class="btn btn-neutral float-left" title="Read Me File" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="todos.html" class="btn btn-neutral float-left" title="To Do List" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

@@ -36,7 +36,7 @@ Generation of the Documentation.
 
    #. Remove all prior versions of the documentation from the docs directory:
 
-      .. code-block:: nox
+      .. code-block:: text
 
         session.run("pdm", "run", "rm", "-fr", "./docs/build")
         session.run("pdm", "run", "rm", "-fr", "./docs/source")
@@ -48,8 +48,8 @@ Generation of the Documentation.
 
 
 First, confirm you are in the root directory (directory containing manage.py)
-    Note: The Sphinx setup was initially run with the command `sphinx-quickstart docs`, making `docs/` as the documentation folder.
-    This means that when generating the documentation you should:
+    ``Caution``: The Sphinx setup was initially run with the command `sphinx-quickstart docs`, making `docs/` as the documentation folder.
+    If you are not using the `nox` automations generating the documentation you should:
 
     - be in the root directory of the project (where manage.py exists).
     - specify the doc directory location ( --directory=docs, or -C docs)
@@ -68,37 +68,41 @@ We will use nox to run the sphinxDocs automation session, which will:
 - copy in our manually created rst files into a new docs/source directory from docs/sphinx_src
 - run nox -s testing to run all of the tests, coverage and generate their badges
 - run nox -s genNoxDocs to list all of the automations that nox can do.
-  - note we create a text file of the nox --list command to display all of the commands (sessions)
+
+  - Note: we create a text file of the nox --list command to display all of the commands (sessions)
   - Note: we need to do this because sphinx autodoc does not extract the docstrings from noxfile.py.
+
 - run sphinx-apidoc to extract docstrings from the project source files into .rst files in the docs/source directory.
 - run the sphinx-build to generate html in the docs/build directory from the .rst files in the docs/source directory.
 - This is all done by the following nox command:
 
 .. code-block:: shell
 
-    nox -s sphinxDocs
+  nox -s sphinxDocs
 
-    # or using Docker
-    nox -s dockerMakeDocs
+  # or using Docker
+  nox -s dockerMakeDocs
 
-    # or using make
-    make apidocs --directory=docs
-    make html --directory=docs
+  # or using make
+  make apidocs --directory=docs
+  make html --directory=docs
 
 To Rebuild the Documentation (ensures all old links and pages are gone):
 
 .. code-block:: shell
 
-    nox -s remakeDocs
+  nox -s remakeDocs
 
-    # or using Docker
-    nox -s dockerRemakeDocs
+  # or using Docker
+  nox -s dockerRemakeDocs
 
-    # or using make
-    make apidocs --directory=docs
-    make allhtml --directory=docs
+  # or using make
+  make apidocs --directory=docs
+  make allhtml --directory=docs
 
 The final HTML documention main index page is generated to: `docs/build/html/index.html`
+
+.. code-block:: shell
 
    # or alternatively
    make -C docs
@@ -118,17 +122,13 @@ Notes:
 - They will automatically show up in docs/source/modules.rst without titles like the ones in docs/source/index.rst
 
 
-
-
-
-
 The Sphinx toolset provides the capability of doing this using:
 
 - the `Toc Tree @ documentation.help <https://documentation.help/Sphinx/toctree.html>`_ extension to manage a Table of Contents.
 - the `sphinx autodoc <https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html>`_ extension to extract the documentation as well as extract documentation from the code itself.
 - the `sphinx apidoc <https://www.sphinx-doc.org/en/master/man/sphinx-apidoc.html>`_ extension to generate the documentation in the form of .rst (`restructured text <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html>`_ files).
 - the `sphinx napoleon <https://sphinxcontrib-napoleon.readthedocs.io/en/latest/>`_ extension to allow for rst, google or numpy style documentation.
-
+- the `sphinx todo <https://www.sphinx-doc.org/en/master/usage/extensions/todo.html>`_ extension allows for the accumulation of all doc strings (or entries in .rst files) marked as :code:`.. :todo:` to be automatically included into a `To Do List`.
 
 
 Understanding the custom .rst anc config files (docs_guide.rst, index.rst, and conf.py)
@@ -141,21 +141,21 @@ It has a table of contents that looks like:
 
 .. code-block:: rst
 
-    Table of Contents
-    -----------------
+  Table of Contents
+  -----------------
 
-    .. toctree::
+  .. toctree::
     :maxdepth: 2
     :caption: Contents:
 
-   Quality Assurance</qa>
-   Index<genindex>
-   Module Index<modindex>
-   User Accounts Module</accounts>
-   Misc. Pages Module</pages>
-   Tests Module</tests>
-   Programmers Guide<prog_guide>
-   Documentation Guide</docs_guide>
+    Quality Assurance</qa>
+    Index<genindex>
+    Module Index<modindex>
+    User Accounts Module</accounts>
+    Misc. Pages Module</pages>
+    Tests Module</tests>
+    Programmers Guide<prog_guide>
+    Documentation Guide</docs_guide>
 
 The Table of Contents (TOC) is what shows up in the sidebar navigation.  It has been customized in the following ways:
 
@@ -165,9 +165,10 @@ The Table of Contents (TOC) is what shows up in the sidebar navigation.  It has 
 - the ``/accounts`` apidoc generated file (``User Accounts``) module for the Custom User accounts.
 - the ``/pages`` apidoc generated file (``Misc. Pages``) module for simple pages such as home, or about.
 - the ``/tests`` apidoc generated file (``Tests``, automated testing doc strings generated documentation.
+- the custom ``/prog_guide`` (`Programmers Guide`) includes many technical details about how this project has been programmed, philosophy, standards, and the To Do list pulled from the code base and documentation.
 - the custom ``/docs_guide`` (this Documentation Guide file) is added to introduce the documentation philosophy of healthy-meals, and provide a step by step breakdown of the documentation process.
 
-Note the format of the entries in the TOC is as follows:  "The Name With Spaces<[optional /]rst_filename_without_extension>"
+Note: the format of the entries in the TOC is as follows:  "The Name With Spaces<[optional /]rst_filename_without_extension>"
 
 - The name to display in the TOC.
 - the name of the .rst file (without the .rst extension) is contained within "<" and ">".
@@ -175,13 +176,9 @@ Note the format of the entries in the TOC is as follows:  "The Name With Spaces<
 
 We build the sphinx .rst files in the docs/source, then build html into the docs/build/html directory.
 
-CAUTION: Do not remove the following files in the docs/source directory, as these are custom files:
+``Note``: Sphinx requires that all of the .rst files used to build the documentation reside in the `source` directory.  Because we are using both our custom .rst files (including the `index.rst` file) and the files generated from the code using the `autodoc` toolset, this directory is a mix of files that are regenerated, as well as files that are permanent custom files.  To prevent accidental loss of any of the permanent custom files (including `index.rst`), these files are now kept in the `docs/sphinx_src` directory, and copied into the source directory when using the `nox` documentation automations.
 
-- conf.py - is the configuration file for Sphinx.
-- docs_guide.rst - is this document.
-- index.rst - is the parent .rst providing the TOC for all documentation.
-- prog_guide.rst - is the start of programmer documentation, starting with the nox automation documentation.
-- qa.rst is a custom .rst file to integrate in the pytest reports
+``Caution``: Be sure to edit your .rst files in the sphinx_src directory, not the source directory.
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

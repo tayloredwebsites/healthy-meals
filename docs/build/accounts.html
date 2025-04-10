@@ -168,7 +168,7 @@
 <dt class="sig sig-object py" id="accounts.admin.CustomUserAdmin">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">accounts.admin.</span></span><span class="sig-name descname"><span class="pre">CustomUserAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/accounts/admin.html#CustomUserAdmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accounts.admin.CustomUserAdmin" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">UserAdmin</span></code></p>
-<p>Accounts (User) Administration customization</p>
+<p>Accounts (CustomUser) Administration customization</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="accounts.admin.CustomUserAdmin.add_fieldsets">
 <span class="sig-name descname"><span class="pre">add_fieldsets</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">((None,</span> <span class="pre">{'classes':</span> <span class="pre">('wide',),</span> <span class="pre">'fields':</span> <span class="pre">('username',</span> <span class="pre">'email',</span> <span class="pre">'password1',</span> <span class="pre">'password2')}),)</span></em><a class="headerlink" href="#accounts.admin.CustomUserAdmin.add_fieldsets" title="Link to this definition"></a></dt>
@@ -207,7 +207,7 @@
 </section>
 <section id="module-accounts.apps">
 <span id="accounts-apps-module"></span><h2>accounts.apps module<a class="headerlink" href="#module-accounts.apps" title="Link to this heading"></a></h2>
-<p>Accounts App Configuration</p>
+<p>Accounts App (CustomUser records) Configuration</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="accounts.apps.AccountsConfig">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">accounts.apps.</span></span><span class="sig-name descname"><span class="pre">AccountsConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/accounts/apps.html#AccountsConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accounts.apps.AccountsConfig" title="Link to this definition"></a></dt>
@@ -273,6 +273,14 @@
 </section>
 <section id="module-accounts.models">
 <span id="accounts-models-module"></span><h2>accounts.models module<a class="headerlink" href="#module-accounts.models" title="Link to this heading"></a></h2>
+<p>Accounts model (CustomUser records) for storing users customized to allow login by email, etc.
+[Source: <a class="reference external" href="https://toxigon.com">https://toxigon.com</a>]</p>
+<p>Mix in SafeDeleteManager into CustomUserManager for Soft Deletes using safedelete</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://django-safedelete.readthedocs.io/en/latest/managers.html">https://django-safedelete.readthedocs.io/en/latest/managers.html</a></p></li>
+<li><p>safe delete of custom users example found at;</p></li>
+<li><p><a class="reference external" href="https://codeberg.org/mvlaev/Cars/src/branch/main/cars/users_app/models.py">https://codeberg.org/mvlaev/Cars/src/branch/main/cars/users_app/models.py</a>”</p></li>
+</ul>
 <dl class="py class">
 <dt class="sig sig-object py" id="accounts.models.CustomUser">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">accounts.models.</span></span><span class="sig-name descname"><span class="pre">CustomUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/accounts/models.html#CustomUser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accounts.models.CustomUser" title="Link to this definition"></a></dt>
@@ -495,7 +503,8 @@ many-to-one relation.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="accounts.models.CustomUser.name_or_email">
 <span class="sig-name descname"><span class="pre">name_or_email</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/accounts/models.html#CustomUser.name_or_email"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accounts.models.CustomUser.name_or_email" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Return the user’s full name, otherwise return their email.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="accounts.models.CustomUser.objects">
@@ -513,22 +522,30 @@ many-to-one relation.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="accounts.models.CustomUser.rec_history_count">
 <span class="sig-name descname"><span class="pre">rec_history_count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/accounts/models.html#CustomUser.rec_history_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accounts.models.CustomUser.rec_history_count" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Return the count of all of the history records for this user.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="accounts.models.CustomUser.rec_history_field_changed">
 <span class="sig-name descname"><span class="pre">rec_history_field_changed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_rec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/accounts/models.html#CustomUser.rec_history_field_changed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accounts.models.CustomUser.rec_history_field_changed" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Return the number of records that are maintained in CustomUser’s history table.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="accounts.models.CustomUser.rec_history_field_is_now">
 <span class="sig-name descname"><span class="pre">rec_history_field_is_now</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_rec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/accounts/models.html#CustomUser.rec_history_field_is_now"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accounts.models.CustomUser.rec_history_field_is_now" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>What is the rec_history_field_is_now functionality?</p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Research what the accounts.models.CustomUser.rec_history_field_is_now function was supposed to do.  Is this needed?</p>
+</div>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="accounts.models.CustomUser.rec_history_field_was">
 <span class="sig-name descname"><span class="pre">rec_history_field_was</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_rec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/accounts/models.html#CustomUser.rec_history_field_was"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accounts.models.CustomUser.rec_history_field_was" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Return a dictionary of the previous values for this field, for this record.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="accounts.models.CustomUser.user_permissions">
@@ -566,21 +583,30 @@ instances.</p>
 instance attribute of the CustomUser Class.</p>
 <p>Soft Delete of Users are implemented through SafeDelete.
 See: <a class="reference external" href="https://django-safedelete.readthedocs.io/en/latest/managers.html">https://django-safedelete.readthedocs.io/en/latest/managers.html</a></p>
-<p>Args:
-param1 (class): SafeDelete manager class mixin
-param2 (class): UserManager  for CustomUser Abstract Class</p>
-<p>Attributes:
-param1 (class): SafeDelete manager class mixin
-param2 (class): UserManager  for CustomUser Abstract Class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>param1</strong> (<em>class</em>) – SafeDelete manager class mixin</p></li>
+<li><p><strong>param2</strong> (<em>class</em>) – UserManager  for CustomUser Abstract Class</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="accounts.models.CustomUserManager.all_deleted">
 <span class="sig-name descname"><span class="pre">all_deleted</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/accounts/models.html#CustomUserManager.all_deleted"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accounts.models.CustomUserManager.all_deleted" title="Link to this definition"></a></dt>
 <dd><p>Returns all soft deleted customuser records.</p>
 <p>No arguments are passed to this function when calling it</p>
-<p>Returns:
-recordset: The soft deleted custom user records.</p>
-<p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">rec</span> <span class="ow">in</span> <span class="n">Account</span><span class="o">.</span><span class="n">all_deleted</span><span class="p">():</span>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The soft deleted custom user records.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>recordset</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Print out all deleted records</span>
+<span class="k">for</span> <span class="n">rec</span> <span class="ow">in</span> <span class="n">Account</span><span class="o">.</span><span class="n">all_deleted</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">rec</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -594,7 +620,18 @@ recordset: The soft deleted custom user records.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="accounts.signals.email_is_also_username">
 <span class="sig-prename descclassname"><span class="pre">accounts.signals.</span></span><span class="sig-name descname"><span class="pre">email_is_also_username</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/accounts/signals.html#email_is_also_username"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accounts.signals.email_is_also_username" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Force the username field to be the same as the email field</p>
+<p>Prevent duplication of email addresses in the CustomUser model at the database level.</p>
+<ul class="simple">
+<li><p>there could be duplicate emails in the database, thus leaving a potential issue with duplicate emails in the database</p></li>
+<li><p>We do not want duplicate emails in the database, because we are logging in by email address</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Warning</span></code>: do not use this CustomUser model if you wish to have usernames that are other than the user’s email address</p></li>
+<li><p>see: <a class="reference external" href="https://docs.allauth.org/en/latest/">https://docs.allauth.org/en/latest/</a></p></li>
+<li><p>see: <a class="reference external" href="https://docs.allauth.org/en/latest/account/configuration.html">https://docs.allauth.org/en/latest/account/configuration.html</a></p></li>
+</ul>
+<p>We are using a pre_save signal decorator
+to force username field to be set to the records email field value for all CustomUser records</p>
+</dd></dl>
 
 </section>
 <section id="module-accounts.views">

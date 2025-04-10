@@ -1,5 +1,5 @@
-Quality Assurance
-======================================================================
+Quality Assurance Guide
+=======================
 
 
 Testing Summary Report

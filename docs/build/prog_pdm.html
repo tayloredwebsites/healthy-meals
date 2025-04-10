@@ -56,8 +56,8 @@
 <li class="toctree-l2"><a class="reference internal" href="prog_prs.html">Pull Requests</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">PDM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="prog_ci.html">Continuous Integration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="prog_readme.html">Read Me File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="prog_readme.html#healthy-meals-meet-your-dietary-goals-with-healthier-meals">healthy_meals: Meet your Dietary Goals with Healthier Meals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prog_readme.html">Readme File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="todos.html">All To Do Items</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="docs_guide.html">Documentation Guide</a></li>
@@ -99,8 +99,15 @@
 <li><p>Publishing a package: ✅</p></li>
 </ul>
 <p>According to the <a class="reference external" href="https://pdm-project.org/en/latest/usage/venv/">PDM Working with Virtual Environments Page</a>, PDM works with Virtual Environments.  We are currently using the standard .env that we set up during the installation of this project, and by default, PDM uses the same virtual environment (in &lt;project_root&gt;/.venv).  See: <a class="reference external" href="https://pdm-project.org/en/latest/usage/venv/#the-location-of-virtualenvs">location of virtuanenvs</a>.</p>
-<p>According to the <a class="reference external" href="https://pdm-project.org/en/latest/usage/advanced/#use-nox-as-the-runner">PDM Advanced Usage page (nox section)</a> PDM works with <a class="reference external" href="https://nox.thea.codes/en/stable/">nox</a>, and we have been successfully using nox with PDM.</p>
-<p>We may need to use the <a class="reference external" href="https://pdm-project.org/en/latest/usage/advanced/#use-pdm-in-continuous-integration">Continuous Integration with Github Actions</a> feature for that the tests are all passing for the code passed up to the server.  See:  <a class="reference internal" href="prog_ci.html"><span class="doc">Continuous Integration Guide</span></a>.</p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Followup on features listed in the <a class="reference external" href="https://pdm-project.org/en/latest/usage/advanced/">PDM Advanced Usage page</a></p>
+<ul class="simple">
+<li><p>According to the <a class="reference external" href="https://pdm-project.org/en/latest/usage/advanced/#use-nox-as-the-runner">PDM Advanced Usage page (nox section)</a> PDM works with <a class="reference external" href="https://nox.thea.codes/en/stable/">nox</a>, and we have been successfully using nox with PDM.</p></li>
+<li><p>We may need to use the <a class="reference external" href="https://pdm-project.org/en/latest/usage/advanced/#use-pdm-in-continuous-integration">Continuous Integration with Github Actions</a> feature for that the tests are all passing for the code passed up to the server.  See:  <a class="reference internal" href="prog_ci.html"><span class="doc">Continuous Integration Guide</span></a>.</p></li>
+<li><p>Ensure that <a class="reference external" href="https://pdm-project.org/en/latest/usage/advanced/#use-pdm-in-a-multi-stage-dockerfile">PDM works properly in Docker</a>.</p></li>
+</ul>
+</div>
 </section>
 
 

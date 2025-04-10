@@ -61,10 +61,14 @@ class UserModelsTestCase(TestCase):
         self.assertEqual(CustomUser.objects.all_with_deleted().count(), 4)
         self.assertEqual(CustomUser.objects.all_deleted().count(), 1)
 
-        # make sure the database does not allow duplicate emails for custom_users
-        # tests the pre_save signal that copies the email into the username field
-        # - this ensures that duplicate emails are not allowed at the database level
+        ''' .. todo::  make sure the database does not allow duplicate emails for custom_users'''
+        # -
         with self.assertRaises(IntegrityError):
+            '''tests the pre_save signal that copies the email into the username field
+
+            - this ensures that duplicate emails are not allowed at the database level
+
+            '''
             with transaction.atomic():
                 CustomUserFactory(
                     email=test_users[0].email,
@@ -81,4 +85,4 @@ class UserModelsTestCase(TestCase):
         self.assertEqual(CustomUser.objects.all_deleted().count(), 0)
         print(f'Restored: {test_users[0].email}: {test_users[0].username}, {test_users[0].deleted}')
 
-    # To Do: test to make sure that undeleted users can still log into the system and function properly
+    ''' .. :todo: test to make sure that undeleted users can still log into the system and function properly.'''

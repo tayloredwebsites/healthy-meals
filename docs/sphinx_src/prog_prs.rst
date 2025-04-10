@@ -140,39 +140,30 @@ Notes:
     - The "docs" branch should now have the correct docs/.gitignore.
 
 
-To Do:
-------
+To Do for next pull request:
+----------------------------
 
-- get doc working and clean (can gradually update as we go)
-- push up docs branch when:
+.. todo:: Enhance Sphinx generated documentation as we go.
+
+.. todo:: docs branch pull requests Step 1:
+
+  - all of docs are going to docs
+  - turn on circle ci validation
+  - turn on other ci from github
+  - confirm docs/.gitignore is correct for docs branch
+
+.. todo:: docs branch pull requests Step 2:
 
   - nox commands work in docker
-  - all of docs are going to docs
-  - circle ci validation
-  - other ci from github working
-  - deploy to pages
+  - confirm docs branch deploys to pages
+  - confirm top  nav to docs works
+  - consider putting index page at root of docs?
+  - confirm website link to docs works with styles working
+  - consider fixing all nox items, especially docker (with PDM changes)
+  - turn on and get circle  CI going again
+  - turn on github actions and get github CI going again
+  - consider pre-commits to prevent problems with docs/.gitignore - https://pre-commit.com/
 
-- Docs branch setup
+.. todo:: research:
 
-  - .gitignore to ignore anything built by sphinx
-  - build directory
-  - github action to build sphinx html and other needed files
-  - github action to build and run tests, coverage, and badges
-  - coverage ignore: {.nox, .venv, migrations, docs}
-
-- confirm website link to docs works with styles working
-
-  - https://www.docslikecode.com/articles/github-pages-python-sphinx/
-
-- confirm all nox items work, including docker
-- confirm docker, test and dev all work correctly
-- commit for pdm (python dependency manager)
-- check git gui  for other outstanding changes
-
-  - prs if necessary
-
-- turn on and get circle  CI going again
-- turn on github actions and get github CI going again
-- ensure that docs branch update github pages
-- research pre-commits to prevent problems with docs/.gitignore - https://pre-commit.com/
-- consider system testing of docker  environment
+  - consider validation of docker environment before pull request merges

@@ -8,19 +8,21 @@ Sessions defined in /Users/dave/works/python/healthy-meals/noxfile.py:
 * genNoxDocs -> Generate nox documentation into a file for inclusion into Sphinx.
 * sphinxDocs -> Rebuild all documentation to Sphinx (cleans up old docs).
 * testing -> Run automated tests (with test coverage) through docker.
-* dockerUpBg -> Bring up Healthy Meals in docker in background.
-* dockerUpLog -> Bring up Healthy Meals in docker, with log to console.
-* dockerEnsureUp -> Only bring up Healthy Meals in docker if not up already.
-* dockerExecSh -> Open shell in web container.
-* dockerExecPsql -> Open psql in db container.
-* dockerDown -> Bring down Healthy Meals in docker.
-* dockerClear -> Clear out entire docker system.
-* dockerMakeDocs -> Generate the documentation using Sphinx through docker.
-* dockerRemakeDocs -> Regenerate the documentation using Sphinx through docker (cleans up old docs).
-* dockerLogs -> Output docker logs out to console. (hit <ctrl>c to stop).
-* dockerTesting -> Run automated tests (localtest) through docker.
-* ruff -> run the ruff code standards tool
-* mypy -> run the mypy type checker
-* flake8 -> run the flake8 code standards tool
+* dockerUpBg -> Bring up Healthy Meals in docker in background. >:(
+* dockerUpLog -> Bring up Healthy Meals in docker, with log to console. >:(
+* dockerEnsureUp -> to Only bring up Healthy Meals in docker if not up already. >:(
+* dockerExecSh -> to Open shell in web container. >:(
+* dockerExecPsql -> to Open psql in db container. >:(
+* dockerDown -> to Bring down Healthy Meals in docker. >:(
+* dockerClear -> to Clear out entire docker system. >:(
+* dockerMakeDocs -> to Generate the documentation using Sphinx through docker. >:(
+* dockerRemakeDocs -> to Regenerate the documentation using Sphinx through docker (cleans up old docs). >:(
+* dockerLogs -> to Output docker logs out to console. (hit <ctrl>c to stop). >:(
+* dockerTesting -> to Run automated tests (localtest) through docker. >:(
+* mypy -> to run the mypy type checker >:(
+* ruff -> to run the ruff code standards tool >:(
+* flake8 -> to run the flake8 code standards tool >:(
+* djlint -> to run the djlint code standards tool >:(
+* pylint -> to run the pylint code standards tool >:(
 
 sessions marked with * are selected, sessions marked with - are skipped.
