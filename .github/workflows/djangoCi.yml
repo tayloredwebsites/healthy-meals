@@ -28,9 +28,6 @@ jobs:
     - name: setup secret key
       run:
         echo 'django-insecure-*-f)8&%jk%mc2%!4qqi0m+=%-*i8$#ule@!_!n#s1k@xnl3fz5' >> env:SECRET_KEY
-    - name: Run Tests
-        env: 'django-insecure-*-f)8&%jk%mc2%!4qqi0m+=%-*i8$#ule@!_!n#s1k@xnl3fz5'
-          SECRET_KEY:
       run: |
         pytest --junitxml=reports/junit/junit.xml --html=reports/junit/index.html
         coverage run -m pytest tests
