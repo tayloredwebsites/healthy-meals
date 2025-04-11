@@ -20,12 +20,13 @@ RUN apt-get -y update \
   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
   && rm -rf /var/lib/apt/lists/*
 
-# Install dependencies
-COPY requirements.txt /tmp/requirements.txt
-RUN set -ex && \
-    pip install --upgrade pip && \
-    pip install -r /tmp/requirements.txt && \
-    rm -rf /root/.cache/
+# # Install dependencies
+RUN pdm install -G test
+# COPY requirements.txt /tmp/requirements.txt
+# RUN set -ex && \
+#     pip install --upgrade pip && \
+#     pip install -r /tmp/requirements.txt && \
+#     rm -rf /root/.cache/
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
