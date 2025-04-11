@@ -2,9 +2,9 @@ name: Django CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "docs" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "docs" ]
 
 jobs:
   build:
@@ -26,9 +26,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: setup secret key
-      run:
-        echo 'django-insecure-*-f)8&%jk%mc2%!4qqi0m+=%-*i8$#ule@!_!n#s1k@xnl3fz5' >> env:SECRET_KEY
       run: |
+        echo 'django-insecure-*-f)8&%jk%mc2%!4qqi0m+=%-*i8$#ule@!_!n#s1k@xnl3fz5' >> env:SECRET_KEY
         pytest --junitxml=reports/junit/junit.xml --html=reports/junit/index.html
         coverage run -m pytest tests
         coverage xml
