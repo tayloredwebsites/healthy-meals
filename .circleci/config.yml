@@ -39,7 +39,7 @@ jobs:
             DATABASE_URL: postgresql://postgres@localhost/circle_test
           command: |
             # To Do: have issues getting access to artifacts.  Just running tests now.
-            pytest tests # --junitxml=/tmp/tests.xml --html=/tmp/tests_index.html;
+            pdm run pytest tests # --junitxml=/tmp/tests.xml --html=/tmp/tests_index.html;
             # coverage run --data-file=/tmp/coverage_data -m pytest tests;
             # coverage xml --data-file=/tmp/coverage_data -o /tmp/coverage.xml;
             # genbadge coverage -i /tmp/coverage.xml -o /tmp/cov_badge.svg;
