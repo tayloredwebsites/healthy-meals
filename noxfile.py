@@ -4,6 +4,8 @@ import os
 import nox
 
 
+# from utils.shell_cmds import clear_docker
+
 ##################################################################################
 # Local Server tasks
 
@@ -166,8 +168,8 @@ def dockerClear(session):
     .. :todo:: consider getting the noxfile.py flake8 automation session working cleanly
 
     '''
-    session.run("docker", "ps", "-aq", "|", "xargs", "docker", "stop", "|", "xargs", "docker", "rm")
-    session.run("docker", "system", "prune", "--all", "--force")
+    # session.run("docker", "ps", "-aq", "|", "xargs", "docker", "stop", "|", "xargs", "docker", "rm")
+    session.run("python3", "utils/docker_clear.py")
 
 
 @nox.session(python=("3.12"), venv_backend="none")

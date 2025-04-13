@@ -31,10 +31,21 @@ services:
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
 
     platform: linux/x86_64
-    command: sh -c "python manage.py makemigrations &&
-        python manage.py migrate &&
+
+    command: sh -c "apt-get update && apt-get install -y curl &&
+        curl -sSLO https://pdm-project.org/install-pdm.py &&
+        curl -sSL https://pdm-project.org/install-pdm.py.sha256 | shasum -a 256 -c - &&
+        python -m venv venv &&
+        mkdir -p tmp/bin &&
+        python3 install-pdm.py -p .venv &&
+        .venv/bin/pdm venv --path /code/.venv &&
+        echo "migrations" &&
+        python3 manage.py makemigrations &&
+        python3 manage.py migrate &&
+        sh -c "echo "sass" &&
         sass static/scss:static/css &&
         python3 manage.py collectstatic --noinput &&
+        echo "runserver" &&
         python3 manage.py runserver 0.0.0.0:8000"
 
 

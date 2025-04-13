@@ -20,13 +20,14 @@ RUN apt-get -y update \
   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
   && rm -rf /var/lib/apt/lists/*
 
-# # Install dependencies
-RUN pdm install -G test
-# COPY requirements.txt /tmp/requirements.txt
+# # # Install dependencies
+# # RUN pdm install -G test
+# COPY pyproject.toml /tmp/pyproject.toml
 # RUN set -ex && \
 #     pip install --upgrade pip && \
 #     pip install -r /tmp/requirements.txt && \
 #     rm -rf /root/.cache/
+
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -35,6 +36,19 @@ ENV PYTHONUNBUFFERED 1
 # Create and set work directory called `code`
 RUN mkdir -p /code
 WORKDIR /code
+
+# ARG CURL
+# RUN set -ex && \
+#     # download curl
+#     # Install cURL
+#     apt-get update && apt-get install -y curl && \
+#     # download pdm using sha checksum check && \
+#     curl -sSLO https://pdm-project.org/install-pdm.py && \
+#     curl -sSL https://pdm-project.org/install-pdm.py.sha256 | shasum -a 256 -c - && \
+#     # Run the installer \
+#     python3 install-pdm.py
+#     # pip install -r /tmp/requirements.txt && \
+#     # rm -rf /root/.cache/
 
 # download dart-sass and add to PATH
 ARG SASS_VERSION=1.85.0
