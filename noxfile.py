@@ -4,6 +4,8 @@ import os
 import nox
 
 
+# from utils.shell_cmds import clear_docker
+
 ##################################################################################
 # Local Server tasks
 
@@ -18,6 +20,7 @@ def setupEnv(session):
     session.run("pdm", "run", "manage.py", "migrate")
     session.run("pdm", "run","sass", "static/scss:static/css")
     session.run("pdm", "run", "manage.py", "collectstatic", "--noinput")
+    session.run("pdm", "run", "rm", "-f", "requirements.txt")
 
 
 
@@ -28,6 +31,7 @@ def goodToGo(session):
     session.run("pdm", "run", "nox", "-s", "setupEnv") # make sure pdm session is set up if needed
     session.run("pdm", "run", "nox", "-s", "sphinxDocs") # generate docs locally
     session.run("pdm", "run", "nox", "-s", "testing") # run all current qa checks
+    session.run("pdm", "export", "-o", "requirements.txt") # needed for CI
 
 
 @nox.session(python=("3.12"), venv_backend="none")
@@ -164,8 +168,8 @@ def dockerClear(session):
     .. :todo:: consider getting the noxfile.py flake8 automation session working cleanly
 
     '''
-    session.run("docker", "ps", "-aq", "|", "xargs", "docker", "stop", "|", "xargs", "docker", "rm")
-    session.run("docker", "system", "prune", "--all", "--force")
+    # session.run("docker", "ps", "-aq", "|", "xargs", "docker", "stop", "|", "xargs", "docker", "rm")
+    session.run("python3", "utils/docker_clear.py")
 
 
 @nox.session(python=("3.12"), venv_backend="none")

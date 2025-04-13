@@ -140,6 +140,19 @@ Notes:
     - The "docs" branch should now have the correct docs/.gitignore.
 
 
+Pull  Request preparations.
+---------------------------
+
+Nox prPrepare command
+~~~~~~~~~~~~~~~~~~~~~
+
+
+
+See `Guide to pre-commit hooks <https://www.slingacademy.com/article/git-pre-commit-hook-a-practical-guide-with-examples/#google_vignette>`_.
+
+.. code-block:: shell
+  # set up git pre-commit hook
+
 To Do for next pull request:
 ----------------------------
 
@@ -155,6 +168,10 @@ To Do for next pull request:
 .. todo:: docs branch pull requests Step 2:
 
   - nox commands work in docker
+  - Prevent pushes to docs and main
+  - prevent commits to docs and main
+  - automatic pull rebases from upstream
+  - automatic pr pushes to origin
   - confirm docs branch deploys to pages
   - confirm top  nav to docs works
   - consider putting index page at root of docs?
