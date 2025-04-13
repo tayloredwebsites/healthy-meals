@@ -25,8 +25,7 @@ jobs:
           environment:
             DATABASE_URL: postgresql://postgres@localhost/circle_test
             SECRET_KEY: "django-insecure-*-f)8&%jk%mc2%!4qqi0m+=%-*i8$#ule@!_!n#s1k@xnl3fz5"
-            DATABASE_NAME: healthy_meals
-            DATABASE_USER: healthy_meals
+            POSTGRES_USER: postgres
           command: |
             # To Do: have issues getting access to artifacts.  Just running tests now.
             echo '' >> env:
