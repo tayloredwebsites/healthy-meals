@@ -10,6 +10,8 @@ jobs:
       - image: cimg/python:3.12-node
         environment:
           DATABASE_URL: postgresql://postgres@localhost/circle_test
+          POSTGRES_USER: postgres
+          SECRET_KEY: "django-insecure-*-f)8&%jk%mc2%!4qqi0m+=%-*i8$#ule@!_!n#s1k@xnl3fz5"
     steps:
       # https://circleci.com/developer/orbs/orb/circleci/python#usage-work-with-pip
       - checkout
@@ -23,9 +25,6 @@ jobs:
       - run:
           name: Run tests
           environment:
-            DATABASE_URL: postgresql://postgres@localhost/circle_test
-            SECRET_KEY: "django-insecure-*-f)8&%jk%mc2%!4qqi0m+=%-*i8$#ule@!_!n#s1k@xnl3fz5"
-            POSTGRES_USER: postgres
           command: |
             # To Do: have issues getting access to artifacts.  Just running tests now.
             echo '' >> env:
