@@ -124,6 +124,8 @@ docs = [
 distribution = false
 
 
+[tool.setuptools]
+py-modules = []
 
 # ==== pytest ====
 [tool.pytest.ini_options]
