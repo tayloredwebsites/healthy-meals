@@ -22,6 +22,9 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: ""
           SECRET_KEY: "django-insecure-*-f)8&%jk%mc2%!4qqi0m+=%-*i8$#ule@!_!n#s1k@xnl3fz5"
+      - image: cimg/postgres:16.0
+        environment:
+          POSTGRES_USER: postgres
     steps:
       # https://circleci.com/developer/orbs/orb/circleci/python#usage-work-with-pip
       - checkout
