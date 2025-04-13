@@ -11,20 +11,16 @@ jobs:
         environment:
           DATABASE_URL: postgresql://postgres@localhost/circle_test
           DATABASE_NAME: circle_test
-          DATABASE_USER: postgres
-          DATABASE_PASSWORD: ""
+          DATABASE_USER: circleci
+          POSTGRES_HOST_AUTH_METHOD: trust
           DATABASE_HOST: localhost
           DATABASE_PORT: 5432
           TEST_DATABASE_NAME: circle_test
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
           POSTGRES_DB: circle_test
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: ""
+          POSTGRES_USER: circleci
           SECRET_KEY: "django-insecure-*-f)8&%jk%mc2%!4qqi0m+=%-*i8$#ule@!_!n#s1k@xnl3fz5"
-      - image: cimg/postgres:16.0
-        environment:
-          POSTGRES_USER: postgres
     steps:
       # https://circleci.com/developer/orbs/orb/circleci/python#usage-work-with-pip
       - checkout
