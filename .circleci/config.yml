@@ -5,34 +5,19 @@ orbs:
   python: circleci/python@3.0.0
 jobs:
   test-python:
-    # # Install dependencies and run tests
-    # docker:
-    #   - image: cimg/python:3.12-node
-    #     environment:
-    #       DATABASE_URL: postgresql://postgres@localhost/circle_test
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        python-version: ['3.12']
+    # Install dependencies and run tests
+    docker:
+      - image: cimg/python:3.12-node
+        environment:
+          DATABASE_URL: postgresql://postgres@localhost/circle_test
     steps:
-      # # https://circleci.com/developer/orbs/orb/circleci/python#usage-work-with-pip
-      # - checkout
-      # - python/install-packages:
-      #     pip-dependency-file: requirements/local.txt
-      #     pkg-manager: pip
-      # - python/install-packages:
-      #     args: pytest pytest-html genbadge defusedxml ruff mypy
-      #     pkg-manager: pip
-      #     pypi-cache: false
-      - uses: actions/checkout@v4
+      # https://circleci.com/developer/orbs/orb/circleci/python#usage-work-with-pip
+      - checkout
+      - python/install-packages:
+          run: python3 -m pip install .
       - name: Set up PDM
         uses: pdm-project/setup-pdm@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
-        run: |
-          pdm sync -d -G testing
+        with: ["3.12"]
       - run:
           name: Run tests
           environment:
@@ -46,6 +31,8 @@ jobs:
             # genbadge tests -i /tmp/tests.xml -o /tmp/test_badge.svg;
             # ruff check; Too many errors.  Look into this later
             # mypy .; Too many errors.  Look into this later
+      #- store_artifacts:
+          #path: /tmp/cov_badge.svg
 
   deploy:
     # This is an example deploy job, not actually used by the workflow
