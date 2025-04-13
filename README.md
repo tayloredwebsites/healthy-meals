@@ -10,10 +10,12 @@
 
 ## 🚀 Base Project Features
 - Can run this project in in Docker or locally (using a local web server).
+  - todo: docker needs tlc since adding pdm
 - Uses the nox tool for automating  and simplifying tasks.
-- Uses Circle CI github integration to ensure all tests pass for pull requests.
+- Uses github automations to ensure all tests pass for pull requests.
 - Django 5.1 & Python 3.12
-- Sign in by email and password (see: [Lithium README](./LITHIUM_README.md))
+- Sign in by email and password code using [allauth](https://docs.allauth.org/en/latest/)
+  - see: [Lithium starter project](https://github.com/wsvincent/lithium) and  [Lithium readme](./LITHIUM_README.md)
 - Github pages site for Documentation, Test Results, & Coverage
 - Test and coverage badges displayed in documentation and in README.md
 - Internationalization (i18n) of strings in code
@@ -21,9 +23,11 @@
 - Sphinx documentation tool
 - Base HTML Template
   - sub-template blocks for pages and partial pages
-  - SCSS translation to CSS
+  - SCSS translation to CSS using Dart SASS
+    - [libsass is deprecated, dart sass is recommended](https://sass-lang.com/blog/libsass-is-deprecated/)
+    - [https://sass-lang.com/dart-sass/](https://sass-lang.com/documentation/cli/dart-sass/)
   - site wide font sizing tool
-  - login with email/password
+  - login with email/password using [allauth](https://docs.allauth.org/en/latest/)
   - signup
 
 ### Base Project Features coming soon:
