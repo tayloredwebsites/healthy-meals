@@ -12,6 +12,8 @@ jobs:
           DATABASE_URL: postgresql://postgres@localhost/circle_test
           DATABASE_NAME: circle_test
           DATABASE_USER: postgres
+          DATABASE_PASSWORD: ''
+          DATABASE_HOST: localhost
           POSTGRES_USER: postgres
           SECRET_KEY: "django-insecure-*-f)8&%jk%mc2%!4qqi0m+=%-*i8$#ule@!_!n#s1k@xnl3fz5"
     steps:
