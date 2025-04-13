@@ -24,9 +24,10 @@ jobs:
           name: Run tests
           environment:
             DATABASE_URL: postgresql://postgres@localhost/circle_test
+            SECRET_KEY: "django-insecure-*-f)8&%jk%mc2%!4qqi0m+=%-*i8$#ule@!_!n#s1k@xnl3fz5"
           command: |
             # To Do: have issues getting access to artifacts.  Just running tests now.
-            echo 'django-insecure-*-f)8&%jk%mc2%!4qqi0m+=%-*i8$#ule@!_!n#s1k@xnl3fz5' >> env:SECRET_KEY
+            echo '' >> env:
             pytest tests # --junitxml=/tmp/tests.xml --html=/tmp/tests_index.html;
             # coverage run --data-file=/tmp/coverage_data -m pytest tests;
             # coverage xml --data-file=/tmp/coverage_data -o /tmp/coverage.xml;
