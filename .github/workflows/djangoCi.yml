@@ -8,14 +8,14 @@ on:
 
 jobs:
   build:
-
     runs-on: ${{ matrix.os}}
     strategy:
       max-parallel: 4
       matrix:
         python-version: [3.12]
         os: [ubuntu-latest] # ,macOS-latest, windows-latest
-
+    env:
+      SECRET_KEY: "django-insecure-*-f)8&%jk%mc2%!4qqi0m+=%-*i8$#ule@!_!n#s1k@xnl3fz5"
     steps:
     - uses: actions/checkout@v4
     - name: Set up PDM
@@ -29,7 +29,6 @@ jobs:
         pdm sync -d -G testing
     - name: Run QA
       run: |
-        echo 'django-insecure-*-f)8&%jk%mc2%!4qqi0m+=%-*i8$#ule@!_!n#s1k@xnl3fz5' >> env:SECRET_KEY
         pdm run pytest --junitxml=reports/junit/junit.xml --html=reports/junit/index.html
         coverage run -m pytest tests
         coverage xml
