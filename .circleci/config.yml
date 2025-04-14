@@ -12,6 +12,7 @@ jobs:
           DATABASE_URL: postgresql://postgres@localhost/circle_test
           DATABASE_NAME: circle_test
           DATABASE_USER: ubuntu
+          DATABASE_PASSWORD: ""
           POSTGRES_HOST_AUTH_METHOD: trust
           DATABASE_HOST: localhost
           DATABASE_PORT: 5432
