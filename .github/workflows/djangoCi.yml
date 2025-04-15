@@ -20,7 +20,7 @@ jobs:
       TEST_DATABASE_URL: postgresql://postgres@localhost/circle_test
       DATABASE_NAME: circle_test
       DATABASE_USER: postgres
-      # DATABASE_PASSWORD: ""
+      DATABASE_PASSWORD: ""
       POSTGRES_HOST_AUTH_METHOD: trust
       DATABASE_HOST: localhost
       DATABASE_PORT: 5432
@@ -29,7 +29,7 @@ jobs:
       POSTGRES_PORT: 5432
       POSTGRES_DB: circle_test
       POSTGRES_USER: postgres
-      # POSTGRES_PASSWORD: ""
+      POSTGRES_PASSWORD: ""
 
     steps:
     - uses: actions/checkout@v4
