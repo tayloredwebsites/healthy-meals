@@ -2,8 +2,8 @@
 
 # references
 # https://docs.travis-ci.com/user/tutorials/tutorial-python/
-# https://docs.travis-ci.com/user/reference/overview/
 
+# https://docs.travis-ci.com/user/reference/overview/#linux-examples
 # arch: amd64          # optional, this is default, routes to a full VM
 # os: linux            # optional, this is default
 dist: focal            # or bionic | jammy | xenial with xenial as default
