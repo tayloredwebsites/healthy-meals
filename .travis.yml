@@ -23,6 +23,7 @@ before_script:
 - echo "SECRET_KEY?$SECRET_KEY" .env
 - echo "DATABASE_NAME-travis_ci_test" .env
 - echo "DATABASE_USER-postgres" .env
+- cat .env
 
 # # https://docs.travis-ci.com/user/database-setup/#use-a-different-postgresql-version
 # addons:
