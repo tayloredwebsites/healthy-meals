@@ -30,18 +30,24 @@ services:
 #   - python setup.py -q install
 
 
-# to resolve SECRET_KEY not found using python decouple (https://medium.com/@gilsondev/python-decouple-e-travis-ci-d9cbcd08c20f)
 # to resolve environment variables not found
 env:
   global:
-  - echo "DATABASE_NAME=$DATABASE_NAME >> .env
-  - echo "DATABASE_USER=$DATABASE_USER >> .env
-  - echo "SECRET_KEY=$SECRET_KEY >> .env
+  - DATABASE_NAME=travis_ci_test
+  - DATABASE_USER=postgres
+  - DATABASE_PASSWORD=
 
+
+# to resolve SECRET_KEY not found using python decouple (https://medium.com/@gilsondev/python-decouple-e-travis-ci-d9cbcd08c20f)
+before_script:
 
 install:
-  - pip install -r requirements.txt
+  - echo "SECRET_KEY=$SECRET_KEY" >> .env
+  - echo "DATABASE_NAME=$DATABASE_NAME" >> .env
+  - echo "DATABASE_PASSWORD=$DATABASE_PASSWORD" >> .env
+  - echo "DATABASE_USER=postgres" >> .env
   - psql -c 'create database travis_ci_test;' -U postgres # https://docs.travis-ci.com/user/database-setup/#postgresql
+  - pip install -r requirements.txt
 
 script:
   - pytest
