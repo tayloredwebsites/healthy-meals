@@ -17,6 +17,8 @@ services:
   - postgresql # https://docs.travis-ci.com/user/database-setup/#postgresql
 
 
+env:
+  - SECRET_KEY: "django-insecure-*-f)8&%jk%mc2%!4qqi0m+=%-*i8$#ule@!_!n#s1k@xnl3fz5"
 
 # # https://docs.travis-ci.com/user/database-setup/#use-a-different-postgresql-version
 # addons:
