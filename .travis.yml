@@ -33,9 +33,13 @@ before_script:
 #   - pip install -q Django==$DJANGO_VERSION
 #   - python setup.py -q install
 
+
+# to resolve environment variables not found
 env:
   global:
   - DATABASE_NAME=travis_ci_test
+  - DATABASE_USER=postgres
+
 
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres # https://docs.travis-ci.com/user/database-setup/#postgresql
