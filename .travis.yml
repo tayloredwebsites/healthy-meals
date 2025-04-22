@@ -39,10 +39,10 @@ services:
 
 # to resolve SECRET_KEY not found using python decouple (https://medium.com/@gilsondev/python-decouple-e-travis-ci-d9cbcd08c20f)
 before_script:
-  - echo "DEBUG-False" .env
-  - echo "SECRET_KEY?$SECRET_KEY" .env
-  - echo "DATABASE_NAME-travis_ci_test" .env
-  - echo "DATABASE_USER-postgres" .env
+  - echo "DEBUG=False" >> .env
+  - echo "SECRET_KEY=$SECRET_KEY" >> .env
+  - echo "DATABASE_NAME=travis_ci_test" >> .env
+  - echo "DATABASE_USER=postgres" >> .env
   - cat .env
   - psql -c 'create database travis_ci_test;' -U postgres # https://docs.travis-ci.com/user/database-setup/#postgresql
 
