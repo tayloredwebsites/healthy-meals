@@ -21,6 +21,8 @@ services:
 before_script:
 - echo "DEBUG-False" .env
 - echo "SECRET_KEY?$SECRET_KEY" .env
+- echo "DATABASE_NAME-travis_ci_test" .env
+- echo "DATABASE_USER-postgres" .env
 
 # # https://docs.travis-ci.com/user/database-setup/#use-a-different-postgresql-version
 # addons:
@@ -34,11 +36,11 @@ before_script:
 #   - python setup.py -q install
 
 
-# to resolve environment variables not found
-env:
-  global:
-  - DATABASE_NAME=travis_ci_test
-  - DATABASE_USER=postgres
+# # to resolve environment variables not found
+# env:
+#   global:
+#   - DATABASE_NAME=travis_ci_test
+#   - DATABASE_USER=postgres
 
 
 before_script:
