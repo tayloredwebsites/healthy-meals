@@ -45,6 +45,7 @@ jobs:
         # sudo apt install -y postgresql postgresql-contrib
         # python -m pip install --upgrade pip
         # pip install -r requirements.txt
+        # https://pdm-project.org/latest/usage/advanced/#use-pdm-in-continuous-integration
         pdm sync -d -G testing
         pdm run manage.py makemigrations
         pdm run manage.py migrate
