@@ -33,24 +33,24 @@ services:
 # to resolve environment variables not found
 env:
   global:
-  - DATABASE_NAME=travis_ci_test
-  - DATABASE_USER=postgres
-  - DATABASE_PASSWORD=
-  - DATABASE_HOST=localhost
-  - DATABASE_PORT=5432
+  # - DATABASE_NAME=travis_ci_test
+  # - DATABASE_USER=travis
+  # - DATABASE_PASSWORD=
+  # - DATABASE_HOST=localhost
+  # - DATABASE_PORT=5433
 
 
-# to resolve SECRET_KEY not found using python decouple (https://medium.com/@gilsondev/python-decouple-e-travis-ci-d9cbcd08c20f)
 before_script:
 
+# to populate .env file for python decouple (https://medium.com/@gilsondev/python-decouple-e-travis-ci-d9cbcd08c20f)
 install:
   - echo "SECRET_KEY=$SECRET_KEY" >> .env
-  - echo "DATABASE_NAME=$DATABASE_NAME" >> .env
-  - echo "DATABASE_USER=$DATABASE_USER" >> .env
+  - echo "DATABASE_NAME=travis_ci_test" >> .env
+  - echo "DATABASE_USER=travis" >> .env
   - echo "DATABASE_PASSWORD=$DATABASE_PASSWORD" >> .env
-  - echo "DATABASE_HOST=$DATABASE_HOST" >> .env
-  - echo "DATABASE_PORT=$DATABASE_PORT" >> .env
-  - psql -c 'create database $DATABASE_NAME;' -U $DATABASE_USER # https://docs.travis-ci.com/user/database-setup/#postgresql
+  - echo "DATABASE_HOST=localhost" >> .env
+  - echo "DATABASE_PORT=5433" >> .env
+  - psql -c 'create database healthy_meals_test;' -U travis # https://docs.travis-ci.com/user/database-setup/#postgresql
   - pip install -r requirements.txt
 
 script:
