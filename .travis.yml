@@ -33,11 +33,11 @@ services:
 # to resolve environment variables not found
 env:
   global:
-  # - DATABASE_NAME=travis_ci_test
-  # - DATABASE_USER=travis
-  # - DATABASE_PASSWORD=
-  # - DATABASE_HOST=localhost
-  # - DATABASE_PORT=5433
+  - DATABASE_NAME=travis_ci_test
+  - DATABASE_USER=travis
+  - DATABASE_PASSWORD=
+  - DATABASE_HOST=localhost
+  - DATABASE_PORT=5433
 
 
 before_script:

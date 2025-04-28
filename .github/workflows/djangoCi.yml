@@ -37,7 +37,26 @@ jobs:
       uses: pdm-project/setup-pdm@v4
       with:
         python-version: ${{ matrix.python-version }}
+    - name: Setup .env file for python decouple
+      run: |
+        echo "SECRET_KEY=$SECRET_KEY" >> .env
+        echo "DATABASE_NAME=travis_ci_test" >> .env
+        echo "DATABASE_USER=travis" >> .env
+        echo "DATABASE_PASSWORD=$DATABASE_PASSWORD" >> .env
+        echo "DATABASE_HOST=localhost" >> .env
+        echo "DATABASE_PORT=5433" >> .env
     - name: Install Dependencies
+      run: |
+        # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md
+        # sudo apt update
+        # sudo apt install -y postgresql postgresql-contrib
+        # python -m pip install --upgrade pip
+        # pip install -r requirements.txt
+        # https://pdm-project.org/latest/usage/advanced/#use-pdm-in-continuous-integration
+        pdm sync -d -G testing
+        pdm run sass static/scss:static/css
+        pdm run manage.py collectstatic --noinput
+    - name: Set up Database
       run: |
         # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md
         sudo systemctl start postgresql.service
@@ -45,16 +64,8 @@ jobs:
         sudo -u postgres psql -c "alter user healthy_meals_test with encrypted password 'Password#123';"
         sudo -u postgres createdb healthy_meals_test
         sudo -u postgres psql -c "GRANT ALL PRIVILEGES on database healthy_meals_test to healthy_meals_test"
-        sudo apt update
-        # sudo apt install -y postgresql postgresql-contrib
-        # python -m pip install --upgrade pip
-        # pip install -r requirements.txt
-        # https://pdm-project.org/latest/usage/advanced/#use-pdm-in-continuous-integration
-        pdm sync -d -G testing
         pdm run manage.py makemigrations
         pdm run manage.py migrate
-        pdm run sass static/scss:static/css
-        pdm run manage.py collectstatic --noinput
     - name: Run QA
       run: |
         pdm run pytest --junitxml=reports/junit/junit.xml --html=reports/junit/index.html
