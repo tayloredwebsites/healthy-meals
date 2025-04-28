@@ -34,6 +34,7 @@ services:
 env:
   global:
   - DATABASE_NAME=travis_ci_test
+  - TEST_DATABASE_NAME=travis_ci_test
   - DATABASE_USER=travis
   - DATABASE_PASSWORD=
   - DATABASE_HOST=localhost
@@ -46,6 +47,7 @@ before_script:
 install:
   - echo "SECRET_KEY=$SECRET_KEY" >> .env
   - echo "DATABASE_NAME=travis_ci_test" >> .env
+  - echo "TEST_DATABASE_NAME=travis_ci_test" >> .env
   - echo "DATABASE_USER=travis" >> .env
   - echo "DATABASE_PASSWORD=$DATABASE_PASSWORD" >> .env
   - echo "DATABASE_HOST=localhost" >> .env

@@ -19,7 +19,7 @@ jobs:
       DATABASE_URL: postgresql://postgres@localhost/healthy_meals_test
       TEST_DATABASE_URL: postgresql://postgres@localhost/healthy_meals_test
       DATABASE_NAME: healthy_meals_test
-      DATABASE_USER: postgres
+      DATABASE_USER: healthy_meals_test
       DATABASE_PASSWORD: "Password#123"
       POSTGRES_HOST_AUTH_METHOD: trust
       DATABASE_HOST: localhost
