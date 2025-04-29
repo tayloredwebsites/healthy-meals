@@ -65,7 +65,7 @@ jobs:
         sudo systemctl start postgresql.service
         sudo -u postgres createuser healthy_meals_test
         sudo -u postgres psql -c "alter user healthy_meals_test with encrypted password 'Password#123';"
-        sudo -u postgres createdb healthy_meals_test
+        sudo -u postgres createdb healthy_meals_test -s
         sudo -u postgres psql -c "GRANT ALL PRIVILEGES on database healthy_meals_test to healthy_meals_test"
         pdm run manage.py makemigrations
         pdm run manage.py migrate

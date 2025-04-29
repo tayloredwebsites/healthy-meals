@@ -13,14 +13,29 @@ language: python
 python:
   - "3.12"
 
-services:
-  - postgresql # https://docs.travis-ci.com/user/database-setup/#postgresql
+
+
+# https://docs.travis-ci.com/user/database-setup/#use-a-different-postgresql-version
+addons:
+  postgresql: "16"
+  apt:
+    packages:
+    - postgresql-16
+    - postgresql-client-16
 
 
 
-# # https://docs.travis-ci.com/user/database-setup/#use-a-different-postgresql-version
-# addons:
-#   postgresql: "9.16"
+# to resolve environment variables not found
+env:
+  global:
+  - PGPORT=5433
+  - PGUSER=travis
+  - DATABASE_NAME=travis_ci_test
+  - TEST_DATABASE_NAME=travis_ci_test
+  - DATABASE_USER=travis
+  - DATABASE_PASSWORD=
+  - DATABASE_HOST=localhost
+  - DATABASE_PORT=5433
 
 # https://docs.travis-ci.com/user/languages/python/#test-against-multiple-versions-of-dependencies
 # env:
@@ -28,17 +43,6 @@ services:
 # install:
 #   - pip install -q Django==$DJANGO_VERSION
 #   - python setup.py -q install
-
-
-# to resolve environment variables not found
-env:
-  global:
-  - DATABASE_NAME=travis_ci_test
-  - TEST_DATABASE_NAME=travis_ci_test
-  - DATABASE_USER=travis
-  - DATABASE_PASSWORD=
-  - DATABASE_HOST=localhost
-  - DATABASE_PORT=5433
 
 
 before_script:
