@@ -203,3 +203,16 @@ Sphinx & Restructured Text (rst) guides and resources:
 - `ianhopkinson.org.uk <https://ianhopkinson.org.uk/2021/09/python-documentation-with-sphinx/>`_.
 - `sphinx rtd theme <https://pypi.org/project/sphinx-rtd-theme/>`_ that is used in this project.
 - One of many possible `Cheat Sheets <https://bashtage.github.io/sphinx-material/rst-cheatsheet/rst-cheatsheet.html>`_.
+
+
+Deployment to Github Pages:
+---------------------------
+
+See: `Pull Requests (in Developer Documentation) <prog_prs>`_.
+
+For guidance on how to do Continuous Integration (Testing and validation done in the remote repo - Github), I found this page helpful: `Deploying Github Pages with Github workflows <https://dev.to/davorg/deploying-github-pages-site-with-github-workflows-3bhh>`_.  I ended up doing the following:
+
+- I `Turned off the Jekyl workflow <https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site>`_, so that I could run the regular github workflows in the ``.github/workflows`` directory.
+- I then could see my pre-existing ``.github/workflows/djangoCi.yml`` action could now run.
+- I then added another github action to deploy the pages following the instructions by `davorg <https://dev.to/davorg/deploying-github-pages-site-with-github-workflows-3bhh>`_, and now (hopefully ???) the CI tests are run to ensure no automated testing errors, as well as automatic deployment to github pages.
+-

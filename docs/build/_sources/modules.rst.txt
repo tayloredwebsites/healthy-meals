@@ -8,3 +8,4 @@ healthy-meals
    noxfile
    pages
    tests
+   utils

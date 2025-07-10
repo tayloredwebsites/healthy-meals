@@ -134,11 +134,19 @@
 <section id="base-project-features">
 <h2>🚀 Base Project Features<a class="headerlink" href="#base-project-features" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p>Can run this project in in Docker or locally (using a local web server).</p></li>
+<li><p>Can run this project in in Docker or locally (using a local web server).</p>
+<ul>
+<li><p>todo: docker needs tlc since adding pdm</p></li>
+</ul>
+</li>
 <li><p>Uses the nox tool for automating  and simplifying tasks.</p></li>
-<li><p>Uses Circle CI github integration to ensure all tests pass for pull requests.</p></li>
+<li><p>Uses github automations to ensure all tests pass for pull requests.</p></li>
 <li><p>Django 5.1 &amp; Python 3.12</p></li>
-<li><p>Sign in by email and password (see: <a class="reference external" href="./LITHIUM_README.md">Lithium README</a>)</p></li>
+<li><p>Sign in by email and password code using <a class="reference external" href="https://docs.allauth.org/en/latest/">allauth</a></p>
+<ul>
+<li><p>see: <a class="reference external" href="https://github.com/wsvincent/lithium">Lithium starter project</a> and  <a class="reference external" href="./LITHIUM_README.md">Lithium readme</a></p></li>
+</ul>
+</li>
 <li><p>Github pages site for Documentation, Test Results, &amp; Coverage</p></li>
 <li><p>Test and coverage badges displayed in documentation and in README.md</p></li>
 <li><p>Internationalization (i18n) of strings in code</p></li>
@@ -147,9 +155,14 @@
 <li><p>Base HTML Template</p>
 <ul>
 <li><p>sub-template blocks for pages and partial pages</p></li>
-<li><p>SCSS translation to CSS</p></li>
+<li><p>SCSS translation to CSS using Dart SASS</p>
+<ul>
+<li><p><a class="reference external" href="https://sass-lang.com/blog/libsass-is-deprecated/">libsass is deprecated, dart sass is recommended</a></p></li>
+<li><p><a class="reference external" href="https://sass-lang.com/documentation/cli/dart-sass/">https://sass-lang.com/dart-sass/</a></p></li>
+</ul>
+</li>
 <li><p>site wide font sizing tool</p></li>
-<li><p>login with email/password</p></li>
+<li><p>login with email/password using <a class="reference external" href="https://docs.allauth.org/en/latest/">allauth</a></p></li>
 <li><p>signup</p></li>
 </ul>
 </li>

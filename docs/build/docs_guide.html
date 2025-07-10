@@ -60,6 +60,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#sphinx-restructured-text-rst-guides-and-resources">Sphinx &amp; Restructured Text (rst) guides and resources:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deployment-to-github-pages">Deployment to Github Pages:</a></li>
 </ul>
 </li>
 </ul>
@@ -266,6 +267,17 @@ used to have custom HTML for linked images placed initially  for the Quality Ass
 <li><p><a class="reference external" href="https://ianhopkinson.org.uk/2021/09/python-documentation-with-sphinx/">ianhopkinson.org.uk</a>.</p></li>
 <li><p><a class="reference external" href="https://pypi.org/project/sphinx-rtd-theme/">sphinx rtd theme</a> that is used in this project.</p></li>
 <li><p>One of many possible <a class="reference external" href="https://bashtage.github.io/sphinx-material/rst-cheatsheet/rst-cheatsheet.html">Cheat Sheets</a>.</p></li>
+</ul>
+</section>
+<section id="deployment-to-github-pages">
+<h2>Deployment to Github Pages:<a class="headerlink" href="#deployment-to-github-pages" title="Link to this heading"></a></h2>
+<p>See: <a class="reference external" href="prog_prs">Pull Requests (in Developer Documentation)</a>.</p>
+<p>For guidance on how to do Continuous Integration (Testing and validation done in the remote repo - Github), I found this page helpful: <a class="reference external" href="https://dev.to/davorg/deploying-github-pages-site-with-github-workflows-3bhh">Deploying Github Pages with Github workflows</a>.  I ended up doing the following:</p>
+<ul class="simple">
+<li><p>I <a class="reference external" href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site">Turned off the Jekyl workflow</a>, so that I could run the regular github workflows in the <code class="docutils literal notranslate"><span class="pre">.github/workflows</span></code> directory.</p></li>
+<li><p>I then could see my pre-existing <code class="docutils literal notranslate"><span class="pre">.github/workflows/djangoCi.yml</span></code> action could now run.</p></li>
+<li><p>I then added another github action to deploy the pages following the instructions by <a class="reference external" href="https://dev.to/davorg/deploying-github-pages-site-with-github-workflows-3bhh">davorg</a>, and now (hopefully ???) the CI tests are run to ensure no automated testing errors, as well as automatic deployment to github pages.</p></li>
+<li></li>
 </ul>
 </section>
 </section>
