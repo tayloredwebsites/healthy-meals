@@ -30,23 +30,28 @@ services:
       DATABASE_USER: ${DATABASE_USER}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
 
+      # Poetry's configuration:
+      POETRY_NO_INTERACTION: 1
+      POETRY_VIRTUALENVS_CREATE: false
+      POETRY_CACHE_DIR: '/var/cache/pypoetry'
+      POETRY_HOME: '/usr/local'
+      POETRY_VERSION: 2.1.3
+
     platform: linux/x86_64
 
+    # https://stackoverflow.com/questions/53835198/integrating-python-poetry-with-docker
     command: sh -c "apt-get update && apt-get install -y curl &&
-        curl -sSLO https://pdm-project.org/install-pdm.py &&
-        curl -sSL https://pdm-project.org/install-pdm.py.sha256 | shasum -a 256 -c - &&
-        python -m venv venv &&
-        mkdir -p tmp/bin &&
-        python3 install-pdm.py -p .venv &&
-        .venv/bin/pdm venv --path /code/.venv &&
-        echo "migrations" &&
-        python3 manage.py makemigrations &&
-        python3 manage.py migrate &&
-        sh -c "echo "sass" &&
-        sass static/scss:static/css &&
-        python3 manage.py collectstatic --noinput &&
-        echo "runserver" &&
-        python3 manage.py runserver 0.0.0.0:8000"
+        poetry --version &&
+        poetry show &&
+        echo "@ Run migrations" &&
+        poetry run python manage.py makemigrations &&
+        poetry run python manage.py migrate &&
+        echo "@ sass" &&
+        poetry run sass static/scss:static/css &&
+        echo "@ collectstatic" &&
+        poetry run python manage.py collectstatic --noinput &&
+        echo "@ runserver" &&
+        poetry run python manage.py runserver 0.0.0.0:8000"
 
 
   pg_db:
