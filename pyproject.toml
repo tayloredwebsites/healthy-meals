@@ -86,7 +86,8 @@ dependencies = [
   "sqlparse==0.4.3",
   # "tox==4.23.2",
   # "tox-uv>=1.17",
-  "typing_extensions==4.9.0",
+  # "typing_extensions==4.9.0",
+  "typing_extensions ~=4.12", # from lithium updates
   "urllib3==1.26.14",
   "whitenoise ~=6.7",
 ]
@@ -94,7 +95,6 @@ dependencies = [
 [dependency-groups]
 dev = [
   # "ruff<1.0.0,>=0.7.4",
-  "typing_extensions ~=4.12",
 ]
 prod = [
     # "gunicorn<24.0.0,>=23.0.0",
