@@ -14,8 +14,16 @@
 - Uses the nox tool for automating  and simplifying tasks.
 - Uses github automations to ensure all tests pass for pull requests.
 - Django 5.1 & Python 3.12
+- Django 5.1 & Python 3.13
+- Installation via [uv](https://github.com/astral-sh/uv), [Pip](https://pypi.org/project/pip/) or [Docker](https://www.docker.com/)
 - Sign in by email and password code using [allauth](https://docs.allauth.org/en/latest/)
-  - see: [Lithium starter project](https://github.com/wsvincent/lithium) and  [Lithium readme](./LITHIUM_README.md)
+  - see: [Lithium starter project](https://github.com/wsvincent/lithium)
+  - User authentication--log in, sign up, password reset--via [django-allauth](https://github.com/pennersr/django-allauth)
+- Static files configured with [Whitenoise](http://whitenoise.evans.io/en/stable/index.html)
+- Styling with [Bootstrap v5](https://getbootstrap.com/)
+- Debugging with [django-debug-toolbar](https://github.com/jazzband/django-debug-toolbar)
+- DRY forms with [django-crispy-forms](https://github.com/django-crispy-forms/django-crispy-forms)
+- Custom 404, 500, and 403 error pages
 - Github pages site for Documentation, Test Results, & Coverage
 - Test and coverage badges displayed in documentation and in README.md
 - Internationalization (i18n) of strings in code
@@ -49,12 +57,28 @@
 
 ### 1) fork and clone repo(sitory) from github
 
-
-    # cd <your_projects_parent_directory>
-
 see: [Fork a Github Repo](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo)
 
 see: [Clone a Github Repo](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
+
+### uv
+You can use [uv](https://docs.astral.sh/uv/) to create a dedicated virtual environment.
+
+```
+$ uv sync
+```
+
+Then run `migrate` to configure the initial database. The command `createsuperuser` will create a new superuser account for accessing the admin. Execute the `runserver` command to start up the local server.
+
+```
+$ uv run manage.py migrate
+$ uv run manage.py createsuperuser
+$ uv run manage.py runserver
+# Load the site at http://127.0.0.1:8000 or http://127.0.0.1:8000/admin for the admin
+```
+
+### Pip
+To use Pip, create a new virtual environment and then install all packages hosted in `requirements.txt`. Run `migrate` to configure the initial database. and `createsuperuser` to create a new superuser account for accessing the admin. Execute the `runserver` command to start up the local server.
 
     * Note: <code folder> is your projects parent directory
     $ cd <code folder>
