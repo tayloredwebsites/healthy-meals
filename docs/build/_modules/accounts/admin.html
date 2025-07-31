@@ -8,7 +8,7 @@
   <title>accounts.admin &mdash; Healthy Meals Diet Assistant  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=de96878a" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
@@ -78,7 +78,6 @@
              
   <h1>Source code for accounts.admin</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib</span><span class="w"> </span><span class="kn">import</span> <span class="n">admin</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_user_model</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib.auth.admin</span><span class="w"> </span><span class="kn">import</span> <span class="n">UserAdmin</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.forms</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomUserCreationForm</span><span class="p">,</span> <span class="n">CustomUserChangeForm</span>
@@ -95,18 +94,9 @@
     <span class="n">list_display</span> <span class="o">=</span> <span class="p">[</span>
         <span class="s2">&quot;email&quot;</span><span class="p">,</span>
         <span class="s2">&quot;username&quot;</span><span class="p">,</span>
-    <span class="p">]</span>
-
-    <span class="c1"># Explicitly define add_fieldsets to prevent unexpected fields</span>
-    <span class="n">add_fieldsets</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="p">(</span>
-            <span class="kc">None</span><span class="p">,</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;classes&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;wide&quot;</span><span class="p">,),</span>
-                <span class="s2">&quot;fields&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="s2">&quot;email&quot;</span><span class="p">,</span> <span class="s2">&quot;password1&quot;</span><span class="p">,</span> <span class="s2">&quot;password2&quot;</span><span class="p">),</span>
-            <span class="p">},</span>
-        <span class="p">),</span>
-    <span class="p">)</span></div>
+        <span class="s2">&quot;is_staff&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;is_active&quot;</span><span class="p">,</span>
+    <span class="p">]</span></div>
 
 
 

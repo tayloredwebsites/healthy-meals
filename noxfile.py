@@ -2,6 +2,7 @@ from pathlib import Path
 
 import os
 import nox
+import subprocess
 
 
 # from utils.shell_cmds import clear_docker
@@ -14,37 +15,39 @@ import nox
 def setupEnv(session):
     '''Set up external environment as needed (no venv)).'''
     # os.environ.update({"NOX_DEFAULT_VENV_BACKEND": "none"})
-    # session.run_always('pdm', 'install', '-G', 'test')
-    session.run("poetry", "run", "python", "manage.py", "makemigrations")
-    session.run("poetry", "run", "python", "manage.py", "migrate")
-    session.run("poetry", "run","sass", "static/scss:static/css")
-    session.run("poetry", "run", "python", "manage.py", "collectstatic", "--noinput")
+    # session.run_always('uv', 'install', '-G', 'test')
+    session.run("uv", "run", "python", "manage.py", "makemigrations")
+    session.run("uv", "run", "python", "manage.py", "migrate")
+    session.run("uv", "run","sass", "static/scss:static/css")
+    session.run("uv", "run", "python", "manage.py", "collectstatic", "--noinput")
     # prevent commits until goodToGo runs and recreates requirements.txt (??)
-    session.run("poetry", "run", "rm", "requirements.txt")
-    # session.run("poetry", "export", "-f", "requirements.txt", "--output", "requirements.txt", "--without-hashes")
+    session.run("uv", "run", "rm", "-f", "requirements.txt")
 
 
 @nox.session(python=("3.12"), venv_backend="none")
 def goodToGo(session):
     #: testing goodToGo docs
     ''' Check to confirm that all is good to go (for push / commit / etc.).'''
-    session.run("poetry", "run", "nox", "-s", "setupEnv") # make sure session is set up if needed
-    session.run("poetry", "run", "nox", "-s", "sphinxDocs") # generate docs locally
-    # session.run("poetry", "run", "nox", "-s", "testing") # already run in sphinxDocs
-    session.run("poetry", "export", "-f", "requirements.txt", "--output", "requirements.txt", "--without-hashes") # needed for CI
+    session.run("uv", "run", "nox", "-s", "setupEnv") # make sure session is set up if needed
+    session.run("uv", "run", "nox", "-s", "sphinxDocs") # generate docs locally
+    # session.run("uv", "run", "nox", "-s", "testing") # already run in sphinxDocs
+    with Path.open("./requirements.txt", "w") as out:
+        session.run("uv", "export", "--no-hashes", "--format", "requirements-txt", #  --no-header --no-annotate --no-dev
+            stdout=out, # output to requirements.txt
+        )
 
 
 @nox.session(python=("3.12"), venv_backend="none")
 def localUp(session):
     ''' Bring up Healthy Meals in local server.'''
-    session.run("poetry", "run", "python", "manage.py", "runserver", "0.0.0.0:8000")
+    session.run("uv", "run", "python", "manage.py", "runserver", "0.0.0.0:8000")
 
 
 @nox.session(python=("3.12"), venv_backend="none")
 def genNoxDocs(session):
     ''' Generate nox documentation into a file for inclusion into Sphinx.'''
     with Path.open("./docs/qa/nox_docs.txt", "w") as out:
-        session.run("poetry", "run", "nox", "--list",
+        session.run("uv", "run", "nox", "--list",
             stdout=out, # output to nox_docs.txt
         )
 
@@ -57,14 +60,14 @@ def sphinxDocs(session):
     as modules are manually entered into index.rst
 
     """
-    session.run("poetry", "run", "rm", "-fr", "./docs/build")
-    session.run("poetry", "run", "rm", "-fr", "./docs/source")
-    session.run("poetry", "run", "cp", "-R", "./docs/sphinx_src/", "./docs/source/")
-    session.run("poetry", "run", "nox", "-s", "testing")
-    session.run("poetry", "run", "nox", "-s", "genNoxDocs")
-    session.run("poetry", "run", "make", "apidocs", "--directory=docs")
-    session.run("poetry", "run", "make", "allhtml", "--directory=docs")
-    # session.run("poetry", "run", "mv", "./docs/build/*", "./docs/")
+    session.run("uv", "run", "rm", "-fr", "./docs/build")
+    session.run("uv", "run", "rm", "-fr", "./docs/source")
+    session.run("uv", "run", "cp", "-R", "./docs/sphinx_src/", "./docs/source/")
+    session.run("uv", "run", "nox", "-s", "testing")
+    session.run("uv", "run", "nox", "-s", "genNoxDocs")
+    session.run("uv", "run", "make", "apidocs", "--directory=docs")
+    session.run("uv", "run", "make", "allhtml", "--directory=docs")
+    # session.run("uv", "run", "mv", "./docs/build/*", "./docs/")
 
 
 @nox.session(python=("3.12"), venv_backend="none")
@@ -73,30 +76,30 @@ def testing(session):
     with Path.open("./docs/qa/coverage_run.txt", "w") as out:
 
         # empty out tests and coverage directories
-        session.run("poetry", "run", "rm", "-fr", "./docs/qa")
+        session.run("uv", "run", "rm", "-fr", "./docs/qa")
 
-        session.run("poetry", "run", "coverage", "run", "-m", "pytest", "tests",
+        session.run("uv", "run", "coverage", "run", "-m", "pytest", "tests",
             "--junitxml=./docs/qa/tests/junit.xml",
             "--html=./docs/qa/tests/index.html",
             stdout=out, # output to ran_coverage.txt
         ) # run tests with coverage
-        session.run("poetry", "run", "genbadge", "tests",
+        session.run("uv", "run", "genbadge", "tests",
             "--input-file", "./docs/qa/tests/junit.xml",
             "--output-file", "./docs/qa/tests/tests_badge.svg",
             stdout=out, # output to ran_coverage.txt
         ) # create tests badge
-        session.run("poetry", "run", "coverage", "xml",
+        session.run("uv", "run", "coverage", "xml",
             "-o", "./docs/qa/coverage/coverage.xml", # xml output file
             stdout=out, # output to ran_coverage.txt
         ) # create coverage.xml file
-        session.run("poetry", "run", "coverage", "html",
+        session.run("uv", "run", "coverage", "html",
             "-d", "./docs/qa/coverage/html/", # html output directory
             stdout=out, # output to ran_coverage.txt
         ) # create coverage HTML files
-        session.run("poetry", "run", "rm", "-f",
+        session.run("uv", "run", "rm", "-f",
             "./docs/qa/coverage/html/.gitignore", # ensure all files go to repo
         )
-        session.run("poetry", "run", "genbadge", "coverage",
+        session.run("uv", "run", "genbadge", "coverage",
             "--input-file", "./docs/qa/coverage/coverage.xml",
             "--output-file", "./docs/qa/coverage/coverage_badge.svg",
             stdout=out, # output to ran_coverage.txt
@@ -108,108 +111,63 @@ def testing(session):
 
 @nox.session(python=("3.12"), venv_backend="none")
 def dockerUpBg(session):
-    '''Bring up Healthy Meals in docker in background. >:(
-
-    .. :todo:: get noxfile.dockerUpBg working again with PDM
-
-    '''
+    '''Bring up Healthy Meals in docker in background.'''
     session.run("docker", "compose", "up", "--build", "--detach")
+
 
 @nox.session(python=("3.12"), venv_backend="none")
 def dockerUpLog(session):
-    '''Bring up Healthy Meals in docker, with log to console. >:(
-
-    .. :todo:: consider getting the noxfile.py flake8 automation session working cleanly
-
-    '''
+    '''Bring up Healthy Meals in docker, with log to console.'''
     session.run("docker", "compose", "up", "--build")
+
 
 @nox.session(python=("3.12"), venv_backend="none")
 def dockerEnsureUp(session):
-    '''to Only bring up Healthy Meals in docker if not up already. >:(
-
-    .. :todo:: consider getting the noxfile.py flake8 automation session working cleanly
-
-    '''
+    '''to Only bring up Healthy Meals in docker if not up already.'''
     session.run("docker", "compose", "up", "--build", "--detach", "--no-recreate")
+
 
 @nox.session(python=("3.12"), venv_backend="none")
 def dockerExecSh(session):
-    '''to Open shell in web container. >:(
+    '''to Open shell in web container.'''
+    session.run("docker", "exec", "-it", "healthy-meals-web-1", "sh")
 
-    .. :todo:: consider getting the noxfile.py flake8 automation session working cleanly
-
-    '''
-    session.run("docker", "exec", "-it", "hm_web_image", "sh")
 
 @nox.session(python=("3.12"), venv_backend="none")
 def dockerExecPsql(session):
-    '''to Open psql in db container. >:(
+    '''to Open psql in db container.'''
+    session.run("docker", "exec", "-it", "healthy-meals-web-1", "psql", "--dbname=healthy_meals", "--username=healthy_meals")
 
-    .. :todo:: consider getting the noxfile.py flake8 automation session working cleanly
-
-    '''
-    session.run("docker", "exec", "-it", "healthy_meals_5-pg_db-1", "psql", "--dbname=healthy_meals", "--username=healthy_meals")
 
 @nox.session(python=("3.12"), venv_backend="none")
 def dockerDown(session):
-    '''to Bring down Healthy Meals in docker. >:(
+    '''Bring down all Healthy Meals Docker Containers
 
-    .. :todo:: consider getting the noxfile.py flake8 automation session working cleanly
-
+    We get the active docker procs that are wild card filtered to match the names of all healthy-meal containers
+    a pipe is used to pass the container ids between the docker ps command and the docker stop command
+    xargs is used to feed the container ids into docker stop command as arguments
     '''
-    session.run("docker", "stop", "hm_web_image")
-    session.run("docker", "stop", "healthy_meals_5-pg_db-1")
-
-@nox.session(python=("3.12"), venv_backend="none")
-def dockerClear(session):
-    '''to Clear out entire docker system. >:(
-
-    .. :todo:: consider getting the noxfile.py flake8 automation session working cleanly
-
-    '''
-    # session.run("docker", "ps", "-aq", "|", "xargs", "docker", "stop", "|", "xargs", "docker", "rm")
-    session.run("python3", "utils/docker_clear.py")
+    # session.run("docker", "stop", "healthy-meals-web-1")
+    # session.run("docker", "stop", "healthy_meals-pg_db-1")
+    session.run("bash", "-c", "docker ps -q --filter 'name=healthy-meals*' | xargs docker stop")
 
 
 @nox.session(python=("3.12"), venv_backend="none")
-def dockerMakeDocs(session):
-    """to Generate the documentation using Sphinx through docker. >:(
-
-    .. :todo:: consider getting the noxfile.py flake8 automation session working cleanly
-
-    """
-    session.run("docker", "exec", "-it", "hm_web_image", "toc", "-s", "makeDocs")
-
-
-@nox.session(python=("3.12"), venv_backend="none")
-def dockerRemakeDocs(session):
-    """to Regenerate the documentation using Sphinx through docker (cleans up old docs). >:(
-
-    .. :todo:: consider getting the noxfile.py flake8 automation session working cleanly
-
-    """
-    session.run("docker", "exec", "-it", "hm_web_image", "toc", "-s", "remakeDocs")
+def dockerSphinxDocs(session):
+    """to Generate the documentation using Sphinx through docker."""
+    session.run("docker", "exec", "-it", "healthy-meals-web-1", "nox", "-s", "sphinxDocs")
 
 
 @nox.session(python=("3.12"), venv_backend="none")
 def dockerLogs(session):
-    """to Output docker logs out to console. (hit <ctrl>c to stop). >:(
-
-    .. :todo:: consider getting the noxfile.py flake8 automation session working cleanly
-
-    """
+    """to Output docker logs out to console. (hit <ctrl>c to stop)."""
     session.run("docker", "compose", "logs", "--follow")
 
 
 @nox.session(python=("3.12"), venv_backend="none")
 def dockerTesting(session):
-    """to Run automated tests (localtest) through docker. >:(
-
-    .. :todo:: consider getting the noxfile.py flake8 automation session working cleanly
-
-    """
-    session.run("docker", "exec", "-it", "hm_web_image", "nox", "-s", "testing")
+    """to Run automated tests (localtest) through docker."""
+    session.run("docker", "exec", "-it", "healthy-meals-web-1", "nox", "-s", "testing")
 
 
 

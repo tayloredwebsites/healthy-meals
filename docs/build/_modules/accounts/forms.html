@@ -8,7 +8,7 @@
   <title>accounts.forms &mdash; Healthy Meals Diet Assistant  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=de96878a" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
@@ -77,17 +77,21 @@
            <div itemprop="articleBody">
              
   <h1>Source code for accounts.forms</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">django</span><span class="w"> </span><span class="kn">import</span> <span class="n">forms</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib.auth.forms</span><span class="w"> </span><span class="kn">import</span> <span class="n">UserCreationForm</span><span class="p">,</span> <span class="n">UserChangeForm</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib.auth.forms</span><span class="w"> </span><span class="kn">import</span> <span class="n">AdminUserCreationForm</span><span class="p">,</span> <span class="n">UserChangeForm</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomUser</span>
+
 
 <div class="viewcode-block" id="CustomUserCreationForm">
 <a class="viewcode-back" href="../../accounts.html#accounts.admin.CustomUserCreationForm">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">CustomUserCreationForm</span><span class="p">(</span><span class="n">UserCreationForm</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CustomUserCreationForm</span><span class="p">(</span><span class="n">AdminUserCreationForm</span><span class="p">):</span>
 
-    <span class="k">class</span><span class="w"> </span><span class="nc">Meta</span><span class="p">(</span><span class="n">UserCreationForm</span><span class="o">.</span><span class="n">Meta</span><span class="p">):</span>
+    <span class="k">class</span><span class="w"> </span><span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">CustomUser</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">,)</span></div>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;email&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;username&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
 
 
 <div class="viewcode-block" id="CustomUserChangeForm">
@@ -96,7 +100,10 @@
 
     <span class="k">class</span><span class="w"> </span><span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">CustomUser</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;username&#39;</span><span class="p">,)</span></div>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;email&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;username&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
 </pre></div>
 

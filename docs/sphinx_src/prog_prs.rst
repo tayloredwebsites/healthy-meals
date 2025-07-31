@@ -150,8 +150,8 @@ Nox prPrepare command
 
 See `Guide to pre-commit hooks <https://www.slingacademy.com/article/git-pre-commit-hook-a-practical-guide-with-examples/#google_vignette>`_.
 
-.. code-block:: shell
-  # set up git pre-commit hook
+.. .. code-block:: shell
+..   # set up git pre-commit hook
 
 To Do for next pull request:
 ----------------------------

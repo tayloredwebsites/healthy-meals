@@ -9,7 +9,7 @@
   <title>healthy_meals: Meet your Dietary Goals with Healthier Meals &mdash; Healthy Meals Diet Assistant  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=de96878a" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
@@ -65,6 +65,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#fork-and-clone-repo-sitory-from-github">1) fork and clone repo(sitory) from github</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">uv</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">Pip</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#asdf-installation">2) ASDF Installation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#installation-of-venv-and-direnv-working-with-asdf">3) installation of venv and direnv (working with asdf)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#install-required-software-into-venv">4) install required software into .venv</a></li>
@@ -142,11 +144,19 @@
 <li><p>Uses the nox tool for automating  and simplifying tasks.</p></li>
 <li><p>Uses github automations to ensure all tests pass for pull requests.</p></li>
 <li><p>Django 5.1 &amp; Python 3.12</p></li>
+<li><p>Django 5.1 &amp; Python 3.13</p></li>
+<li><p>Installation via <a class="reference external" href="https://github.com/astral-sh/uv">uv</a>, <a class="reference external" href="https://pypi.org/project/pip/">Pip</a> or <a class="reference external" href="https://www.docker.com/">Docker</a></p></li>
 <li><p>Sign in by email and password code using <a class="reference external" href="https://docs.allauth.org/en/latest/">allauth</a></p>
 <ul>
-<li><p>see: <a class="reference external" href="https://github.com/wsvincent/lithium">Lithium starter project</a> and  <a class="reference external" href="./LITHIUM_README.md">Lithium readme</a></p></li>
+<li><p>see: <a class="reference external" href="https://github.com/wsvincent/lithium">Lithium starter project</a></p></li>
+<li><p>User authentication–log in, sign up, password reset–via <a class="reference external" href="https://github.com/pennersr/django-allauth">django-allauth</a></p></li>
 </ul>
 </li>
+<li><p>Static files configured with <a class="reference external" href="http://whitenoise.evans.io/en/stable/index.html">Whitenoise</a></p></li>
+<li><p>Styling with <a class="reference external" href="https://getbootstrap.com/">Bootstrap v5</a></p></li>
+<li><p>Debugging with <a class="reference external" href="https://github.com/jazzband/django-debug-toolbar">django-debug-toolbar</a></p></li>
+<li><p>DRY forms with <a class="reference external" href="https://github.com/django-crispy-forms/django-crispy-forms">django-crispy-forms</a></p></li>
+<li><p>Custom 404, 500, and 403 error pages</p></li>
 <li><p>Github pages site for Documentation, Test Results, &amp; Coverage</p></li>
 <li><p>Test and coverage badges displayed in documentation and in README.md</p></li>
 <li><p>Internationalization (i18n) of strings in code</p></li>
@@ -193,11 +203,26 @@
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
 <section id="fork-and-clone-repo-sitory-from-github">
 <h3>1) fork and clone repo(sitory) from github<a class="headerlink" href="#fork-and-clone-repo-sitory-from-github" title="Link to this heading"></a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># cd &lt;your_projects_parent_directory&gt;</span>
-</pre></div>
-</div>
 <p>see: <a class="reference external" href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo">Fork a Github Repo</a></p>
 <p>see: <a class="reference external" href="https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository">Clone a Github Repo</a></p>
+</section>
+<section id="id2">
+<h3>uv<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<p>You can use <a class="reference external" href="https://docs.astral.sh/uv/">uv</a> to create a dedicated virtual environment.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ uv sync
+</pre></div>
+</div>
+<p>Then run <code class="docutils literal notranslate"><span class="pre">migrate</span></code> to configure the initial database. The command <code class="docutils literal notranslate"><span class="pre">createsuperuser</span></code> will create a new superuser account for accessing the admin. Execute the <code class="docutils literal notranslate"><span class="pre">runserver</span></code> command to start up the local server.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ uv run manage.py migrate
+$ uv run manage.py createsuperuser
+$ uv run manage.py runserver
+# Load the site at http://127.0.0.1:8000 or http://127.0.0.1:8000/admin for the admin
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>Pip<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>To use Pip, create a new virtual environment and then install all packages hosted in <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code>. Run <code class="docutils literal notranslate"><span class="pre">migrate</span></code> to configure the initial database. and <code class="docutils literal notranslate"><span class="pre">createsuperuser</span></code> to create a new superuser account for accessing the admin. Execute the <code class="docutils literal notranslate"><span class="pre">runserver</span></code> command to start up the local server.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>* Note: &lt;code folder&gt; is your projects parent directory
 $ cd &lt;code folder&gt;
 $ git clone git@github.com:&lt;yourGithubUsername&gt;/healthy_meals.git
@@ -281,8 +306,8 @@ $ cat .envrc
 </pre></div>
 </div>
 </section>
-<section id="docker">
-<h4>docker<a class="headerlink" href="#docker" title="Link to this heading"></a></h4>
+<section id="id5">
+<h4>docker<a class="headerlink" href="#id5" title="Link to this heading"></a></h4>
 <p>Note: Our Dockerfile downloads dart-sass and adds it to the path</p>
 </section>
 </section>
