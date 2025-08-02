@@ -1,0 +1,67 @@
+# This config was automatically generated from your source code
+# Stacks detected: deps:python:.,file:manage.py:.
+version: 2.1
+orbs:
+  python: circleci/python@3.0.0
+jobs:
+  test-python:
+    # Install dependencies and run tests
+    docker:
+      - image: cimg/python:3.12-node
+        environment:
+          DATABASE_URL: postgresql://postgres@localhost/circle_test
+          TEST_DATABASE_URL: postgresql://postgres@localhost/circle_test
+          DATABASE_NAME: circle_test
+          DATABASE_USER: postgres
+          # DATABASE_PASSWORD: ""
+          POSTGRES_HOST_AUTH_METHOD: trust
+          DATABASE_HOST: localhost
+          DATABASE_PORT: 5432
+          TEST_DATABASE_NAME: circle_test
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_DB: circle_test
+          POSTGRES_USER: postgres
+          # POSTGRES_PASSWORD: ""
+          SECRET_KEY: "django-insecure-*-f)8&%jk%mc2%!4qqi0m+=%-*i8$#ule@!_!n#s1k@xnl3fz5"
+    steps:
+      # https://circleci.com/developer/orbs/orb/circleci/python#usage-work-with-pip
+      - checkout
+      - python/install-packages:
+          pip-dependency-file: requirements.txt
+          pkg-manager: pip
+      - python/install-packages:
+          args: pytest pytest-html genbadge defusedxml # ruff mypy
+          pkg-manager: pip
+          pypi-cache: false
+      - run:
+          name: Run tests
+          command: |
+            # To Do: have issues getting access to artifacts.  Just running tests now.
+            echo '' >> env:
+            pytest tests # --junitxml=/tmp/tests.xml --html=/tmp/tests_index.html;
+            # coverage run --data-file=/tmp/coverage_data -m pytest tests;
+            # coverage xml --data-file=/tmp/coverage_data -o /tmp/coverage.xml;
+            # genbadge coverage -i /tmp/coverage.xml -o /tmp/cov_badge.svg;
+            # genbadge tests -i /tmp/tests.xml -o /tmp/test_badge.svg;
+            # ruff check; Too many errors.  Look into this later
+            # mypy .; Too many errors.  Look into this later
+      #- store_artifacts:
+          #path: /tmp/cov_badge.svg
+
+  deploy:
+    # This is an example deploy job, not actually used by the workflow
+    docker:
+      - image: cimg/base:stable
+    steps:
+      # Replace this with steps to deploy to users
+      - run:
+          name: deploy
+          command: '#e.g. ./deploy.sh'
+workflows:
+  build-and-test:
+    jobs:
+      - test-python
+    # - deploy:
+    #     requires:
+    #       - test-python

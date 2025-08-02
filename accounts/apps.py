@@ -1,4 +1,4 @@
-'''Accounts App Configuration'''
+'''Accounts App (CustomUser records) Configuration'''
 from django.apps import AppConfig
 
 

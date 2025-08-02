@@ -1,19 +1,26 @@
 # .gitignore
-''' MAIN BRANCH version of .gitignore
+# The "main" and "docs" long running branch version of docs/.gitignore
 
-Main branch pushes should not update the /docs folder, thus:
-- there will be a .gitignore in the docs folder that will:
-  - have a * (all file wildcard) in it, so no /docs files go in the git repo.
-  - except we need to have this .gitignore in the git repo to tell git to follow these instructions.
-    - to do this, we have the next line read: !.gitignore
-    - the ! in front  of .gitignore tells git to not ignore .gitignore
-    - thus we put .gitignore into the repo
-    - thus we ensure that the other files are not put into the repo.
+# What are we doing here?
 
-Only the QA branch should update the /docs folder
-- there will be no ignored files in its version of .gitignore
-- the docs folder is deployed to a github page.
-'''
+# The "code" branch, and its child branches SHOULD NOT update the /docs folder
+# We do not want all of the Sphinx documentation mixed in with commits and pull request, because:
+# - all of the documentation update are overwhelming for any code changes
+# - programmers can focuus on docmenting their code in the code where it belongs
+# - while at the same time, documenters can independently focus on the rest of the documentation needs.
+# - Thus there will be a .gitignore in the docs folder that will:
+#   - make sure that no documentation files in the /docs/ folder for developer code deploys
+#   - have the docs/.gitignore have a "*"" (all file wildcard) in it.
+#   - however we need also need to make sure that .gitignore is deployed to the repo.
+#     - to do this, we have the next line read: !.gitignore
+#     - the ! in front  of .gitignore tells git to not ignore .gitignore
+#     - thus we put .gitignore into the repo
+#     - thus we ensure that the other files are not put into the repo.
 
-*
-!.gitignore
+# The "main", "docs", and their children branches SHOULD ALWAYS update the /docs folder
+# - Thus there will be a .gitignore in the docs folder that will:
+#   - make sure that all files in the /docs/ folder are committed
+#   - thus the docs/.gitignore records are commented out to ensure all files in the /docs folder are committed
+
+# *
+# !.gitignore

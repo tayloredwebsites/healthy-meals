@@ -1,5 +1,5 @@
-healthy_meals_5
-===============
+healthy-meals
+=============
 
 .. toctree::
    :maxdepth: 4
@@ -8,3 +8,4 @@ healthy_meals_5
    noxfile
    pages
    tests
+   utils

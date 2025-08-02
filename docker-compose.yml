@@ -2,41 +2,34 @@
 volumes:
   hm_pg_db_vol: {}
 
-
 services:
   web:
     build: .
-    image: hm_web_image
-    container_name: hm_web_image
-    # To Do: get auto code updating to docker working
-    # volumes:
-    #   - .:/code
+    # To Do: get auto app updating to docker working
+    # To Do:  find out why code is the folder used here (app is used in dockerfile)
+    volumes:
+      - .:/code
     ports:
       - 8000:8000
     depends_on:
       - pg_db
+    command: python /code/manage.py runserver 0.0.0.0:8000
     env_file: ".env"
     environment:
 
+      # these are needed for django connections
       POSTGRES_HOST: pg_db
       POSTGRES_PORT: 5432
       POSTGRES_DB: ${DATABASE_NAME}
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
 
+      # these are needed for database connections
       DATABASE_HOST: pg_db
       DATABASE_PORT: 5432
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_USER: ${DATABASE_USER}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-
-    platform: linux/x86_64
-    command: sh -c "python manage.py makemigrations &&
-        python manage.py migrate &&
-        sass static/scss:static/css &&
-        python3 manage.py collectstatic --noinput &&
-        python3 manage.py runserver 0.0.0.0:8000"
-
 
   pg_db:
     image: postgres:16-alpine
@@ -44,6 +37,7 @@ services:
       - hm_pg_db_vol:/var/lib/postgresql/data
     restart: unless-stopped
     environment:
+      # POSTGRES_HOST_AUTH_METHOD: trust"
 
       POSTGRES_HOST: pg_db
       POSTGRES_PORT: 5432

@@ -77,21 +77,23 @@
            <div itemprop="articleBody">
              
   <h1>Source code for accounts.models</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib.auth.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">AbstractUser</span><span class="p">,</span> <span class="n">UserManager</span>
+<span></span><span class="sd">&quot;&quot;&quot; Accounts model (CustomUser records) for storing users customized to allow login by email, etc.</span>
+<span class="sd">[Source: https://toxigon.com]</span>
+
+<span class="sd">Mix in SafeDeleteManager into CustomUserManager for Soft Deletes using safedelete</span>
+
+<span class="sd">- https://django-safedelete.readthedocs.io/en/latest/managers.html</span>
+<span class="sd">- safe delete of custom users example found at;</span>
+<span class="sd">- https://codeberg.org/mvlaev/Cars/src/branch/main/cars/users_app/models.py&quot;</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib.auth.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">AbstractUser</span><span class="p">,</span> <span class="n">UserManager</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">safedelete.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">SafeDeleteModel</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">safedelete.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">SOFT_DELETE_CASCADE</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">safedelete.managers</span><span class="w"> </span><span class="kn">import</span> <span class="n">SafeDeleteManager</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">auditlog.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">auditlog</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">auditlog.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuditlogHistoryField</span>
 
-
-<span class="sd">&quot;&quot;&quot; Accounts model for storing users customized to allow login by email, etc.</span>
-<span class="sd">[Source: https://toxigon.com]</span>
-<span class="sd">Mix in SafeDeleteManager into CustomUserManager for Soft Deletes using safedelete</span>
-<span class="sd">- https://django-safedelete.readthedocs.io/en/latest/managers.html</span>
-<span class="sd">safe delete of custom users example found at;</span>
-<span class="sd">- https://codeberg.org/mvlaev/Cars/src/branch/main/cars/users_app/models.py&quot;</span>
-<span class="sd">&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="CustomUserManager">
 <a class="viewcode-back" href="../../accounts.html#accounts.admin.CustomUserManager">[docs]</a>
@@ -105,12 +107,8 @@
 <span class="sd">    See: https://django-safedelete.readthedocs.io/en/latest/managers.html</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">    param1 (class): SafeDelete manager class mixin</span>
-<span class="sd">    param2 (class): UserManager  for CustomUser Abstract Class</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">    param1 (class): SafeDelete manager class mixin</span>
-<span class="sd">    param2 (class): UserManager  for CustomUser Abstract Class</span>
+<span class="sd">        param1 (class): SafeDelete manager class mixin</span>
+<span class="sd">        param2 (class): UserManager  for CustomUser Abstract Class</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 <div class="viewcode-block" id="CustomUserManager.all_deleted">
@@ -121,14 +119,15 @@
 <span class="sd">        No arguments are passed to this function when calling it</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">        recordset: The soft deleted custom user records.</span>
+<span class="sd">            recordset: The soft deleted custom user records.</span>
 
 <span class="sd">        Example:</span>
 
-<span class="sd">        .. code-block:: python</span>
+<span class="sd">            .. code-block:: python</span>
 
-<span class="sd">            for rec in Account.all_deleted():</span>
-<span class="sd">                print(rec)</span>
+<span class="sd">                # Print out all deleted records</span>
+<span class="sd">                for rec in Account.all_deleted():</span>
+<span class="sd">                    print(rec)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_with_deleted</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">deleted__isnull</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
@@ -141,24 +140,25 @@
 <div class="viewcode-block" id="CustomUser">
 <a class="viewcode-back" href="../../accounts.html#accounts.admin.CustomUser">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">CustomUser</span><span class="p">(</span><span class="n">SafeDeleteModel</span><span class="p">,</span> <span class="n">AbstractUser</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;CustomUser model - Abstract User customized to allow login by email</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;CustomUser model - Abstract User customized to allow login by email&#39;&#39;&#39;</span>
     <span class="n">history</span> <span class="o">=</span> <span class="n">AuditlogHistoryField</span><span class="p">()</span>
 
-    <span class="n">_safedelete_policy</span> <span class="o">=</span> <span class="n">SOFT_DELETE_CASCADE</span> <span class="c1"># To Do: research/test if there should be no cascading of deletes (SOFT_DELETE)?</span>
+    <span class="n">_safedelete_policy</span> <span class="o">=</span> <span class="n">SOFT_DELETE_CASCADE</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Tell SafeDelete to cascade soft deletes of records (also delete child records)&#39;&#39;&#39;</span>
 
     <span class="n">objects</span> <span class="o">=</span> <span class="n">CustomUserManager</span><span class="p">()</span>
 
 <div class="viewcode-block" id="CustomUser.rec_history_count">
 <a class="viewcode-back" href="../../accounts.html#accounts.admin.CustomUser.rec_history_count">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">rec_history_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the count of all of the history records for this user.&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="CustomUser.rec_history_field_was">
 <a class="viewcode-back" href="../../accounts.html#accounts.admin.CustomUser.rec_history_field_was">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">rec_history_field_was</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_rec</span><span class="p">,</span> <span class="n">field_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return a dictionary of the previous values for this field, for this record.&#39;&#39;&#39;</span>
         <span class="n">rec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">all</span><span class="p">()[</span><span class="n">user_rec</span><span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_field_changes</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span><span class="n">field_name</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
 
@@ -166,6 +166,11 @@
 <div class="viewcode-block" id="CustomUser.rec_history_field_is_now">
 <a class="viewcode-back" href="../../accounts.html#accounts.admin.CustomUser.rec_history_field_is_now">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">rec_history_field_is_now</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_rec</span><span class="p">,</span> <span class="n">field_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39; What is the rec_history_field_is_now functionality?</span>
+
+<span class="sd">        .. todo:: Research what the accounts.models.CustomUser.rec_history_field_is_now function was supposed to do.  Is this needed?</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">rec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">all</span><span class="p">()[</span><span class="n">user_rec</span><span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_field_changes</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span><span class="n">field_name</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span></div>
 
@@ -173,6 +178,7 @@
 <div class="viewcode-block" id="CustomUser.rec_history_field_changed">
 <a class="viewcode-back" href="../../accounts.html#accounts.admin.CustomUser.rec_history_field_changed">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">rec_history_field_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_rec</span><span class="p">,</span> <span class="n">field_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the number of records that are maintained in CustomUser&#39;s history table.&#39;&#39;&#39;</span>
         <span class="n">rec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">all</span><span class="p">()[</span><span class="n">user_rec</span><span class="p">]</span>
         <span class="n">changes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_field_changes</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span><span class="n">field_name</span><span class="p">)</span>
         <span class="c1"># print(f&#39;changes: {changes}&#39;)</span>
@@ -180,6 +186,7 @@
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">__get_field_changes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hist_rec</span><span class="p">,</span> <span class="n">field_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return a dictionary of the history for this record&#39;s field values.&#39;&#39;&#39;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">changes</span> <span class="o">=</span> <span class="n">hist_rec</span><span class="o">.</span><span class="n">changes_dict</span><span class="p">[</span><span class="n">field_name</span><span class="p">]</span>
             <span class="c1"># print(f&#39;changes: {changes}&#39;)</span>
@@ -192,6 +199,7 @@
 <div class="viewcode-block" id="CustomUser.name_or_email">
 <a class="viewcode-back" href="../../accounts.html#accounts.admin.CustomUser.name_or_email">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">name_or_email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the user&#39;s full name, otherwise return their email.&#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_name</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_name</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{fname}</span><span class="s2"> </span><span class="si">{lname}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">first_name</span><span class="p">,</span> <span class="n">lname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">last_name</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -201,6 +209,7 @@
     <span class="k">pass</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;What to print when printing a user&#39;s record.&#39;&#39;&#39;</span>
         <span class="c1"># fields = [field.name for field in self._meta.fields if field.name != &#39;password&#39;]</span>
         <span class="c1"># return &#39;, &#39;.join(f&quot;{field}: {getattr(self, field)}&quot; for field in fields)</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">email</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">last_name</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">first_name</span><span class="si">}</span><span class="s1">&#39;</span></div>
@@ -210,7 +219,7 @@
 <span class="n">auditlog</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">CustomUser</span><span class="p">,</span> <span class="n">exclude_fields</span><span class="o">=</span><span class="p">[</span>
     <span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="c1"># protect this field for security reasons</span>
     <span class="s1">&#39;last_login&#39;</span><span class="p">,</span> <span class="c1"># do not update audit log for each login</span>
-    <span class="p">],</span>
+    <span class="p">]</span>
 <span class="p">)</span>
 </pre></div>
 

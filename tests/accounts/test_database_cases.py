@@ -6,9 +6,12 @@ from accounts.models import CustomUser
 
 from django.db import IntegrityError, transaction
 
-# using testcase with factoryboy for testing updates to the database
-# run as one test to minimize database setup and teardown
 class UserModelsTestCase(TestCase):
+    '''using testcase with factoryboy for testing updates to the database.
+
+    - run as large test to minimize database setup and teardown
+
+    '''
     def setUp(self):
         # Setup run before every test method.
         pass
@@ -17,12 +20,14 @@ class UserModelsTestCase(TestCase):
         # Clean up run after every test method.
         pass
 
-    # test to make sure that
-    # - soft deletes and undeletes update the database properly,
-    # - emails are ensured to be unique,
-    # - CustomUser prints out as expected,
-    # - all_deleted (custom function) return the deleted custom users
     def test_user_soft_delete(self):
+        '''Endure soft deletes and undeletes update the database properly
+
+            - emails are ensured to be unique,
+            - CustomUser prints out as expected,
+            - all_deleted (custom function) return the deleted custom users
+
+        '''
         # get starting user record count
         count = CustomUser.objects.count()
         # confirm no users
@@ -56,10 +61,14 @@ class UserModelsTestCase(TestCase):
         self.assertEqual(CustomUser.objects.all_with_deleted().count(), 4)
         self.assertEqual(CustomUser.objects.all_deleted().count(), 1)
 
-        # make sure the database does not allow duplicate emails for custom_users
-        # tests the pre_save signal that copies the email into the username field
-        # - this ensures that duplicate emails are not allowed at the database level
+        ''' .. todo::  make sure the database does not allow duplicate emails for custom_users'''
+        # -
         with self.assertRaises(IntegrityError):
+            '''tests the pre_save signal that copies the email into the username field
+
+            - this ensures that duplicate emails are not allowed at the database level
+
+            '''
             with transaction.atomic():
                 CustomUserFactory(
                     email=test_users[0].email,
@@ -76,4 +85,4 @@ class UserModelsTestCase(TestCase):
         self.assertEqual(CustomUser.objects.all_deleted().count(), 0)
         print(f'Restored: {test_users[0].email}: {test_users[0].username}, {test_users[0].deleted}')
 
-    # To Do: test to make sure that undeleted users can still log into the system and function properly
+    ''' .. :todo: test to make sure that undeleted users can still log into the system and function properly.'''

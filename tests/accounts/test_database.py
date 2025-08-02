@@ -7,16 +7,16 @@ from accounts.models import CustomUser
 
 from django.db import IntegrityError, transaction
 
-# testing updates to the database
-# - run as one test to minimize database setup and teardown
-
-# test to make sure that
-# - soft deletes and undeletes update the database properly,
-# - emails are ensured to be unique,
-# - CustomUser prints out as expected,
-# - all_deleted (custom function) return the deleted custom users
 @pytest.mark.django_db
 def test_user_soft_delete():
+    '''Ensure soft deletes and undeletes update the database properly
+
+        - emails are ensured to be unique,
+        - CustomUser prints out as expected,
+        - all_deleted (custom function) return the deleted custom users
+        - run as large test to minimize database setup and teardown
+
+    '''
     # get starting user record count
     print('Starting TestUserModel::test_user_soft_delete')
     count = CustomUser.objects.count()
@@ -71,4 +71,4 @@ def test_user_soft_delete():
     assert CustomUser.objects.all_deleted().count() == 0
     print(f'Restored: {test_users[0].email}: {test_users[0].username}, {test_users[0].deleted}')
 
-    # To Do: test to make sure that undeleted users can still log into the system and function properly
+    ''' .. :todo: test to make sure that undeleted users can still log into the system and function properly'''

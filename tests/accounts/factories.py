@@ -5,6 +5,7 @@ from pytest_factoryboy import register
 
 @register
 class CustomUserFactory(django.DjangoModelFactory):
+    '''Create a Custom User (Account)'''
     class Meta:
         model = models.CustomUser
     username = Faker('user_name') # see accounts/signals.py to override this.

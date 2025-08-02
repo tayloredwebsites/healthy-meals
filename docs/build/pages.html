@@ -66,10 +66,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#pages.views.AboutPageView.template_name"><code class="docutils literal notranslate"><span class="pre">AboutPageView.template_name</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#pages.views.DocsPageView"><code class="docutils literal notranslate"><span class="pre">DocsPageView</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#pages.views.DocsPageView.template_name"><code class="docutils literal notranslate"><span class="pre">DocsPageView.template_name</span></code></a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="#pages.views.HomePageView"><code class="docutils literal notranslate"><span class="pre">HomePageView</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#pages.views.HomePageView.template_name"><code class="docutils literal notranslate"><span class="pre">HomePageView.template_name</span></code></a></li>
 </ul>
@@ -121,7 +117,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="pages.apps.PagesConfig">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pages.apps.</span></span><span class="sig-name descname"><span class="pre">PagesConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/apps.html#PagesConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.apps.PagesConfig" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/applications/#django.apps.AppConfig" title="(in Django v5.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AppConfig</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/applications/#django.apps.AppConfig" title="(in Django v5.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AppConfig</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pages.apps.PagesConfig.name">
 <span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pages'</span></em><a class="headerlink" href="#pages.apps.PagesConfig.name" title="Link to this definition"></a></dt>
@@ -141,7 +137,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="pages.views.AboutPageView">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pages.views.</span></span><span class="sig-name descname"><span class="pre">AboutPageView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/views.html#AboutPageView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.views.AboutPageView" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/class-based-views/base/#django.views.generic.base.TemplateView" title="(in Django v5.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemplateView</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/class-based-views/base/#django.views.generic.base.TemplateView" title="(in Django v5.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemplateView</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pages.views.AboutPageView.template_name">
 <span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pages/about.html'</span></em><a class="headerlink" href="#pages.views.AboutPageView.template_name" title="Link to this definition"></a></dt>
@@ -150,20 +146,9 @@
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="pages.views.DocsPageView">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pages.views.</span></span><span class="sig-name descname"><span class="pre">DocsPageView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/views.html#DocsPageView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.views.DocsPageView" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/class-based-views/base/#django.views.generic.base.TemplateView" title="(in Django v5.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemplateView</span></code></a></p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="pages.views.DocsPageView.template_name">
-<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pages/docs.html'</span></em><a class="headerlink" href="#pages.views.DocsPageView.template_name" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="pages.views.HomePageView">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pages.views.</span></span><span class="sig-name descname"><span class="pre">HomePageView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pages/views.html#HomePageView"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pages.views.HomePageView" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/class-based-views/base/#django.views.generic.base.TemplateView" title="(in Django v5.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemplateView</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.djangoproject.com/en/stable/ref/class-based-views/base/#django.views.generic.base.TemplateView" title="(in Django v5.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemplateView</span></code></a></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="pages.views.HomePageView.template_name">
 <span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pages/home.html'</span></em><a class="headerlink" href="#pages.views.HomePageView.template_name" title="Link to this definition"></a></dt>

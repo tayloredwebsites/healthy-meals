@@ -85,11 +85,14 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">django.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntegrityError</span><span class="p">,</span> <span class="n">transaction</span>
 
-<span class="c1"># using testcase with factoryboy for testing updates to the database</span>
-<span class="c1"># run as one test to minimize database setup and teardown</span>
 <div class="viewcode-block" id="UserModelsTestCase">
 <a class="viewcode-back" href="../../../tests.accounts.html#tests.accounts.test_database_cases.UserModelsTestCase">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">UserModelsTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;using testcase with factoryboy for testing updates to the database.</span>
+
+<span class="sd">    - run as large test to minimize database setup and teardown</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
 <div class="viewcode-block" id="UserModelsTestCase.setUp">
 <a class="viewcode-back" href="../../../tests.accounts.html#tests.accounts.test_database_cases.UserModelsTestCase.setUp">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -104,14 +107,16 @@
         <span class="k">pass</span></div>
 
 
-    <span class="c1"># test to make sure that</span>
-    <span class="c1"># - soft deletes and undeletes update the database properly,</span>
-    <span class="c1"># - emails are ensured to be unique,</span>
-    <span class="c1"># - CustomUser prints out as expected,</span>
-    <span class="c1"># - all_deleted (custom function) return the deleted custom users</span>
 <div class="viewcode-block" id="UserModelsTestCase.test_user_soft_delete">
 <a class="viewcode-back" href="../../../tests.accounts.html#tests.accounts.test_database_cases.UserModelsTestCase.test_user_soft_delete">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">test_user_soft_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Endure soft deletes and undeletes update the database properly</span>
+
+<span class="sd">            - emails are ensured to be unique,</span>
+<span class="sd">            - CustomUser prints out as expected,</span>
+<span class="sd">            - all_deleted (custom function) return the deleted custom users</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="c1"># get starting user record count</span>
         <span class="n">count</span> <span class="o">=</span> <span class="n">CustomUser</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
         <span class="c1"># confirm no users</span>
@@ -145,10 +150,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">CustomUser</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all_with_deleted</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">4</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">CustomUser</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all_deleted</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
 
-        <span class="c1"># make sure the database does not allow duplicate emails for custom_users</span>
-        <span class="c1"># tests the pre_save signal that copies the email into the username field</span>
-        <span class="c1"># - this ensures that duplicate emails are not allowed at the database level</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39; .. todo::  make sure the database does not allow duplicate emails for custom_users&#39;&#39;&#39;</span>
+        <span class="c1"># -</span>
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">IntegrityError</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&#39;&#39;&#39;tests the pre_save signal that copies the email into the username field</span>
+
+<span class="sd">            - this ensures that duplicate emails are not allowed at the database level</span>
+
+<span class="sd">            &#39;&#39;&#39;</span>
             <span class="k">with</span> <span class="n">transaction</span><span class="o">.</span><span class="n">atomic</span><span class="p">():</span>
                 <span class="n">CustomUserFactory</span><span class="p">(</span>
                     <span class="n">email</span><span class="o">=</span><span class="n">test_users</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">email</span><span class="p">,</span>
@@ -164,10 +173,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">CustomUser</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all_with_deleted</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">4</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">CustomUser</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all_deleted</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Restored: </span><span class="si">{</span><span class="n">test_users</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">email</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">test_users</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">username</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">test_users</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">deleted</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
-</div>
 
 
-    <span class="c1"># To Do: test to make sure that undeleted users can still log into the system and function properly</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; .. :todo: test to make sure that undeleted users can still log into the system and function properly.&#39;&#39;&#39;</span></div>
+
 </pre></div>
 
            </div>

@@ -10,25 +10,37 @@
 
 ## 🚀 Base Project Features
 - Can run this project in in Docker or locally (using a local web server).
+  - todo: docker needs tlc since adding pdm
 - Uses the nox tool for automating  and simplifying tasks.
-- Uses Circle CI github integration to ensure all tests pass for pull requests.
+- Uses github automations to ensure all tests pass for pull requests.
 - Django 5.1 & Python 3.12
-- Sign in by email and password (see: [Lithium README](./LITHIUM_README.md))
+- Django 5.1 & Python 3.13
+- Installation via [uv](https://github.com/astral-sh/uv), [Pip](https://pypi.org/project/pip/) or [Docker](https://www.docker.com/)
+- Sign in by email and password code using [allauth](https://docs.allauth.org/en/latest/)
+  - see: [Lithium starter project](https://github.com/wsvincent/lithium)
+  - User authentication--log in, sign up, password reset--via [django-allauth](https://github.com/pennersr/django-allauth)
+- Static files configured with [Whitenoise](http://whitenoise.evans.io/en/stable/index.html)
+- Styling with [Bootstrap v5](https://getbootstrap.com/)
+- Debugging with [django-debug-toolbar](https://github.com/jazzband/django-debug-toolbar)
+- DRY forms with [django-crispy-forms](https://github.com/django-crispy-forms/django-crispy-forms)
+- Custom 404, 500, and 403 error pages
 - Github pages site for Documentation, Test Results, & Coverage
 - Test and coverage badges displayed in documentation and in README.md
 - Internationalization (i18n) of strings in code
 - Soft Delete functionality of database records
+- Sphinx documentation tool
 - Base HTML Template
   - sub-template blocks for pages and partial pages
-  - SCSS translation to CSS
+  - SCSS translation to CSS using Dart SASS
+    - [libsass is deprecated, dart sass is recommended](https://sass-lang.com/blog/libsass-is-deprecated/)
+    - [https://sass-lang.com/dart-sass/](https://sass-lang.com/documentation/cli/dart-sass/)
   - site wide font sizing tool
-  - login with email/password
+  - login with email/password using [allauth](https://docs.allauth.org/en/latest/)
   - signup
 
 ### Base Project Features coming soon:
 - Internationalization (i18n) of strings in database
 - Static typing checks with MyPy
-- Sphinx documentation tool
 - HTMX ?
 
 ### Application Features coming soon:
@@ -45,48 +57,78 @@
 
 ### 1) fork and clone repo(sitory) from github
 
-
-    # cd <your_projects_parent_directory>
-
 see: [Fork a Github Repo](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo)
 
 see: [Clone a Github Repo](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 
-    #confirm you are in your projects parent directory
-    $ pwd #confirm you are in your projects parent directory
+### uv
+You can use [uv](https://docs.astral.sh/uv/) to create a dedicated virtual environment.
+
+```
+$ uv sync
+```
+
+Then run `migrate` to configure the initial database. The command `createsuperuser` will create a new superuser account for accessing the admin. Execute the `runserver` command to start up the local server.
+
+```
+$ uv run manage.py migrate
+$ uv run manage.py createsuperuser
+$ uv run manage.py runserver
+# Load the site at http://127.0.0.1:8000 or http://127.0.0.1:8000/admin for the admin
+```
+
+### Pip
+To use Pip, create a new virtual environment and then install all packages hosted in `requirements.txt`. Run `migrate` to configure the initial database. and `createsuperuser` to create a new superuser account for accessing the admin. Execute the `runserver` command to start up the local server.
+
+    * Note: <code folder> is your projects parent directory
+    $ cd <code folder>
     $ git clone git@github.com:<yourGithubUsername>/healthy_meals.git
     $ cd healthy_meals
     $ git remote add upstream git@github.com:tayloredwebsites/healthy_meals.git
 
-###  2) Installation of ASDF
+###  2) ASDF Installation
+
+See: [ASDF install](https://asdf-vm.com/guide/getting-started.html), and [ASDF configuration](https://asdf-vm.com/manage/configuration.html)
 
     $ cat .tool-versions
-      # you should see (with possible version differences):
-      #    python 3.12.6
-      #    direnv 2.34.0
+      * you should see (with possible version differences):
+      *    python 3.12.6
+      *    direnv 2.34.0
 
 ### 3) installation of venv and direnv (working with asdf)
 
 see: # [https://mdaverde.com/posts/python-venv-direnv-asdf/](https://mdaverde.com/posts/python-venv-direnv-asdf/)
 
-    $ cd <code folder>
-    $ cd healthy_meals  # see clone repo from github
+
+    * Note: <code folder> is your projects parent directory
+    $ cd <code folder>/healthy-meals  # see clone repo from github
     $ python -m venv .venv
-    $ echo "export VIRTUAL_ENV=$PWD/.venv\nexport PATH=$PWD/.venv/bin:\$PATH" > .envrc
-      # you should get: error ... .envrc is blocked. Run `direnv allow` to approve its content
+    $ echo "export VIRTUAL_ENV=$PWD/.venv\nexport PATH=$PWD/.venv/bin:\$PATH\nexport PYTHONPATH=$PWD" > .envrc
+      * You should get: "direnv: error <code folder>/healthy-meals/.envrc is blocked. Run `direnv allow` to approve its content"
     $ direnv allow
-    $ which python3
-      # you should see python3 3 running from the .venv directory
-      #   .../healthy_meals/.venv/bin/python3
+    $ which python
+      * you should see python3 running from the .venv directory
+      *   <code folder>/healthy_meals/.venv/bin/python3
     $ cd ..
     $ cd healthy_meals
-      # you will see the following messages entering your directory
-      #   direnv: loading .../.envrc
-      #   direnv: export +VIRTUAL_ENV ~PATH
+      * you will see the following messages entering your directory
+      *   direnv: loading .../.envrc
+      *   direnv: export +PYTHONPATH +VIRTUAL_ENV ~PATH
+    $ cat .envrc
+      * You should see the following listing for your .envrc file
+      * export VIRTUAL_ENV=<code folder>/healthy-meals/.venv
+      * export PATH=<code folder>/healthy-meals/.venv/bin:$PATH
+      * export PYTHONPATH=<code folder>/healthy-meals/.venv/bin
+
 
 ### 4) install required software into .venv
 
-    $ pip install -r requirements.txt
+
+Note: We use [nox](https://nox.thea.codes/en/stable/index.html) for automation of tasks
+
+Instructions:
+
+    $ nox -s setupEnv
 
 ### 5) install postgres locally
 
@@ -102,7 +144,7 @@ Note: If you are having problems with installing postgres onto your computer, co
 
 ### 6) install docker desktop
 
-Note: You may skip this step if you are only developing locally, or have the Docker Daemon installed already.
+Note: You may skip this step if you are only developing locally, or have the Docker Daemon or Desktop installed already.
 
 ### 7) install dart sass
 
@@ -128,7 +170,7 @@ See: [https://snapcraft.io/dart-sass](https://snapcraft.io/dart-sass)
 
 #### docker
 
-Note: Dockerfile now downloads dart-sass and adds it to the path
+Note: Our Dockerfile downloads dart-sass and adds it to the path
 
 ## Development Environment Guide
 

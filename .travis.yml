@@ -1,0 +1,64 @@
+# .travis.yml
+
+# references
+# https://docs.travis-ci.com/user/tutorials/tutorial-python/
+
+# https://docs.travis-ci.com/user/reference/overview/#linux-examples
+# arch: amd64          # optional, this is default, routes to a full VM
+# os: linux            # optional, this is default
+dist: focal            # or bionic | jammy | xenial with xenial as default
+
+language: python
+
+python:
+  - "3.12"
+
+
+
+# https://docs.travis-ci.com/user/database-setup/#use-a-different-postgresql-version
+addons:
+  postgresql: "16"
+  apt:
+    packages:
+    - postgresql-16
+    - postgresql-client-16
+
+
+
+# to resolve environment variables not found
+env:
+  global:
+  - PGPORT=5433
+  - PGUSER=travis
+  - DATABASE_NAME=travis_ci_test
+  - TEST_DATABASE_NAME=travis_ci_test
+  - DATABASE_USER=travis
+  - DATABASE_PASSWORD=
+  - DATABASE_HOST=localhost
+  - DATABASE_PORT=5433
+
+# https://docs.travis-ci.com/user/languages/python/#test-against-multiple-versions-of-dependencies
+# env:
+#   - DJANGO_VERSION=5.1.7
+# install:
+#   - pip install -q Django==$DJANGO_VERSION
+#   - python setup.py -q install
+
+
+before_script:
+
+# to populate .env file for python decouple (https://medium.com/@gilsondev/python-decouple-e-travis-ci-d9cbcd08c20f)
+install:
+  - echo "SECRET_KEY=$SECRET_KEY" >> .env
+  - echo "DATABASE_NAME=travis_ci_test" >> .env
+  - echo "TEST_DATABASE_NAME=travis_ci_test" >> .env
+  - echo "DATABASE_USER=travis" >> .env
+  - echo "DATABASE_PASSWORD=$DATABASE_PASSWORD" >> .env
+  - echo "DATABASE_HOST=localhost" >> .env
+  - echo "DATABASE_PORT=5433" >> .env
+  - psql -c 'create database healthy_meals_test;' -U travis # https://docs.travis-ci.com/user/database-setup/#postgresql
+  - pip install -r requirements.txt
+
+# https://github.com/dbfixtures/pytest-postgresql
+script:
+  - pytest --postgresql-dbname=travis_ci_test
