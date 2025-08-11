@@ -19,8 +19,12 @@ import os
 import sys
 import django
 
-sys.path.insert(0, os.path.abspath("../.."))
-sys.path.insert(0, os.path.abspath("../../.."))
+''' set path to include Project directory (healthy_meals) using .. (parent) path
+
+this prevents the error: ModuleNotFoundError: No module named 'healthy_meals' when running (in the docs directory)
+% sphinx-build --builder html --write-all --fresh-env "source" "build" --verbose --conf-dir .
+'''
+sys.path.insert(0, os.path.abspath("..")) # prevent error: ModuleNotFoundError: No module named 'healthy_meals'
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "healthy_meals.settings")
 django.setup()
 

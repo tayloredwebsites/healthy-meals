@@ -1,0 +1,27 @@
+Watching for file changes with StatReloader
+Error: That port is already in use.
+Watching for file changes with StatReloader
+[10/Aug/2025 00:01:30] "GET / HTTP/1.1" 200 16320
+[10/Aug/2025 00:01:30] "GET /static/css/base.css HTTP/1.1" 200 8708
+[10/Aug/2025 00:01:30] "GET /static/js/base.js HTTP/1.1" 304 0
+[10/Aug/2025 00:01:30] "GET /static/debug_toolbar/js/toolbar.js HTTP/1.1" 200 14601
+[10/Aug/2025 00:01:30] "GET /static/debug_toolbar/css/toolbar.css HTTP/1.1" 200 16675
+[10/Aug/2025 00:01:30] "GET /static/debug_toolbar/css/print.css HTTP/1.1" 200 43
+[10/Aug/2025 00:01:30] "GET /static/debug_toolbar/js/utils.js HTTP/1.1" 200 4742
+usage: manage.py runserver [-h] [--ipv6] [--nothreading] [--noreload]
+                           [--nostatic] [--insecure] [--version]
+                           [--settings SETTINGS] [--pythonpath PYTHONPATH]
+                           [--no-color] [--force-color] [--skip-checks]
+                           [addrport]
+manage.py runserver: error: unrecognized arguments: &
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+August 10, 2025 - 00:06:05
+Django version 5.2.4, using settings 'healthy_meals.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+For more information on production servers see: https://docs.djangoproject.com/en/5.2/howto/deployment/

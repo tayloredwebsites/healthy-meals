@@ -8,7 +8,7 @@ SPHINXOPTS    ?= --verbose --conf-dir .
 SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = source
 BUILDDIR      = build
-PROJECT = healthy_meals
+PROJECT = healthy-meals
 APPSDIR = ..
 
 .PHONY: html allhtml apidocs Makefile

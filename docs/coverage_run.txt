@@ -1,0 +1,24 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.6, pytest-8.4.1, pluggy-1.6.0
+django: version: 5.2.4, settings: healthy_meals.settings (from ini)
+rootdir: /Users/dave/works/python/healthy-meals
+configfile: pyproject.toml
+plugins: postgresql-7.0.1, html-4.1.1, metadata-3.1.1, django-4.11.1, factoryboy-2.8.1, Faker-37.4.2
+collected 7 items
+
+tests/accounts/test_database.py .                                        [ 14%]
+tests/accounts/test_database_cases.py .                                  [ 28%]
+tests/pages/test_base_template.py ...                                    [ 71%]
+tests/pages/test_base_template_cases.py ..                               [100%]
+
+- generated xml file: /Users/dave/works/python/healthy-meals/docs/qa/tests/junit.xml -
+- Generated html report: file:///Users/dave/works/python/healthy-meals/docs/qa/tests/index.html -
+============================== 7 passed in 1.71s ===============================
+/Users/dave/works/python/healthy-meals/.venv/lib/python3.12/site-packages/genbadge/utils_badge.py:20: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import resource_string, resource_filename
+SUCCESS - Tests badge created: '/Users/dave/works/python/healthy-meals/docs/qa/tests/tests_badge.svg'
+Wrote XML report to ./docs/qa/coverage/coverage.xml
+Wrote HTML report to ./docs/qa/coverage/html/index.html
+/Users/dave/works/python/healthy-meals/.venv/lib/python3.12/site-packages/genbadge/utils_badge.py:20: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import resource_string, resource_filename
+SUCCESS - Coverage badge created: '/Users/dave/works/python/healthy-meals/docs/qa/coverage/coverage_badge.svg'

@@ -1,11 +1,13 @@
 Sessions defined in /Users/dave/works/python/healthy-meals/noxfile.py:
 
+* allTests -> Confirm all pytest and nox pass successfully locally and in Docker
 * setupEnv -> Set up external environment as needed (no venv)).
 * goodToGo -> Check to confirm that all is good to go (for push / commit / etc.).
 * localUp -> Bring up Healthy Meals in local server.
 * genNoxDocs -> Generate nox documentation into a file for inclusion into Sphinx.
 * sphinxDocs -> Rebuild all documentation to Sphinx (cleans up old docs).
-* testing -> Run automated tests (with test coverage) through docker.
+* pytestTesting -> Run automated tests (with test coverage) through docker.
+* noxTestLocal -> Confirm Local nox sessions work
 * dockerUpBg -> Bring up Healthy Meals in docker in background.
 * dockerUpLog -> Bring up Healthy Meals in docker, with log to console.
 * dockerEnsureUp -> to Only bring up Healthy Meals in docker if not up already.
@@ -14,7 +16,8 @@ Sessions defined in /Users/dave/works/python/healthy-meals/noxfile.py:
 * dockerDown -> Bring down all Healthy Meals Docker Containers
 * dockerSphinxDocs -> to Generate the documentation using Sphinx through docker.
 * dockerLogs -> to Output docker logs out to console. (hit <ctrl>c to stop).
-* dockerTesting -> to Run automated tests (localtest) through docker.
+* dockerPytestTesting -> to Run automated tests (localtest) through docker.
+* noxTestDocker -> Confirm nox docker sessions work
 * mypy -> to run the mypy type checker >:(
 * ruff -> to run the ruff code standards tool >:(
 * flake8 -> to run the flake8 code standards tool >:(
