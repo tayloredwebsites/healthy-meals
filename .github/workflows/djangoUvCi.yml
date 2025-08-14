@@ -52,7 +52,10 @@ jobs:
 
     - name: Set up nox
       # https://nox.thea.codes/en/stable/tutorial.html
-      uses: wntrblm/nox@v2025.05.01
+      # https://github.com/fjwillemsen/setup-nox2
+      uses: fjwillemsen/setup-nox2@v3.0.0
+    - name: Confirm nox is installed
+      run: nox --version
 
     - name: Setup .env file for python decouple
       run: |
