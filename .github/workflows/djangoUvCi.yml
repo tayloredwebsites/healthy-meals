@@ -52,7 +52,7 @@ jobs:
 
     - name: Set up nox
       # https://nox.thea.codes/en/stable/tutorial.html
-      uses: wntrblm/nox@latest
+      uses: wntrblm/nox@v2025.05.01
 
     - name: Setup .env file for python decouple
       run: |
