@@ -66,13 +66,14 @@ jobs:
         echo "DATABASE_PASSWORD=$DATABASE_PASSWORD" >> .env
         echo "DATABASE_HOST=localhost" >> .env
         echo "DATABASE_PORT=5433" >> .env
+        cat .env
     - name: Set up Database
       run: |
         # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md
         sudo systemctl start postgresql.service
         sudo -u postgres createuser healthy_meals_test
         sudo -u postgres psql -c "alter user healthy_meals_test with encrypted password 'Password#123';"
-        sudo -u postgres createdb healthy_meals_test -s
+        sudo -u postgres createdb healthy_meals_test
         sudo -u postgres psql -c "GRANT ALL PRIVILEGES on database healthy_meals_test to healthy_meals_test"
         pdm run manage.py makemigrations
         pdm run manage.py migrate
