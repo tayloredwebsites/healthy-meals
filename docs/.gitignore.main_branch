@@ -1,26 +1,5 @@
 # .gitignore
-# The "main" and "docs" long running branch version of docs/.gitignore
-
-# What are we doing here?
-
-# The "code" branch, and its child branches SHOULD NOT update the /docs folder
-# We do not want all of the Sphinx documentation mixed in with commits and pull request, because:
-# - all of the documentation update are overwhelming for any code changes
-# - programmers can focuus on docmenting their code in the code where it belongs
-# - while at the same time, documenters can independently focus on the rest of the documentation needs.
-# - Thus there will be a .gitignore in the docs folder that will:
-#   - make sure that no documentation files in the /docs/ folder for developer code deploys
-#   - have the docs/.gitignore have a "*"" (all file wildcard) in it.
-#   - however we need also need to make sure that .gitignore is deployed to the repo.
-#     - to do this, we have the next line read: !.gitignore
-#     - the ! in front  of .gitignore tells git to not ignore .gitignore
-#     - thus we put .gitignore into the repo
-#     - thus we ensure that the other files are not put into the repo.
-
-# The "main", "docs", and their children branches SHOULD ALWAYS update the /docs folder
-# - Thus there will be a .gitignore in the docs folder that will:
-#   - make sure that all files in the /docs/ folder are committed
-#   - thus the docs/.gitignore records are commented out to ensure all files in the /docs folder are committed
-
-# *
-# !.gitignore
+# The .github/workflows/djangoUvCi.yml workflow will automatically create the "build", "qa", and the "source" folders up on github
+# - note: the source directory will be built from the following steps:
+#   - the "sphinx-apidoc" command will create the rst files from the project source files into the "source" directory.
+#   - also the nox "sphinxDocs" session will copy all of the files in the "sphinx_src" directory into the "source" directory
