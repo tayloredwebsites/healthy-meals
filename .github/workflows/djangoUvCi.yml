@@ -75,7 +75,8 @@ jobs:
         sudo -u postgres psql -c "alter user healthy_meals_test with encrypted password 'Password#123';"
         sudo -u postgres createdb healthy_meals_test
         # sudo -u postgres psql -c "GRANT ALL PRIVILEGES on database healthy_meals_test to healthy_meals_test"
-        sudo -u postgres psql -c "alter database healthy_meals_test owner to healthy_meals_test;"
+        # sudo -u postgres psql -c "alter database healthy_meals_test owner to healthy_meals_test;"
+        sudo -u postgres psql -c "ALTER USER your_user CREATEDB;""
         # should not need these for only running tests
         # uv run manage.py makemigrations
         # uv run manage.py migrate
