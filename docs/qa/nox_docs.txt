@@ -5,7 +5,8 @@ Sessions defined in /Users/dave/works/python/healthy-meals/noxfile.py:
 * localUp -> Bring up Healthy Meals in local server.
 * genNoxDocs -> Generate nox documentation into a file for inclusion into Sphinx.
 * sphinxDocs -> Rebuild all documentation to Sphinx (cleans up old docs).
-* testing -> Run automated tests (with test coverage) through docker.
+* testing -> Run automated tests (with test coverage).
+* testsToConsole -> Run automated tests (with test coverage) to console.
 * dockerUpBg -> Bring up Healthy Meals in docker in background.
 * dockerUpLog -> Bring up Healthy Meals in docker, with log to console.
 * dockerEnsureUp -> to Only bring up Healthy Meals in docker if not up already.
