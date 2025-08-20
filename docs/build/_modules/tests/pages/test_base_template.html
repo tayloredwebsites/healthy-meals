@@ -1,0 +1,273 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tests.pages.test_base_template &mdash; Healthy Meals Diet Assistant  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=de96878a" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Healthy Meals Diet Assistant
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../qa.html">Quality Assurance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../py-modindex.html">Module Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../accounts.html">User Accounts Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pages.html">Misc. Pages Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tests.html">Tests Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../prog_guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs_guide.html">Documentation Guide</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Healthy Meals Diet Assistant</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">tests.pages.test_base_template</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tests.pages.test_base_template</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">accounts.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomUser</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntegrityError</span><span class="p">,</span> <span class="n">transaction</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.test</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.urls</span><span class="w"> </span><span class="kn">import</span> <span class="n">reverse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">bs4</span><span class="w"> </span><span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tests.accounts.factories</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomUserFactory</span>
+
+<div class="viewcode-block" id="test_base_not_logged_in">
+<a class="viewcode-back" href="../../../tests.pages.html#tests.pages.test_base_template.test_base_not_logged_in">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">django_db</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_base_not_logged_in</span><span class="p">():</span>
+    <span class="c1"># get starting user record count</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Starting Starting test_base_template.py::test_user_soft_delete&#39;</span><span class="p">)</span>
+
+    <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span>
+    <span class="c1"># get home page for any user (logged in or not)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">reverse</span><span class="p">(</span><span class="s2">&quot;home&quot;</span><span class="p">))</span>
+    <span class="c1"># confirm response is OK</span>
+    <span class="k">assert</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
+    <span class="c1">### Check the Header Font Sizers</span>
+    <span class="c1"># parse the html response</span>
+    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
+    <span class="c1">### confirm we are on the home page of this site</span>
+    <span class="k">assert</span> <span class="n">soup</span><span class="o">.</span><span class="n">h1</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Healthy Meals: Diet Assistant&quot;</span>
+    <span class="k">assert</span> <span class="n">soup</span><span class="o">.</span><span class="n">h2</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Home&quot;</span>
+    <span class="c1"># confirm the 5 font sizers are in the header</span>
+    <span class="n">sizer_tags</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;fontSizer&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">sizer_tags</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span>
+    <span class="c1">### Check the Header Nav bar</span>
+    <span class="c1"># confirm the navigation bar has two items - (home and about)</span>
+    <span class="n">nav_tags</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;topMenu&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">nav_tags</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="c1"># 3 top navigation items</span>
+    <span class="n">nav_home_link_tag</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;topMenu&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">nav_home_link_tag</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="n">nav_about_link_tag</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;topMenu&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;/about/&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">nav_about_link_tag</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+
+    <span class="c1"># confirm not logged in at home page with displays for user as not logged in</span>
+    <span class="n">tsm</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;topSysMenu&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;tm : </span><span class="si">{</span><span class="n">tsm</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">tsm_ne</span> <span class="o">=</span>  <span class="n">tsm</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;tsm_friend&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;tsm_ne: </span><span class="si">{</span><span class="n">tsm_ne</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="s2">&quot;Friend&quot;</span> <span class="ow">in</span> <span class="n">tsm_ne</span>
+    <span class="c1"># confirm the navigation bar has two items - (password change and logout)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">tsm</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;/accounts/login/&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">tsm</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;/accounts/signup/&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span></div>
+
+
+    <span class="c1">#############################################</span>
+    <span class="c1"># Check About page displays</span>
+    <span class="c1">#############################################</span>
+
+
+<div class="viewcode-block" id="test_base_logged_in">
+<a class="viewcode-back" href="../../../tests.pages.html#tests.pages.test_base_template.test_base_logged_in">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">django_db</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_base_logged_in</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    - Validate base template display</span>
+<span class="sd">    - ensure user with name is displayed using their name</span>
+<span class="sd">    - pytest tests/pages/test_base_template.py::test_base_logged_in</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Starting test_base_template.py::test_base_logged_in&#39;</span><span class="p">)</span>
+
+    <span class="c1">#############################################</span>
+    <span class="c1"># Check Logged in displays properly</span>
+    <span class="c1">#############################################</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span>
+
+    <span class="c1"># create a user and log in to the test system</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">CustomUserFactory</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s1">&#39;test@sample.com&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;password#123&#39;</span><span class="p">)</span>
+    <span class="c1"># # attempt to login using using login functon - always returns false</span>
+    <span class="c1"># user.set_password(&#39;password#123&#39;)</span>
+    <span class="c1"># user.save</span>
+    <span class="c1"># response = client.login(email=&#39;test@sample.com&#39;, password=&#39;password#123&#39;)</span>
+    <span class="c1"># assert response == True</span>
+
+     <span class="c1"># # unable to use standard login, must force_login</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">force_login</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+    <span class="c1"># get home page for logged in user</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">reverse</span><span class="p">(</span><span class="s2">&quot;home&quot;</span><span class="p">))</span>
+    <span class="c1"># confirm response is OK</span>
+    <span class="k">assert</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
+    <span class="c1"># parse the html response</span>
+    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
+    <span class="c1"># print(&#39;Logged in user web page:&#39;)</span>
+    <span class="c1"># print(soup.prettify())</span>
+
+    <span class="c1"># confirm logged in at home page with displays for user as logged in</span>
+    <span class="n">tsm</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;topSysMenu&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;tm : </span><span class="si">{</span><span class="n">tsm</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">tsm_ne</span> <span class="o">=</span>  <span class="n">tsm</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;tsm_name_email&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;tsm_ne: </span><span class="si">{</span><span class="n">tsm_ne</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="s2">&quot;</span><span class="si">{fname}</span><span class="s2"> </span><span class="si">{lname}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fname</span><span class="o">=</span><span class="n">user</span><span class="o">.</span><span class="n">first_name</span><span class="p">,</span> <span class="n">lname</span><span class="o">=</span><span class="n">user</span><span class="o">.</span><span class="n">last_name</span><span class="p">)</span> <span class="ow">in</span> <span class="n">tsm_ne</span>
+    <span class="c1"># confirm the navigation bar has two items - (password change and logout)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">tsm</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;/accounts/password/change/&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">tsm</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;/accounts/logout/&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span></div>
+
+
+
+<div class="viewcode-block" id="test_no_name_has_email">
+<a class="viewcode-back" href="../../../tests.pages.html#tests.pages.test_base_template.test_no_name_has_email">[docs]</a>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">django_db</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_no_name_has_email</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    - ensure user without a name is displayed using their email</span>
+<span class="sd">    - pytest tests/pages/test_base_template.py::test_no_name_has_email</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Starting test_no_name_has_email&#39;</span><span class="p">)</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span> <span class="c1"># get web client</span>
+
+    <span class="c1"># create a user and log in to the test system</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">CustomUserFactory</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s1">&#39;test@sample.com&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;password#123&#39;</span><span class="p">,</span> <span class="n">first_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+     <span class="c1"># # unable to use standard login, must force_login</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">force_login</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+
+    <span class="c1"># get home page for logged in user</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">reverse</span><span class="p">(</span><span class="s2">&quot;home&quot;</span><span class="p">))</span>
+    <span class="c1"># confirm response is OK</span>
+    <span class="k">assert</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
+    <span class="c1"># parse the html response</span>
+    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Logged in user web page:&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">soup</span><span class="o">.</span><span class="n">prettify</span><span class="p">())</span>
+
+    <span class="c1"># confirm logged in at home page with displays for user as logged in</span>
+    <span class="n">tsm</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;topSysMenu&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;tm : </span><span class="si">{</span><span class="n">tsm</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">tsm_ne</span> <span class="o">=</span>  <span class="n">tsm</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&quot;tsm_name_email&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;tsm_ne: </span><span class="si">{</span><span class="n">tsm_ne</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">first_name</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">last_name</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span> <span class="o">!=</span> <span class="kc">None</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;email: </span><span class="si">{</span><span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span> <span class="ow">in</span> <span class="n">tsm_ne</span></div>
+
+
+
+    <span class="c1">#############################################</span>
+    <span class="c1"># Check Logged in page displays email if missing first or last name</span>
+    <span class="c1">#############################################</span>
+
+    <span class="c1">#############################################</span>
+    <span class="c1"># Check Logged in - change password process works correctly</span>
+    <span class="c1">#############################################</span>
+
+    <span class="c1">#############################################</span>
+    <span class="c1"># Check log out process works correctly</span>
+    <span class="c1">#############################################</span>
+
+    <span class="c1">#############################################</span>
+    <span class="c1"># Check password change process works correctly</span>
+    <span class="c1">#############################################</span>
+
+    <span class="c1">#############################################</span>
+    <span class="c1"># Check password reset process works correctly</span>
+    <span class="c1">#############################################</span>
+
+    <span class="c1">#############################################</span>
+    <span class="c1"># Check signup process works correctly</span>
+    <span class="c1">#############################################</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, David A. Taylor @ Taylored Web Sites.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,253 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>accounts.models &mdash; Healthy Meals Diet Assistant  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=de96878a" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Healthy Meals Diet Assistant
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../qa.html">Quality Assurance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../py-modindex.html">Module Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../accounts.html">User Accounts Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pages.html">Misc. Pages Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tests.html">Tests Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../prog_guide.html">Programmers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs_guide.html">Documentation Guide</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Healthy Meals Diet Assistant</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">accounts.models</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for accounts.models</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot; Accounts model (CustomUser records) for storing users customized to allow login by email, etc.</span>
+<span class="sd">[Source: https://toxigon.com]</span>
+
+<span class="sd">Mix in SafeDeleteManager into CustomUserManager for Soft Deletes using safedelete</span>
+
+<span class="sd">- https://django-safedelete.readthedocs.io/en/latest/managers.html</span>
+<span class="sd">- safe delete of custom users example found at;</span>
+<span class="sd">- https://codeberg.org/mvlaev/Cars/src/branch/main/cars/users_app/models.py&quot;</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib.auth.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">AbstractUser</span><span class="p">,</span> <span class="n">UserManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">safedelete.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">SafeDeleteModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">safedelete.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">SOFT_DELETE_CASCADE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">safedelete.managers</span><span class="w"> </span><span class="kn">import</span> <span class="n">SafeDeleteManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">auditlog.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">auditlog</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">auditlog.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuditlogHistoryField</span>
+
+
+<div class="viewcode-block" id="CustomUserManager">
+<a class="viewcode-back" href="../../accounts.html#accounts.admin.CustomUserManager">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CustomUserManager</span><span class="p">(</span><span class="n">SafeDeleteManager</span><span class="p">,</span> <span class="n">UserManager</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Custom User model Manager class (&#39;objects&#39;).</span>
+
+<span class="sd">    Manager class for CustomUsers (Accounts).  Access to this class is through the &#39;objects&#39;</span>
+<span class="sd">    instance attribute of the CustomUser Class.</span>
+
+<span class="sd">    Soft Delete of Users are implemented through SafeDelete.</span>
+<span class="sd">    See: https://django-safedelete.readthedocs.io/en/latest/managers.html</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        param1 (class): SafeDelete manager class mixin</span>
+<span class="sd">        param2 (class): UserManager  for CustomUser Abstract Class</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CustomUserManager.all_deleted">
+<a class="viewcode-back" href="../../accounts.html#accounts.admin.CustomUserManager.all_deleted">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">all_deleted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns all soft deleted customuser records.</span>
+
+<span class="sd">        No arguments are passed to this function when calling it</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            recordset: The soft deleted custom user records.</span>
+
+<span class="sd">        Example:</span>
+
+<span class="sd">            .. code-block:: python</span>
+
+<span class="sd">                # Print out all deleted records</span>
+<span class="sd">                for rec in Account.all_deleted():</span>
+<span class="sd">                    print(rec)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_with_deleted</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">deleted__isnull</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+</div>
+
+
+<span class="c1"># Mix in SafeDeleteModel into CustomUser Model for Soft Deletes using safedelete</span>
+<span class="c1"># - https://django-safedelete.readthedocs.io/en/latest/managers.html</span>
+
+<div class="viewcode-block" id="CustomUser">
+<a class="viewcode-back" href="../../accounts.html#accounts.admin.CustomUser">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CustomUser</span><span class="p">(</span><span class="n">SafeDeleteModel</span><span class="p">,</span> <span class="n">AbstractUser</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;CustomUser model - Abstract User customized to allow login by email&#39;&#39;&#39;</span>
+    <span class="n">history</span> <span class="o">=</span> <span class="n">AuditlogHistoryField</span><span class="p">()</span>
+
+    <span class="n">_safedelete_policy</span> <span class="o">=</span> <span class="n">SOFT_DELETE_CASCADE</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Tell SafeDelete to cascade soft deletes of records (also delete child records)&#39;&#39;&#39;</span>
+
+    <span class="n">objects</span> <span class="o">=</span> <span class="n">CustomUserManager</span><span class="p">()</span>
+
+<div class="viewcode-block" id="CustomUser.rec_history_count">
+<a class="viewcode-back" href="../../accounts.html#accounts.admin.CustomUser.rec_history_count">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rec_history_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the count of all of the history records for this user.&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="CustomUser.rec_history_field_was">
+<a class="viewcode-back" href="../../accounts.html#accounts.admin.CustomUser.rec_history_field_was">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rec_history_field_was</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_rec</span><span class="p">,</span> <span class="n">field_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return a dictionary of the previous values for this field, for this record.&#39;&#39;&#39;</span>
+        <span class="n">rec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">all</span><span class="p">()[</span><span class="n">user_rec</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_field_changes</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span><span class="n">field_name</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="CustomUser.rec_history_field_is_now">
+<a class="viewcode-back" href="../../accounts.html#accounts.admin.CustomUser.rec_history_field_is_now">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rec_history_field_is_now</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_rec</span><span class="p">,</span> <span class="n">field_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39; What is the rec_history_field_is_now functionality?</span>
+
+<span class="sd">        .. todo:: Research what the accounts.models.CustomUser.rec_history_field_is_now function was supposed to do.  Is this needed?</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">rec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">all</span><span class="p">()[</span><span class="n">user_rec</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_field_changes</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span><span class="n">field_name</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="CustomUser.rec_history_field_changed">
+<a class="viewcode-back" href="../../accounts.html#accounts.admin.CustomUser.rec_history_field_changed">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rec_history_field_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_rec</span><span class="p">,</span> <span class="n">field_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the number of records that are maintained in CustomUser&#39;s history table.&#39;&#39;&#39;</span>
+        <span class="n">rec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">all</span><span class="p">()[</span><span class="n">user_rec</span><span class="p">]</span>
+        <span class="n">changes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_field_changes</span><span class="p">(</span><span class="n">rec</span><span class="p">,</span><span class="n">field_name</span><span class="p">)</span>
+        <span class="c1"># print(f&#39;changes: {changes}&#39;)</span>
+        <span class="k">return</span> <span class="n">changes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">changes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__get_field_changes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hist_rec</span><span class="p">,</span> <span class="n">field_name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return a dictionary of the history for this record&#39;s field values.&#39;&#39;&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">changes</span> <span class="o">=</span> <span class="n">hist_rec</span><span class="o">.</span><span class="n">changes_dict</span><span class="p">[</span><span class="n">field_name</span><span class="p">]</span>
+            <span class="c1"># print(f&#39;changes: {changes}&#39;)</span>
+            <span class="k">return</span> <span class="n">changes</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># there was no change, audit log does not log values that do not change, so return array of None strings</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;expected key error auditlog - no changes for field: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="s1">&#39;None&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="CustomUser.name_or_email">
+<a class="viewcode-back" href="../../accounts.html#accounts.admin.CustomUser.name_or_email">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">name_or_email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the user&#39;s full name, otherwise return their email.&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_name</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_name</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{fname}</span><span class="s2"> </span><span class="si">{lname}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">first_name</span><span class="p">,</span> <span class="n">lname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">last_name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;missing full name, using user email: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">email</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">email</span></div>
+
+    <span class="k">pass</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;What to print when printing a user&#39;s record.&#39;&#39;&#39;</span>
+        <span class="c1"># fields = [field.name for field in self._meta.fields if field.name != &#39;password&#39;]</span>
+        <span class="c1"># return &#39;, &#39;.join(f&quot;{field}: {getattr(self, field)}&quot; for field in fields)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">email</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">last_name</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">first_name</span><span class="si">}</span><span class="s1">&#39;</span></div>
+
+
+<span class="c1"># place as last line in file to ensure it gets all changes into AuditLog</span>
+<span class="n">auditlog</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">CustomUser</span><span class="p">,</span> <span class="n">exclude_fields</span><span class="o">=</span><span class="p">[</span>
+    <span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="c1"># protect this field for security reasons</span>
+    <span class="s1">&#39;last_login&#39;</span><span class="p">,</span> <span class="c1"># do not update audit log for each login</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, David A. Taylor @ Taylored Web Sites.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
