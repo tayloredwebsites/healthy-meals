@@ -77,6 +77,7 @@ def testing(session):
 
         # empty out tests and coverage directories
         session.run("uv", "run", "rm", "-fr", "./docs/qa")
+        session.run("uv", "run", "mkdir", "-p", "./docs/qa/tests")
 
         session.run("uv", "run", "coverage", "run", "-m", "pytest", "tests",
             "--junitxml=./docs/qa/tests/junit.xml",
