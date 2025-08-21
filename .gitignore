@@ -91,15 +91,15 @@ pip-delete-this-directory.txt
 # **/coverage.xml
 # **/junit.xml
 
-# # Sphinx Documentation
-# # The .github/workflows/djangoUvCi.yml workflow will automatically create the "build", "qa", and the "source" folders up on github
-# # - note: the source directory will be built from the following steps:
-# #   - the "sphinx-apidoc" command will create the rst files from the project source files into the "source" directory.
-# #   - also the nox "sphinxDocs" session will copy all of the files in the "sphinx_src" directory into the "source" directory
+# Sphinx Documentation
+# The .github/workflows/djangoUvCi.yml workflow will automatically create the "build", "qa", and the "source" folders up on github
+# - note: the source directory will be built from the following steps:
+#   - the "sphinx-apidoc" command will create the rst files from the project source files into the "source" directory.
+#   - also the nox "sphinxDocs" session will copy all of the files in the "sphinx_src" directory into the "source" directory
 
-# docs/build
-# docs/qa
-# docs/source
+docs/build
+docs/qa
+docs/source
 
 *.cover
 .hypothesis/
