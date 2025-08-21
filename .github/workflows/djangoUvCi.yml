@@ -1,0 +1,86 @@
+name: djangoUvCi
+
+on:
+  push:
+    branches: [ "main" ] #, "docs" ]
+  pull_request:
+    branches: [ "main" ] #, "docs" ]
+
+jobs:
+  uv-django-ci-pages:
+    runs-on: ${{ matrix.os}}
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.12]
+        os: [ubuntu-latest] # ,macOS-latest, windows-latest
+    env:
+      SECRET_KEY: "django-insecure-*-f)8&%jk%mc2%!4qqi0m+=%-*i8$#ule@!_!n#s1k@xnl3fz5"
+      DATABASE_URL: postgresql://postgres@localhost/healthy_meals_test
+      TEST_DATABASE_URL: postgresql://postgres@localhost/healthy_meals_test
+      DATABASE_NAME: healthy_meals_test
+      DATABASE_USER: healthy_meals_test
+      DATABASE_PASSWORD: "Password#123"
+      POSTGRES_HOST_AUTH_METHOD: trust
+      DATABASE_HOST: localhost
+      DATABASE_PORT: 5432
+      TEST_DATABASE_NAME: healthy_meals_test
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: healthy_meals_test
+      POSTGRES_USER: healthy_meals_test
+      POSTGRES_PASSWORD: "Password#123"
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install UV
+      # https://docs.astral.sh/uv/guides/integration/github/#installation
+      # https://docs.astral.sh/uv/guides/integration/github/#multiple-python-versions
+      uses: astral-sh/setup-uv@v6
+      with:
+        version: "0.8.0" #"latest"
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install the project
+      # https://docs.astral.sh/uv/guides/integration/github/#syncing-and-running
+      run: uv sync --locked --all-extras --dev
+
+    - name: install dart sass
+      # https://github.com/marketplace/actions/dart-sass
+      uses: dw-labs-org/dart-sass-gha@v1
+
+    - name: Set up nox
+      # https://nox.thea.codes/en/stable/tutorial.html
+      # https://github.com/fjwillemsen/setup-nox2
+      uses: fjwillemsen/setup-nox2@v3.0.0
+    - name: Confirm nox is installed
+      run: nox --version
+
+    - name: Setup .env file for python decouple
+      run: |
+        echo "SECRET_KEY=$SECRET_KEY" >> .env
+        echo "DATABASE_NAME=travis_ci_test" >> .env
+        echo "TEST_DATABASE_NAME=travis_ci_test" >> .env
+        echo "DATABASE_USER=travis" >> .env
+        echo "DATABASE_PASSWORD=$DATABASE_PASSWORD" >> .env
+        echo "DATABASE_HOST=localhost" >> .env
+        echo "DATABASE_PORT=5433" >> .env
+        cat .env
+    - name: Set up Database
+      run: |
+        # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md
+        sudo systemctl start postgresql.service
+        sudo -u postgres createuser healthy_meals_test
+        sudo -u postgres psql -c "ALTER USER healthy_meals_test WITH ENCRYPTED PASSWORD 'Password#123';"
+        sudo -u postgres createdb healthy_meals_test
+        # sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE healthy_meals_test TO healthy_meals_test"
+        sudo -u postgres psql -c "ALTER DATABASE healthy_meals_test OWNER TO healthy_meals_test;"
+        sudo -u postgres psql -c "ALTER USER healthy_meals_test CREATEDB;"
+        # should not need these for only running tests
+        # uv run manage.py makemigrations
+        # uv run manage.py migrate
+
+
+    - name: Run tests and generate sphinx docs
+      run: nox -s goodToGo

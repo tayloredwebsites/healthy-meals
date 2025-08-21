@@ -26,15 +26,14 @@ def setupEnv(session):
 
 @nox.session(python=("3.12"), venv_backend="none")
 def goodToGo(session):
-    #: testing goodToGo docs
     ''' Check to confirm that all is good to go (for push / commit / etc.).'''
+    # with Path.open("./requirements.txt", "w") as out:
     session.run("uv", "run", "nox", "-s", "setupEnv") # make sure session is set up if needed
     session.run("uv", "run", "nox", "-s", "sphinxDocs") # generate docs locally
     # session.run("uv", "run", "nox", "-s", "testing") # already run in sphinxDocs
-    with Path.open("./requirements.txt", "w") as out:
-        session.run("uv", "export", "--no-hashes", "--format", "requirements-txt", #  --no-header --no-annotate --no-dev
-            stdout=out, # output to requirements.txt
-        )
+    # session.run("uv", "export", "--no-hashes", "--format", "requirements-txt", #  --no-header --no-annotate --no-dev
+    #     stdout=out, # output to requirements.txt
+    # )
 
 
 @nox.session(python=("3.12"), venv_backend="none")
@@ -63,7 +62,8 @@ def sphinxDocs(session):
     session.run("uv", "run", "rm", "-fr", "./docs/build")
     session.run("uv", "run", "rm", "-fr", "./docs/source")
     session.run("uv", "run", "cp", "-R", "./docs/sphinx_src/", "./docs/source/")
-    session.run("uv", "run", "nox", "-s", "testing")
+    # session.run("uv", "run", "nox", "-s", "testing")
+    session.run("uv", "run", "nox", "-s", "testsToConsole")
     session.run("uv", "run", "nox", "-s", "genNoxDocs")
     session.run("uv", "run", "make", "apidocs", "--directory=docs")
     session.run("uv", "run", "make", "allhtml", "--directory=docs")
@@ -72,7 +72,7 @@ def sphinxDocs(session):
 
 @nox.session(python=("3.12"), venv_backend="none")
 def testing(session):
-    """Run automated tests (with test coverage) through docker."""
+    """Run automated tests (with test coverage)."""
     with Path.open("./docs/qa/coverage_run.txt", "w") as out:
 
         # empty out tests and coverage directories
@@ -96,14 +96,49 @@ def testing(session):
             "-d", "./docs/qa/coverage/html/", # html output directory
             stdout=out, # output to ran_coverage.txt
         ) # create coverage HTML files
-        session.run("uv", "run", "rm", "-f",
-            "./docs/qa/coverage/html/.gitignore", # ensure all files go to repo
-        )
+        # session.run("uv", "run", "rm", "-f",
+        #     "./docs/qa/coverage/html/.gitignore", # ensure all files go to repo
+        # )
         session.run("uv", "run", "genbadge", "coverage",
             "--input-file", "./docs/qa/coverage/coverage.xml",
             "--output-file", "./docs/qa/coverage/coverage_badge.svg",
             stdout=out, # output to ran_coverage.txt
         ) # create coverage badge
+
+
+@nox.session(python=("3.12"), venv_backend="none")
+def testsToConsole(session):
+    """Run automated tests (with test coverage) to console."""
+
+    # empty out tests and coverage directories
+    session.run("uv", "run", "rm", "-fr", "./docs/qa")
+
+    session.run("uv", "run", "coverage", "run", "-m", "pytest", "tests",
+        "--junitxml=./docs/qa/tests/junit.xml",
+        "--html=./docs/qa/tests/index.html",
+        # stdout=out, # output to ran_coverage.txt
+    ) # run tests with coverage
+    session.run("uv", "run", "genbadge", "tests",
+        "--input-file", "./docs/qa/tests/junit.xml",
+        "--output-file", "./docs/qa/tests/tests_badge.svg",
+        # stdout=out, # output to ran_coverage.txt
+    ) # create tests badge
+    session.run("uv", "run", "coverage", "xml",
+        "-o", "./docs/qa/coverage/coverage.xml", # xml output file
+        # stdout=out, # output to ran_coverage.txt
+    ) # create coverage.xml file
+    session.run("uv", "run", "coverage", "html",
+        "-d", "./docs/qa/coverage/html/", # html output directory
+        # stdout=out, # output to ran_coverage.txt
+    ) # create coverage HTML files
+    # session.run("uv", "run", "rm", "-f",
+    #     "./docs/qa/coverage/html/.gitignore", # ensure all files go to repo
+    # )
+    session.run("uv", "run", "genbadge", "coverage",
+        "--input-file", "./docs/qa/coverage/coverage.xml",
+        "--output-file", "./docs/qa/coverage/coverage_badge.svg",
+        # stdout=out, # output to ran_coverage.txt
+    ) # create coverage badge
 
 
 ##################################################################################
