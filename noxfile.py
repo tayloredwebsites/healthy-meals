@@ -27,13 +27,13 @@ def setupEnv(session):
 @nox.session(python=("3.12"), venv_backend="none")
 def goodToGo(session):
     ''' Check to confirm that all is good to go (for push / commit / etc.).'''
-    with Path.open("./requirements.txt", "w") as out:
-        session.run("uv", "run", "nox", "-s", "setupEnv") # make sure session is set up if needed
-        session.run("uv", "run", "nox", "-s", "sphinxDocs") # generate docs locally
-        # session.run("uv", "run", "nox", "-s", "testing") # already run in sphinxDocs
-        # session.run("uv", "export", "--no-hashes", "--format", "requirements-txt", #  --no-header --no-annotate --no-dev
-        #     stdout=out, # output to requirements.txt
-        # )
+    # with Path.open("./requirements.txt", "w") as out:
+    session.run("uv", "run", "nox", "-s", "setupEnv") # make sure session is set up if needed
+    session.run("uv", "run", "nox", "-s", "sphinxDocs") # generate docs locally
+    # session.run("uv", "run", "nox", "-s", "testing") # already run in sphinxDocs
+    # session.run("uv", "export", "--no-hashes", "--format", "requirements-txt", #  --no-header --no-annotate --no-dev
+    #     stdout=out, # output to requirements.txt
+    # )
 
 
 @nox.session(python=("3.12"), venv_backend="none")
