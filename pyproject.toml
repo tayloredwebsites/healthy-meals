@@ -1,8 +1,14 @@
 [project]
 name = "healthy-meals"
-version = "2025.07.20"
+version = "0.1.0"
 description = "Meet your Dietary Goals with Healthier Meals."
-readme = "README.md"
+readme = {file = "README.md", content-type = "text/markdown"}
+requires-python = "==3.12.*"
+license = { text = "AGPL-3.0-only" }
+authors = [
+  { name = "David A. Taylor", email = "tayloredwebsites@me.com" },
+]
+urls = { Repository = "https://github.com/tayloredwebsites/healthy-meals" }
 keywords = [
   "python",
   "django",
@@ -19,11 +25,6 @@ keywords = [
   "preparation",
   "cooking",
 ]
-license = { text = "AGPL-3.0-only" }
-authors = [
-  { name = "David A. Taylor", email = "tayloredwebsites@me.com" },
-]
-urls = { Repository = "https://github.com/tayloredwebsites/healthy-meals" }
 classifiers = [
   "Development Status :: 4 - Alpha",
   "Environment :: Web",
@@ -36,7 +37,6 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Topic :: Health",
 ]
-requires-python = "==3.12.*"
 # dependencies include all libraries that are used in both production and dev(elopment)
 dependencies = [
   "asgiref",
@@ -81,9 +81,7 @@ dependencies = [
 ]
 
 [dependency-groups]
-# dev dependency group include libraries only used for development
-# - "dev" includes development, testing, linting, and documentation libraries
-dev = [
+test = [
   "beautifulsoup4>=4.13.4",
   "coverage>=7.9.2",
   "factory-boy>=3.3.3",
@@ -94,6 +92,18 @@ dev = [
   "pytest-factoryboy (>=2.8.1,<3.0.0)",
   "pytest-postgresql==7.0.1",
   "pytest-html>=4.1.1",
+  # "pytest-cookies",
+  # "pytest-instafail",
+  # "pytest-xdist",
+]
+lint = [
+  # "black",
+  # "djlint",
+  # "flake8",
+  # "myst-parser>=4",
+  # "ruff==0.11.2",
+]
+docs = [
   "sphinx>=8.2.3",
   "sphinx-mdinclude>=0.6.2",
   "sphinx-rtd-theme>=3.0.2",
@@ -106,17 +116,12 @@ dev = [
   # "sphinxcontrib_django", # https://pypi.org/project/sphinxcontrib-django/
   # "sphinx_mdinclude", # https://pypi.org/project/sphinx_mdinclude/
   # "sphinx.ext.todo", # see: https://www.sphinx-doc.org/en/master/usage/extensions/todo.htm
-  # "black",
-  # "djlint",
-  # "flake8",
-  # "myst-parser>=4",
-  # "pytest-cookies",
-  # "pytest-instafail",
-  # "pytest-xdist",
-  # "ruff==0.11.2",
   # "sphinx-autobuild",
 ]
-docs = [
+# "dev" dependency group includes libraries for development
+# - "dev" includes development, testing, linting, and documentation libraries
+dev = [
+  "healthy-meals[test,lint,docs]",
 ]
 # dev dependency group include libraries only used for production
 # To Do: set this up to prepare for going to production
