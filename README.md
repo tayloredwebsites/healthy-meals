@@ -10,11 +10,9 @@
 
 ## 🚀 Base Project Features
 - Can run this project in in Docker or locally (using a local web server).
-  - todo: docker needs tlc since adding pdm
 - Uses the nox tool for automating  and simplifying tasks.
 - Uses github automations to ensure all tests pass for pull requests.
 - Django 5.1 & Python 3.12
-- Django 5.1 & Python 3.13
 - Installation via [uv](https://github.com/astral-sh/uv), [Pip](https://pypi.org/project/pip/) or [Docker](https://www.docker.com/)
 - Sign in by email and password code using [allauth](https://docs.allauth.org/en/latest/)
   - see: [Lithium starter project](https://github.com/wsvincent/lithium)
@@ -24,7 +22,7 @@
 - Debugging with [django-debug-toolbar](https://github.com/jazzband/django-debug-toolbar)
 - DRY forms with [django-crispy-forms](https://github.com/django-crispy-forms/django-crispy-forms)
 - Custom 404, 500, and 403 error pages
-- Github pages site for Documentation, Test Results, & Coverage
+- Github pages site for Documentation from Sphinx, Test Results, & Coverage reports
 - Test and coverage badges displayed in documentation and in README.md
 - Internationalization (i18n) of strings in code
 - Soft Delete functionality of database records
@@ -37,14 +35,6 @@
   - site wide font sizing tool
   - login with email/password using [allauth](https://docs.allauth.org/en/latest/)
   - signup
-
-### Base Project Features coming soon:
-- Internationalization (i18n) of strings in database
-- Static typing checks with MyPy
-- HTMX ?
-
-### Application Features coming soon:
-
 
 ## Table of Contents
 * [Installation](#installation)
@@ -74,7 +64,8 @@ Then run `migrate` to configure the initial database. The command `createsuperus
 $ uv run manage.py migrate
 $ uv run manage.py createsuperuser
 $ uv run manage.py runserver
-# Load the site at http://127.0.0.1:8000 or http://127.0.0.1:8000/admin for the admin
+# Load the site @ http://127.0.0.1:8000
+# Load the Django Admin pages @ http://127.0.0.1:8000/admin
 ```
 
 ### Pip
@@ -86,7 +77,7 @@ To use Pip, create a new virtual environment and then install all packages hoste
     $ cd healthy_meals
     $ git remote add upstream git@github.com:tayloredwebsites/healthy_meals.git
 
-###  2) ASDF Installation
+###  2) ASDF Installation (To Do: review this)
 
 See: [ASDF install](https://asdf-vm.com/guide/getting-started.html), and [ASDF configuration](https://asdf-vm.com/manage/configuration.html)
 
@@ -95,7 +86,7 @@ See: [ASDF install](https://asdf-vm.com/guide/getting-started.html), and [ASDF c
       *    python 3.12.6
       *    direnv 2.34.0
 
-### 3) installation of venv and direnv (working with asdf)
+### 3) installation of venv and direnv (working with asdf) (To Do: review this)
 
 see: # [https://mdaverde.com/posts/python-venv-direnv-asdf/](https://mdaverde.com/posts/python-venv-direnv-asdf/)
 
@@ -178,20 +169,26 @@ Note: Our Dockerfile downloads dart-sass and adds it to the path
 
 ### Local Development
 
-## Next Steps
+## Next Steps To Do:
 
-### Base (Starter) Project Possible Enhancements
+### Complete Base Project Features
+
+#### Base (Starter) Project Possible Enhancements
 - Internationalization (i18n) of strings in database
 - Static typing checks with MyPy
-- Sphinx documentation tool
-- HTMX ?
-- Other enhancements ?
+- HTMX
+- Internationalization (i18n) of strings in database
+- Static typing checks with MyPy
+- QA using ruff (and/or others?)
+- Put all in starterApp
 
-### Start Application Coding
+### Application Coding
 
-#### 1) References Table
+#### 1) Wiki (with built in references tooling)
 
-- This table will be designed to be able to have foreign key access to the references behind any particular piece of data or information on the site
+- include django_wiki project to deliver main UI to site
+
+- references table will be integrated with the wiki to provide references to information on wiki, as well as who put in the information.
 
 #### 2) Consumables Table
 
@@ -208,7 +205,7 @@ Note: Our Dockerfile downloads dart-sass and adds it to the path
   - Preservatives
 - The amounts from the aspect's sample analysis will be stored such that an average value and variance of the aspect will be available for display
 
-#### 4) and so on.
+#### 4) and so much more...
 
 ## Contributing
 
@@ -217,7 +214,7 @@ Please enter issues or pull requests (initially) for the following:
 - Base Starter branch issues, updates, or feature requests
 - Application feature requests
 
-If you are interested in contributing to the software development, please email [David Andrews Taylor of Taylored Web Sites](mailto:tayloredwebsites@me.com)
+If you have any questions, or are interested in contributing to the software development, please email [David Andrews Taylor of Taylored Web Sites](mailto:tayloredwebsites@me.com)
 
 ## License
 
