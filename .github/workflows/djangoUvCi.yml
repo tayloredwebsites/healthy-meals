@@ -84,3 +84,7 @@ jobs:
 
     - name: Run tests and generate sphinx docs
       run: nox -s goodToGo
+
+    - name: Run ghp-import
+      run: |
+        ghp-import -n -p -f docs
