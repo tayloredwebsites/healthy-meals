@@ -20,20 +20,17 @@ def setupEnv(session):
     session.run("uv", "run", "python", "manage.py", "migrate")
     session.run("uv", "run","sass", "static/scss:static/css")
     session.run("uv", "run", "python", "manage.py", "collectstatic", "--noinput")
-    # prevent commits until goodToGo runs and recreates requirements.txt (??)
-    session.run("uv", "run", "rm", "-f", "requirements.txt")
+    # prevent commits until goodToGo runs and recreates dev-requirements.txt (??)
+    session.run("uv", "run", "rm", "-f", "dev-requirements.txt")
 
 
 @nox.session(python=("3.12"), venv_backend="none")
 def goodToGo(session):
     ''' Check to confirm that all is good to go (for push / commit / etc.).'''
-    # with Path.open("./requirements.txt", "w") as out:
     session.run("uv", "run", "nox", "-s", "setupEnv") # make sure session is set up if needed
     session.run("uv", "run", "nox", "-s", "sphinxDocs") # generate docs locally
     # session.run("uv", "run", "nox", "-s", "testing") # already run in sphinxDocs
-    # session.run("uv", "export", "--no-hashes", "--format", "requirements-txt", #  --no-header --no-annotate --no-dev
-    #     stdout=out, # output to requirements.txt
-    # )
+    session.run("uv", "export", "--no-hashes", "--output-file", "dev-requirements.txt", "--group", "dev") #  --no-header --no-annotate --no-dev
 
 
 @nox.session(python=("3.12"), venv_backend="none")
@@ -269,7 +266,7 @@ def flake8(session):
 def djlint(session):
     """to run the djlint code standards tool >:(
 
-    .. :todo:: consider getting the noxfile.py flake8 automation session working cleanly
+    .. :todo:: consider getting the noxfile.py djlint automation session working cleanly
 
     """
     with Path.open("./docs/qa/djlint_run.txt", "w") as out:
