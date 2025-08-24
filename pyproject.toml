@@ -81,7 +81,7 @@ dependencies = [
 ]
 
 [dependency-groups]
-test = [
+dev = [
   "beautifulsoup4>=4.13.4",
   "coverage>=7.9.2",
   "factory-boy>=3.3.3",
@@ -95,15 +95,11 @@ test = [
   # "pytest-cookies",
   # "pytest-instafail",
   # "pytest-xdist",
-]
-lint = [
   # "black",
   # "djlint",
   # "flake8",
   # "myst-parser>=4",
   # "ruff==0.11.2",
-]
-docs = [
   "sphinx>=8.2.3",
   "sphinx-mdinclude>=0.6.2",
   "sphinx-rtd-theme>=3.0.2",
@@ -118,15 +114,15 @@ docs = [
   # "sphinx.ext.todo", # see: https://www.sphinx-doc.org/en/master/usage/extensions/todo.htm
   # "sphinx-autobuild",
 ]
-# "dev" dependency group includes libraries for development
-# - "dev" includes development, testing, linting, and documentation libraries
-dev = [
-  "healthy-meals[test,lint,docs]",
-]
-# dev dependency group include libraries only used for production
-# To Do: set this up to prepare for going to production
-prod = [
-]
+# # "dev" dependency group includes libraries for development
+# # - "dev" includes development, testing, linting, and documentation libraries
+# dev = [
+#   "healthy-meals[test,lint,docs]",
+# ]
+# # dev dependency group include libraries only used for production
+# # To Do: set this up to prepare for going to production
+# prod = [
+# ]
 
 [tool.setuptools]
 py-modules = []

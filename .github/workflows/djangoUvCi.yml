@@ -46,7 +46,8 @@ jobs:
 
     - name: Install the project
       # https://docs.astral.sh/uv/guides/integration/github/#syncing-and-running
-      run: uv sync # --locked --all-extras --dev
+      run: |
+        uv sync # --locked --all-extras --dev
 
     - name: install dart sass
       # https://github.com/marketplace/actions/dart-sass
