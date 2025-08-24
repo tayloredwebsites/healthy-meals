@@ -122,22 +122,22 @@ jobs:
   #       id: deployment
   #       uses: actions/deploy-pages@v4
 
-  # https://github.com/marketplace/actions/copy-to-branch
-  docs-to-ghp:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        # with:
-        #   fetch-depth: 0
-      - id: date
-        run: |
-          echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
-      - uses: tuftsrt/copy-to-branch@v1
-        with:
-          destination-branch: pages
-          clear-destination: "true"
-          copy: |
-            ./docs/|.
-          # replace: |
-          #   data/sample.csv|data.csv|*.ipynb
-          #   GH_ACTIONS_DATE|${{ steps.date.outputs.date }}
+  # # https://github.com/marketplace/actions/copy-to-branch
+  # docs-to-ghp:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       # with:
+  #       #   fetch-depth: 0
+  #     - id: date
+  #       run: |
+  #         echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+  #     - uses: tuftsrt/copy-to-branch@v1
+  #       with:
+  #         destination-branch: pages
+  #         clear-destination: "true"
+  #         copy: |
+  #           ./docs/|.
+  #         # replace: |
+  #         #   data/sample.csv|data.csv|*.ipynb
+  #         #   GH_ACTIONS_DATE|${{ steps.date.outputs.date }}
