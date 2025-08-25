@@ -1,0 +1,8 @@
+/* custom.css
+
+custom adjustments to sphinx_rtd_theme
+*/
+
+.wy-nav-content {
+  max-width: 100%;
+}

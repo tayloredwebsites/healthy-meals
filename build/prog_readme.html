@@ -1,0 +1,407 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>healthy_meals: Meet your Dietary Goals with Healthier Meals &mdash; Healthy Meals Diet Assistant  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=de96878a" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="To Do List" href="todos.html" />
+    <link rel="prev" title="Continuous Integration (CI)" href="prog_ci.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Healthy Meals Diet Assistant
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="qa.html">Quality Assurance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="py-modindex.html">Module Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="accounts.html">User Accounts Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages.html">Misc. Pages Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">Tests Module</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="prog_guide.html">Programmers Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="prog_nox_docs.html">Nox Automation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prog_prs.html">Pull Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prog_pdm.html">PDM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prog_ci.html">Continuous Integration</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Readme File</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#base-project-features">🚀 Base Project Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#fork-and-clone-repo-sitory-from-github">1) fork and clone repo(sitory) from github</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">uv</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">Pip</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#asdf-installation-to-do-review-this">2) ASDF Installation (To Do: review this)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#installation-of-venv-and-direnv-working-with-asdf-to-do-review-this">3) installation of venv and direnv (working with asdf) (To Do: review this)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#install-required-software-into-venv">4) install required software into .venv</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#install-postgres-locally">5) install postgres locally</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#install-docker-desktop">6) install docker desktop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#install-dart-sass">7) install dart sass</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#development-environment-guide">Development Environment Guide</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#docker-development">Docker Development</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#local-development">Local Development</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#next-steps-to-do">Next Steps To Do:</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#complete-base-project-features">Complete Base Project Features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#application-coding">Application Coding</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#contributing">Contributing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#license">License</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="todos.html">All To Do Items</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="docs_guide.html">Documentation Guide</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Healthy Meals Diet Assistant</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="prog_guide.html">Programmers Guide</a></li>
+      <li class="breadcrumb-item active">healthy_meals: Meet your Dietary Goals with Healthier Meals</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/prog_readme.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="healthy-meals-meet-your-dietary-goals-with-healthier-meals">
+<h1>healthy_meals: Meet your Dietary Goals with Healthier Meals<a class="headerlink" href="#healthy-meals-meet-your-dietary-goals-with-healthier-meals" title="Link to this heading"></a></h1>
+<a class="reference external image-reference" href="https://dl.circleci.com/status-badge/redirect/circleci/BZR3uzdbU6P9JdMbhCLMmZ/PhQcorR5decQrvhgn17chH/tree/main"><img alt="CircleCI" src="https://dl.circleci.com/status-badge/img/circleci/BZR3uzdbU6P9JdMbhCLMmZ/PhQcorR5decQrvhgn17chH/tree/main.svg?style=svg" />
+</a>
+<a class="reference external image-reference" href="https://tayloredwebsites.github.io/%E2%88%9A/qa/coverage/html/index.html"><img alt="Coverage Status" src="https://tayloredwebsites.github.io/healthy_meals_5/qa/coverage/coverage_badge.svg" />
+</a>
+<a class="reference external image-reference" href="https://tayloredwebsites.github.io/healthy_meals_5/qa/tests/index.html"><img alt="Test Status" src="https://tayloredwebsites.github.io/healthy_meals_5/qa/tests/tests_badge.svg" />
+</a>
+<a class="reference external image-reference" href="https://tayloredwebsites.github.io/healthy_meals_5/qa/flake8/html/index.html"><img alt="" src="https://tayloredwebsites.github.io/healthy_meals_5/qa/flake8/flake8_badge.svg" />
+</a>
+<a class="reference external image-reference" href="https://tayloredwebsites.github.io/healthy_meals_5/qa/mypy/index.html"><img alt="" src="https://tayloredwebsites.github.io/healthy_meals_5/mypy_badge.svg" />
+</a>
+<p><a class="reference external" href="%22https://tayloredwebsites.github.io/healthy_meals_5/index.html%22">Documentation</a></p>
+<section id="base-project-features">
+<h2>🚀 Base Project Features<a class="headerlink" href="#base-project-features" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Can run this project in in Docker or locally (using a local web server).</p></li>
+<li><p>Uses the nox tool for automating  and simplifying tasks.</p></li>
+<li><p>Uses github automations to ensure all tests pass for pull requests.</p></li>
+<li><p>Django 5.1 &amp; Python 3.12</p></li>
+<li><p>Installation via <a class="reference external" href="https://github.com/astral-sh/uv">uv</a>, <a class="reference external" href="https://pypi.org/project/pip/">Pip</a> or <a class="reference external" href="https://www.docker.com/">Docker</a></p></li>
+<li><p>Sign in by email and password code using <a class="reference external" href="https://docs.allauth.org/en/latest/">allauth</a></p>
+<ul>
+<li><p>see: <a class="reference external" href="https://github.com/wsvincent/lithium">Lithium starter project</a></p></li>
+<li><p>User authentication–log in, sign up, password reset–via <a class="reference external" href="https://github.com/pennersr/django-allauth">django-allauth</a></p></li>
+</ul>
+</li>
+<li><p>Static files configured with <a class="reference external" href="http://whitenoise.evans.io/en/stable/index.html">Whitenoise</a></p></li>
+<li><p>Styling with <a class="reference external" href="https://getbootstrap.com/">Bootstrap v5</a></p></li>
+<li><p>Debugging with <a class="reference external" href="https://github.com/jazzband/django-debug-toolbar">django-debug-toolbar</a></p></li>
+<li><p>DRY forms with <a class="reference external" href="https://github.com/django-crispy-forms/django-crispy-forms">django-crispy-forms</a></p></li>
+<li><p>Custom 404, 500, and 403 error pages</p></li>
+<li><p>Github pages site for Documentation from Sphinx, Test Results, &amp; Coverage reports</p></li>
+<li><p>Test and coverage badges displayed in documentation and in README.md</p></li>
+<li><p>Internationalization (i18n) of strings in code</p></li>
+<li><p>Soft Delete functionality of database records</p></li>
+<li><p>Sphinx documentation tool</p></li>
+<li><p>Base HTML Template</p>
+<ul>
+<li><p>sub-template blocks for pages and partial pages</p></li>
+<li><p>SCSS translation to CSS using Dart SASS</p>
+<ul>
+<li><p><a class="reference external" href="https://sass-lang.com/blog/libsass-is-deprecated/">libsass is deprecated, dart sass is recommended</a></p></li>
+<li><p><a class="reference external" href="https://sass-lang.com/documentation/cli/dart-sass/">https://sass-lang.com/dart-sass/</a></p></li>
+</ul>
+</li>
+<li><p>site wide font sizing tool</p></li>
+<li><p>login with email/password using <a class="reference external" href="https://docs.allauth.org/en/latest/">allauth</a></p></li>
+<li><p>signup</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><span class="xref std std-ref">Installation</span></p></li>
+<li><p><span class="xref std std-ref">Development Environment Guide</span></p></li>
+<li><p><span class="xref std std-ref">Next Steps</span></p></li>
+<li><p><span class="xref std std-ref">Contributing</span></p></li>
+<li><p><span class="xref std std-ref">License</span></p></li>
+</ul>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<section id="fork-and-clone-repo-sitory-from-github">
+<h3>1) fork and clone repo(sitory) from github<a class="headerlink" href="#fork-and-clone-repo-sitory-from-github" title="Link to this heading"></a></h3>
+<p>see: <a class="reference external" href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo">Fork a Github Repo</a></p>
+<p>see: <a class="reference external" href="https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository">Clone a Github Repo</a></p>
+</section>
+<section id="id2">
+<h3>uv<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<p>You can use <a class="reference external" href="https://docs.astral.sh/uv/">uv</a> to create a dedicated virtual environment.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ uv sync
+</pre></div>
+</div>
+<p>Then run <code class="docutils literal notranslate"><span class="pre">migrate</span></code> to configure the initial database. The command <code class="docutils literal notranslate"><span class="pre">createsuperuser</span></code> will create a new superuser account for accessing the admin. Execute the <code class="docutils literal notranslate"><span class="pre">runserver</span></code> command to start up the local server.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ uv run manage.py migrate
+$ uv run manage.py createsuperuser
+$ uv run manage.py runserver
+# Load the site @ http://127.0.0.1:8000
+# Load the Django Admin pages @ http://127.0.0.1:8000/admin
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>Pip<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p>To use Pip, create a new virtual environment and then install all packages hosted in <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code>. Run <code class="docutils literal notranslate"><span class="pre">migrate</span></code> to configure the initial database. and <code class="docutils literal notranslate"><span class="pre">createsuperuser</span></code> to create a new superuser account for accessing the admin. Execute the <code class="docutils literal notranslate"><span class="pre">runserver</span></code> command to start up the local server.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>* Note: &lt;code folder&gt; is your projects parent directory
+$ cd &lt;code folder&gt;
+$ git clone git@github.com:&lt;yourGithubUsername&gt;/healthy_meals.git
+$ cd healthy_meals
+$ git remote add upstream git@github.com:tayloredwebsites/healthy_meals.git
+</pre></div>
+</div>
+</section>
+<section id="asdf-installation-to-do-review-this">
+<h3>2) ASDF Installation (To Do: review this)<a class="headerlink" href="#asdf-installation-to-do-review-this" title="Link to this heading"></a></h3>
+<p>See: <a class="reference external" href="https://asdf-vm.com/guide/getting-started.html">ASDF install</a>, and <a class="reference external" href="https://asdf-vm.com/manage/configuration.html">ASDF configuration</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cat .tool-versions
+  * you should see (with possible version differences):
+  *    python 3.12.6
+  *    direnv 2.34.0
+</pre></div>
+</div>
+</section>
+<section id="installation-of-venv-and-direnv-working-with-asdf-to-do-review-this">
+<h3>3) installation of venv and direnv (working with asdf) (To Do: review this)<a class="headerlink" href="#installation-of-venv-and-direnv-working-with-asdf-to-do-review-this" title="Link to this heading"></a></h3>
+<p>see: # <a class="reference external" href="https://mdaverde.com/posts/python-venv-direnv-asdf/">https://mdaverde.com/posts/python-venv-direnv-asdf/</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>* Note: &lt;code folder&gt; is your projects parent directory
+$ cd &lt;code folder&gt;/healthy-meals  # see clone repo from github
+$ python -m venv .venv
+$ echo &quot;export VIRTUAL_ENV=$PWD/.venv\nexport PATH=$PWD/.venv/bin:\$PATH\nexport PYTHONPATH=$PWD&quot; &gt; .envrc
+  * You should get: &quot;direnv: error &lt;code folder&gt;/healthy-meals/.envrc is blocked. Run `direnv allow` to approve its content&quot;
+$ direnv allow
+$ which python
+  * you should see python3 running from the .venv directory
+  *   &lt;code folder&gt;/healthy_meals/.venv/bin/python3
+$ cd ..
+$ cd healthy_meals
+  * you will see the following messages entering your directory
+  *   direnv: loading .../.envrc
+  *   direnv: export +PYTHONPATH +VIRTUAL_ENV ~PATH
+$ cat .envrc
+  * You should see the following listing for your .envrc file
+  * export VIRTUAL_ENV=&lt;code folder&gt;/healthy-meals/.venv
+  * export PATH=&lt;code folder&gt;/healthy-meals/.venv/bin:$PATH
+  * export PYTHONPATH=&lt;code folder&gt;/healthy-meals/.venv/bin
+</pre></div>
+</div>
+</section>
+<section id="install-required-software-into-venv">
+<h3>4) install required software into .venv<a class="headerlink" href="#install-required-software-into-venv" title="Link to this heading"></a></h3>
+<p>Note: We use <a class="reference external" href="https://nox.thea.codes/en/stable/index.html">nox</a> for automation of tasks</p>
+<p>Instructions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ nox -s setupEnv
+</pre></div>
+</div>
+</section>
+<section id="install-postgres-locally">
+<h3>5) install postgres locally<a class="headerlink" href="#install-postgres-locally" title="Link to this heading"></a></h3>
+<p>Note: you may skip this step if you will be only using docker.</p>
+<p>for brew install on mac: <a class="reference external" href="https://daily-dev-tips.com/posts/installing-postgresql-on-a-mac-with-homebrew/">https://daily-dev-tips.com/posts/installing-postgresql-on-a-mac-with-homebrew/</a></p>
+<p>for other installs: <a class="reference external" href="https://www.enterprisedb.com/docs/supported-open-source/postgresql/installing/">https://www.enterprisedb.com/docs/supported-open-source/postgresql/installing/</a></p>
+<p>Note: If you are having problems with installing postgres onto your computer, consider using docker desktop</p>
+</section>
+<section id="install-docker-desktop">
+<h3>6) install docker desktop<a class="headerlink" href="#install-docker-desktop" title="Link to this heading"></a></h3>
+<p>Note: You may skip this step if you are only developing locally, or have the Docker Daemon or Desktop installed already.</p>
+</section>
+<section id="install-dart-sass">
+<h3>7) install dart sass<a class="headerlink" href="#install-dart-sass" title="Link to this heading"></a></h3>
+<p>Note: the libsass used by many python programs has been deprecated and dart-sass is now recommended</p>
+<p>See: <a class="reference external" href="https://sass-lang.com/blog/libsass-is-deprecated/">https://sass-lang.com/blog/libsass-is-deprecated/</a></p>
+<p>see: <a class="reference external" href="https://github.com/sass/dart-sass">https://github.com/sass/dart-sass</a></p>
+<p>See: <a class="reference external" href="https://sass-lang.com/install/">https://sass-lang.com/install/</a></p>
+<section id="mac">
+<h4>Mac<a class="headerlink" href="#mac" title="Link to this heading"></a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">brew</span> <span class="n">install</span> <span class="n">sass</span><span class="o">/</span><span class="n">sass</span><span class="o">/</span><span class="n">sass</span>
+<span class="o">%</span> <span class="n">sass</span> <span class="o">--</span><span class="n">version</span>
+</pre></div>
+</div>
+</section>
+<section id="linux-using-snap">
+<h4>Linux (using Snap)<a class="headerlink" href="#linux-using-snap" title="Link to this heading"></a></h4>
+<p>See: <a class="reference external" href="https://snapcraft.io/dart-sass">https://snapcraft.io/dart-sass</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo snap install dart-sass
+% sass --version
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h4>docker<a class="headerlink" href="#id5" title="Link to this heading"></a></h4>
+<p>Note: Our Dockerfile downloads dart-sass and adds it to the path</p>
+</section>
+</section>
+</section>
+<section id="development-environment-guide">
+<h2>Development Environment Guide<a class="headerlink" href="#development-environment-guide" title="Link to this heading"></a></h2>
+<section id="docker-development">
+<h3>Docker Development<a class="headerlink" href="#docker-development" title="Link to this heading"></a></h3>
+</section>
+<section id="local-development">
+<h3>Local Development<a class="headerlink" href="#local-development" title="Link to this heading"></a></h3>
+</section>
+</section>
+<section id="next-steps-to-do">
+<h2>Next Steps To Do:<a class="headerlink" href="#next-steps-to-do" title="Link to this heading"></a></h2>
+<section id="complete-base-project-features">
+<h3>Complete Base Project Features<a class="headerlink" href="#complete-base-project-features" title="Link to this heading"></a></h3>
+<section id="base-starter-project-possible-enhancements">
+<h4>Base (Starter) Project Possible Enhancements<a class="headerlink" href="#base-starter-project-possible-enhancements" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Internationalization (i18n) of strings in database</p></li>
+<li><p>Static typing checks with MyPy</p></li>
+<li><p>HTMX</p></li>
+<li><p>Internationalization (i18n) of strings in database</p></li>
+<li><p>Static typing checks with MyPy</p></li>
+<li><p>QA using ruff (and/or others?)</p></li>
+<li><p>Put all in starterApp</p></li>
+</ul>
+</section>
+</section>
+<section id="application-coding">
+<h3>Application Coding<a class="headerlink" href="#application-coding" title="Link to this heading"></a></h3>
+<section id="wiki-with-built-in-references-tooling">
+<h4>1) Wiki (with built in references tooling)<a class="headerlink" href="#wiki-with-built-in-references-tooling" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>include django_wiki project to deliver main UI to site</p></li>
+<li><p>references table will be integrated with the wiki to provide references to information on wiki, as well as who put in the information.</p></li>
+</ul>
+</section>
+<section id="consumables-table">
+<h4>2) Consumables Table<a class="headerlink" href="#consumables-table" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>This table will be designed so that all variety of consumables such as food, supplements, herbs, medicines will be in this system.</p></li>
+</ul>
+</section>
+<section id="consumable-aspects-table">
+<h4>3) Consumable Aspects Table<a class="headerlink" href="#consumable-aspects-table" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>This table will be used to keep track of the important dietary aspects of consumables.  This will include:</p>
+<ul>
+<li><p>Vitamins</p></li>
+<li><p>Minerals</p></li>
+<li><p>Nutrients</p></li>
+<li><p>Anti-nutrients (such as oxalates).</p></li>
+<li><p>Additives</p></li>
+<li><p>Preservatives</p></li>
+</ul>
+</li>
+<li><p>The amounts from the aspect’s sample analysis will be stored such that an average value and variance of the aspect will be available for display</p></li>
+</ul>
+</section>
+<section id="and-so-much-more">
+<h4>4) and so much more…<a class="headerlink" href="#and-so-much-more" title="Link to this heading"></a></h4>
+</section>
+</section>
+</section>
+<section id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Link to this heading"></a></h2>
+<p>Please enter issues or pull requests (initially) for the following:</p>
+<ul class="simple">
+<li><p>Documentation issues, updates, or feature requests</p></li>
+<li><p>Base Starter branch issues, updates, or feature requests</p></li>
+<li><p>Application feature requests</p></li>
+</ul>
+<p>If you have any questions, or are interested in contributing to the software development, please email <a class="reference external" href="mailto:tayloredwebsites&#37;&#52;&#48;me&#46;com">David Andrews Taylor of Taylored Web Sites</a></p>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading"></a></h2>
+<p>Copyright (C) 2025 David A. Taylor of Taylored Web Sites (tayloredwebsites.com)
+Licensed under <a class="reference external" href="https://opensource.org/license/agpl-v3/">AGPL-3.0-only</a>, and let me know how you wish to help.</p>
+<p><a class="reference external" href="https://www.fsf.org/bulletin/2021/fall/the-fundamentals-of-the-agplv3">Why AGPL V3?</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="prog_ci.html" class="btn btn-neutral float-left" title="Continuous Integration (CI)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="todos.html" class="btn btn-neutral float-right" title="To Do List" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, David A. Taylor @ Taylored Web Sites.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
