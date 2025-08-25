@@ -88,41 +88,47 @@ jobs:
     - name: Run tests and generate sphinx docs
       run: nox -s goodToGo
 
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs  # Directory to deploy
+
     # # To Do: create a step to run the docs with the name of uv-django-gh-pages
     # - name: Run ghp-import
     #   run: |
     #     ghp-import -n -p -f docs
 
-  # deploy to github pages
-  # see: https://github.com/actions/deploy-pages
-  deploy-to-pages:
-    # Add a dependency to the build job
-    needs: uv-django-ci
+  # # deploy to github pages
+  # # see: https://github.com/actions/deploy-pages
+  # deploy-to-pages:
+  #   # Add a dependency to the build job
+  #   needs: uv-django-ci
 
-    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-    permissions:
-      pages: write      # to deploy to Pages
-      id-token: write   # to verify the deployment originates from an appropriate source
+  #   # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+  #   permissions:
+  #     pages: write      # to deploy to Pages
+  #     id-token: write   # to verify the deployment originates from an appropriate source
 
-    # Deploy to the github-pages environment
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  #   # Deploy to the github-pages environment
+  #   environment:
+  #     name: github-pages
+  #     url: ${{ steps.deployment.outputs.page_url }}
 
-    # Specify runner
-    runs-on: ubuntu-latest
+  #   # Specify runner
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          # Upload entire repository
-          path: './docs'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+  #   steps:
+  #     - name: Setup Pages
+  #       uses: actions/configure-pages@v5
+  #     - name: Upload artifact
+  #       uses: actions/upload-pages-artifact@v3
+  #       with:
+  #         # Upload entire repository
+  #         path: './docs'
+  #     - name: Deploy to GitHub Pages
+  #       id: deployment
+  #       uses: actions/deploy-pages@v4
 
   # # https://github.com/marketplace/actions/copy-to-branch
   # docs-to-ghp:
