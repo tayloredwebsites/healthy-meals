@@ -88,11 +88,11 @@ jobs:
     - name: Run tests and generate sphinx docs
       run: nox -s goodToGo
 
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v4
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./docs  # Directory to deploy
+    # - name: Deploy to GitHub Pages
+    #   uses: peaceiris/actions-gh-pages@v4
+    #   with:
+    #     github_token: ${{ secrets.GITHUB_TOKEN }}
+    #     publish_dir: ./docs  # Directory to deploy
 
     # # To Do: create a step to run the docs with the name of uv-django-gh-pages
     # - name: Run ghp-import
