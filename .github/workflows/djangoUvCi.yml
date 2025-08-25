@@ -1,10 +1,11 @@
 name: djangoUvCi
 
 on:
-  push:
-    branches: [ "main" ]
+  # push:
+  #   branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "starter" ]
+    types: [opened, synchronize, edited, ready_for_review, reopened]
 
 jobs:
   # To Do: remame this step to uv-django-build when splitting this job into multiple jobs
@@ -45,7 +46,8 @@ jobs:
 
     - name: Install the project
       # https://docs.astral.sh/uv/guides/integration/github/#syncing-and-running
-      run: uv sync --locked --all-extras --dev
+      run: |
+        uv sync # --locked --all-extras --dev
 
     - name: install dart sass
       # https://github.com/marketplace/actions/dart-sass
@@ -86,12 +88,18 @@ jobs:
     - name: Run tests and generate sphinx docs
       run: nox -s goodToGo
 
+    # - name: Deploy to GitHub Pages
+    #   uses: peaceiris/actions-gh-pages@v4
+    #   with:
+    #     github_token: ${{ secrets.GITHUB_TOKEN }}
+    #     publish_dir: ./docs  # Directory to deploy
+
     # # To Do: create a step to run the docs with the name of uv-django-gh-pages
     # - name: Run ghp-import
     #   run: |
     #     ghp-import -n -p -f docs
 
-  # # Single deploy job since we're just deploying
+  # # deploy to github pages
   # # see: https://github.com/actions/deploy-pages
   # deploy-to-pages:
   #   # Add a dependency to the build job
