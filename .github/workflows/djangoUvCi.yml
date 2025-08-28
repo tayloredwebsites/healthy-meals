@@ -1,11 +1,30 @@
 name: djangoUvCi
+# workflow to run tests and build sphinx docs then create artifact to upload to pages
+# runs on any pull request create or update main (or some other branches)
+# To Do: zip and unzip the hm-docs-folder
 
 on:
-  # push:
-  #   branches: [ "main" ]
+  push:
+    branches: [ "main" ]
   pull_request:
     # branches: [ "starter" ]
     types: [opened, synchronize, edited, ready_for_review, reopened]
+
+# to be able to run this workflow manually from the Actions tab
+workflow_dispatch:
+
+# Allow only one concurrent workflow, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 
 jobs:
   # To Do: remame this step to uv-django-build when splitting this job into multiple jobs
@@ -83,10 +102,25 @@ jobs:
         # should not need these for only running tests
         # uv run manage.py makemigrations
         # uv run manage.py migrate
-
-    # To Do: create a step to run the docs with the name of uv-django-sphinx-docs
     - name: Run tests and generate sphinx docs
       run: nox -s goodToGo
+    - name: Deploy to Github Pages
+      uses: actions/deploy-pages@v4
+      with:
+        folder: docs
+
+  # # job to dispatch gzipped docs folder for docsToPages workflow
+  # Dispatch:
+  #   needs: uv-django-ci
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: write
+  #   steps:
+  #     - name: upload docs folder
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: hm-docs-folder
+  #         path: ./docs
 
     # - name: Deploy to GitHub Pages
     #   uses: peaceiris/actions-gh-pages@v4
