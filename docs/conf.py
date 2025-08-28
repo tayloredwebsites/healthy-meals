@@ -25,7 +25,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "healthy_meals.settings")
 django.setup()
 
 project = 'Healthy Meals Diet Assistant'
-copyright = '2025, David A. Taylor @ Taylored Web Sites'
+copyright = '2025, AGPL-3.0-only, David A. Taylor @ Taylored Web Sites'
 author = 'David A. Taylor @ Taylored Web Sites'
 
 # ----------------------------------------------------------------------------

@@ -71,4 +71,4 @@ def test_user_soft_delete():
     assert CustomUser.objects.all_deleted().count() == 0
     print(f'Restored: {test_users[0].email}: {test_users[0].username}, {test_users[0].deleted}')
 
-    ''' .. :todo: test to make sure that undeleted users can still log into the system and function properly'''
+    ''' .. :Todo test to make sure that undeleted users can still log into the system and function properly'''
