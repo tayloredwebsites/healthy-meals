@@ -473,16 +473,6 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
-    { name = "healthy-meals" },
-]
-docs = [
-    { name = "sphinx" },
-    { name = "sphinx-mdinclude" },
-    { name = "sphinx-rtd-theme" },
-    { name = "sphinxcontrib-django" },
-    { name = "sphinxcontrib-napoleon" },
-]
-test = [
     { name = "beautifulsoup4" },
     { name = "coverage" },
     { name = "factory-boy" },
@@ -493,6 +483,11 @@ test = [
     { name = "pytest-factoryboy" },
     { name = "pytest-html" },
     { name = "pytest-postgresql" },
+    { name = "sphinx" },
+    { name = "sphinx-mdinclude" },
+    { name = "sphinx-rtd-theme" },
+    { name = "sphinxcontrib-django" },
+    { name = "sphinxcontrib-napoleon" },
 ]
 
 [package.metadata]
@@ -531,17 +526,7 @@ requires-dist = [
 ]
 
 [package.metadata.requires-dev]
-dev = [{ name = "healthy-meals", extras = ["test", "lint", "docs"] }]
-docs = [
-    { name = "sphinx", specifier = ">=8.2.3" },
-    { name = "sphinx-mdinclude", specifier = ">=0.6.2" },
-    { name = "sphinx-rtd-theme", specifier = ">=3.0.2" },
-    { name = "sphinxcontrib-django", specifier = ">=2.5" },
-    { name = "sphinxcontrib-napoleon", specifier = ">=0.7" },
-]
-lint = []
-prod = []
-test = [
+dev = [
     { name = "beautifulsoup4", specifier = ">=4.13.4" },
     { name = "coverage", specifier = ">=7.9.2" },
     { name = "factory-boy", specifier = ">=3.3.3" },
@@ -552,6 +537,11 @@ test = [
     { name = "pytest-factoryboy", specifier = ">=2.8.1,<3.0.0" },
     { name = "pytest-html", specifier = ">=4.1.1" },
     { name = "pytest-postgresql", specifier = "==7.0.1" },
+    { name = "sphinx", specifier = ">=8.2.3" },
+    { name = "sphinx-mdinclude", specifier = ">=0.6.2" },
+    { name = "sphinx-rtd-theme", specifier = ">=3.0.2" },
+    { name = "sphinxcontrib-django", specifier = ">=2.5" },
+    { name = "sphinxcontrib-napoleon", specifier = ">=0.7" },
 ]
 
 [[package]]

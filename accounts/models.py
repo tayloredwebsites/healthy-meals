@@ -73,7 +73,7 @@ class CustomUser(SafeDeleteModel, AbstractUser):
     def rec_history_field_is_now(self, user_rec, field_name):
         ''' What is the rec_history_field_is_now functionality?
 
-        .. todo:: Research what the accounts.models.CustomUser.rec_history_field_is_now function was supposed to do.  Is this needed?
+        .. ToDo:: Research what the accounts.models.CustomUser.rec_history_field_is_now function was supposed to do.  Is this needed?
 
         '''
         rec = self.history.all()[user_rec]

@@ -1,4 +1,4 @@
-Quality Assurance Guide
+Quality Assurance (QA) Guide
 =======================
 
 
@@ -9,8 +9,8 @@ Note: Click on image to see report.
 
 .. raw:: html
 
-    <a href="../../docs/qa/tests/index.html">
-        <img src="https://tayloredwebsites.github.io/healthy_meals_5/qa/tests/tests_badge.svg" alt="Test Run Report"/></a>
+    <a href="tests/index.html">
+        <img src="tests/tests_badge.svg" alt="Automated Testing Report"/></a>
 
 Testing Coverage Report
 ------------------------------------------------------------------------
@@ -19,5 +19,5 @@ Note: Coverage includes Template HTML files. Click on image to see report.
 
 .. raw:: html
 
-    <a href="../../docs/qa/coverage/html/index.html">
-        <img src="https://tayloredwebsites.github.io/healthy_meals_5/qa/coverage/coverage_badge.svg" alt="Coverage Report"/></a>
+    <a href="coverage/html/index.html">
+        <img src="coverage/coverage_badge.svg" alt="Tests Coverage Report"/></a>

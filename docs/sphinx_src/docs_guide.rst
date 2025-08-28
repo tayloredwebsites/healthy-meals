@@ -128,7 +128,7 @@ The Sphinx toolset provides the capability of doing this using:
 - the `sphinx autodoc <https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html>`_ extension to extract the documentation as well as extract documentation from the code itself.
 - the `sphinx apidoc <https://www.sphinx-doc.org/en/master/man/sphinx-apidoc.html>`_ extension to generate the documentation in the form of .rst (`restructured text <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html>`_ files).
 - the `sphinx napoleon <https://sphinxcontrib-napoleon.readthedocs.io/en/latest/>`_ extension to allow for rst, google or numpy style documentation.
-- the `sphinx todo <https://www.sphinx-doc.org/en/master/usage/extensions/todo.html>`_ extension allows for the accumulation of all doc strings (or entries in .rst files) marked as :code:`.. :todo:` to be automatically included into a `To Do List`.
+- the `sphinx todo <https://www.sphinx-doc.org/en/master/usage/extensions/todo.html>`_ extension allows for the accumulation of all doc strings (or entries in .rst files) marked as :code:`.. :Todo` to be automatically included into a `To Do List`.
 
 
 Understanding the custom .rst anc config files (docs_guide.rst, index.rst, and conf.py)

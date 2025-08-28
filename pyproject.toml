@@ -165,13 +165,15 @@ omit = [
     ".venv/*",
     "*LICENSE.txt",
     "*README.txt",
-    "requirements*.txt",
+    "*requirements*.txt",
     "docs/*",
     ".nox/*",
     "noxfile.py",
     "*/__init__.py"
 ]
-plugins = ["django_coverage_plugin"] # include .html and .txt files
+# include (check coverage on) .html and .txt files
+# To Do: write automated tests for .html and .txt files
+plugins = ["django_coverage_plugin"]
 data_file = "docs/qa/coverage/.coverage"
 
 [tool.coverage.report]
@@ -227,7 +229,7 @@ template_extensions = ["html", "txt", ""]
 # close_void_tags = true
 # format_css = true
 # format_js = true
-# # TODO: remove T002 when fixed https://github.com/djlint/djLint/issues/687
+# # Todo remove T002 when fixed https://github.com/djlint/djLint/issues/687
 # ignore = "H006,H030,H031,T002"
 # include = "H017,H035"
 # indent = 2

@@ -1,19 +1,27 @@
 # healthy_meals: Meet your Dietary Goals with Healthier Meals
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/circleci/BZR3uzdbU6P9JdMbhCLMmZ/PhQcorR5decQrvhgn17chH/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/BZR3uzdbU6P9JdMbhCLMmZ/PhQcorR5decQrvhgn17chH/tree/main)
-[![Coverage Status](https://tayloredwebsites.github.io/healthy_meals_5/qa/coverage/coverage_badge.svg)](https://tayloredwebsites.github.io/√/qa/coverage/html/index.html)
-[![Test Status](https://tayloredwebsites.github.io/healthy_meals_5/qa/tests/tests_badge.svg)](https://tayloredwebsites.github.io/healthy_meals_5/qa/tests/index.html)
-[![](https://tayloredwebsites.github.io/healthy_meals_5/qa/flake8/flake8_badge.svg)](https://tayloredwebsites.github.io/healthy_meals_5/qa/flake8/html/index.html)
-[![](https://tayloredwebsites.github.io/healthy_meals_5/mypy_badge.svg)](https://tayloredwebsites.github.io/healthy_meals_5/qa/mypy/index.html)
+[![Coverage Status](https://tayloredwebsites.github.io/healthy_meals/coverage/coverage_badge.svg)](https://tayloredwebsites.github.io/healthy_meals/coverage/html/index.html)
+[![Test Status](https://tayloredwebsites.github.io/healthy_meals/tests/tests_badge.svg)](https://tayloredwebsites.github.io/healthy_meals/tests/index.html)
+[![](https://tayloredwebsites.github.io/healthy_meals/flake8/flake8_badge.svg)](https://tayloredwebsites.github.io/healthy_meals/flake8/html/index.html)
+[![](https://tayloredwebsites.github.io/healthy_meals/mypy/mypy_badge.svg)](https://tayloredwebsites.github.io/healthy_meals/mypy/index.html)
 
-[Documentation]("https://tayloredwebsites.github.io/healthy_meals_5/index.html")
+[Documentation]("https://tayloredwebsites.github.io/healthy_meals/index.html")
 
-## 🚀 Base Project Features
-- Can run this project in in Docker or locally (using a local web server).
+## 🚀 Project Features
+
+### 🚀 Keeping a Branch for Starter Base Projects
+
+#### Features for basic website kept in the "BaseStarter" branch
+- Runs in Docker or locally (using a local web server).
 - Uses the nox tool for automating  and simplifying tasks.
-- Uses github automations to ensure all tests pass for pull requests.
+- Uses github actions to ensure all tests pass for pull requests.
+  - Test and coverage badges displayed in documentation and in README.md
+- Github pages site for Documentation from Sphinx, Test Passing, & Coverage reports
+  - Sphinx generated documentation generated in github action and deployed to github pages
+  - Automated Testing documentation generated in github action and deployed to github pages
 - Django 5.1 & Python 3.12
-- Installation via [uv](https://github.com/astral-sh/uv), [Pip](https://pypi.org/project/pip/) or [Docker](https://www.docker.com/)
+- Installation via [uv](https://github.com/astral-sh/uv), or [Docker](https://www.docker.com/)
 - Sign in by email and password code using [allauth](https://docs.allauth.org/en/latest/)
   - see: [Lithium starter project](https://github.com/wsvincent/lithium)
   - User authentication--log in, sign up, password reset--via [django-allauth](https://github.com/pennersr/django-allauth)
@@ -22,11 +30,8 @@
 - Debugging with [django-debug-toolbar](https://github.com/jazzband/django-debug-toolbar)
 - DRY forms with [django-crispy-forms](https://github.com/django-crispy-forms/django-crispy-forms)
 - Custom 404, 500, and 403 error pages
-- Github pages site for Documentation from Sphinx, Test Results, & Coverage reports
-- Test and coverage badges displayed in documentation and in README.md
 - Internationalization (i18n) of strings in code
 - Soft Delete functionality of database records
-- Sphinx documentation tool
 - Base HTML Template
   - sub-template blocks for pages and partial pages
   - SCSS translation to CSS using Dart SASS
@@ -36,14 +41,65 @@
   - login with email/password using [allauth](https://docs.allauth.org/en/latest/)
   - signup
 
-## Table of Contents
+#### Starter Base Project Todo List
+
+[To Do List in Documentation](file:///Users/dave/works/python/healthy-meals/docs/build/todos.html)
+
+## 🚀 Features for Main Project
+
+### Completed Main Project Features
+
+Sorry, we are just starting this.
+
+### Main Project Features Next Steps
+
+#### 0) Good ways to get started with this project:
+
+- Documentation Updates
+  - make a pull request with documentation updates
+  - document the process to make documentation update pull requests
+- Feature Requests
+  - Please feel free to make feature requests
+    - note we are very early in project development
+- Development and Documentation standards enhancements
+  - suggestions for standards are best done earlier in project development
+  - getting QA tools working, such as MyPy or Ruff will be greatly apprecieated.
+
+
+#### Major Step 1) Wiki (with built in references tooling)
+
+- include django_wiki project to deliver main UI to site
+
+- references table will be integrated with the wiki to provide references to information on wiki, as well as who put in the information.
+
+#### Major Step 2) Consumables Table
+
+- This table will be designed so that all variety of consumables such as food, supplements, herbs, medicines will be in this system.
+
+#### Major Step 3) Consumable Aspects Table
+
+- This table will be used to keep track of the important dietary aspects of consumables.  This will include:
+  - Vitamins
+  - Minerals
+  - Nutrients
+  - Anti-nutrients (such as oxalates).
+  - Additives
+  - Preservatives
+- The amounts from the aspect's sample analysis will be stored such that an average value and variance of the aspect will be available for display
+
+#### Major Step 4) and so much more...
+
+
+## 🚀 Table of Contents
 * [Installation](#installation)
 * [Development Environment Guide](#development-environment-guide)
 * [Next Steps](#next-steps)
 * [Contributing](#contributing)
 * [License](#license)
 
-## Installation
+## 🚀 Installation
+
+To Do: review installation instructions
 
 ### 1) fork and clone repo(sitory) from github
 
@@ -169,45 +225,7 @@ Note: Our Dockerfile downloads dart-sass and adds it to the path
 
 ### Local Development
 
-## Next Steps To Do:
-
-### Complete Base Project Features
-
-#### Base (Starter) Project Possible Enhancements
-- Internationalization (i18n) of strings in database
-- Static typing checks with MyPy
-- HTMX
-- Internationalization (i18n) of strings in database
-- Static typing checks with MyPy
-- QA using ruff (and/or others?)
-- Put all in starterApp
-
-### Application Coding
-
-#### 1) Wiki (with built in references tooling)
-
-- include django_wiki project to deliver main UI to site
-
-- references table will be integrated with the wiki to provide references to information on wiki, as well as who put in the information.
-
-#### 2) Consumables Table
-
-- This table will be designed so that all variety of consumables such as food, supplements, herbs, medicines will be in this system.
-
-#### 3) Consumable Aspects Table
-
-- This table will be used to keep track of the important dietary aspects of consumables.  This will include:
-  - Vitamins
-  - Minerals
-  - Nutrients
-  - Anti-nutrients (such as oxalates).
-  - Additives
-  - Preservatives
-- The amounts from the aspect's sample analysis will be stored such that an average value and variance of the aspect will be available for display
-
-#### 4) and so much more...
-
-## Contributing
+## 🚀 Contributing
 
 Please enter issues or pull requests (initially) for the following:
 - Documentation issues, updates, or feature requests
@@ -216,7 +234,7 @@ Please enter issues or pull requests (initially) for the following:
 
 If you have any questions, or are interested in contributing to the software development, please email [David Andrews Taylor of Taylored Web Sites](mailto:tayloredwebsites@me.com)
 
-## License
+## 🚀 License
 
 Copyright (C) 2025 David A. Taylor of Taylored Web Sites (tayloredwebsites.com)
 Licensed under [AGPL-3.0-only](https://opensource.org/license/agpl-v3/), and let me know how you wish to help.

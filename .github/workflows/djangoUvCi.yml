@@ -7,7 +7,6 @@ on:
   push:
     branches: [ "main" ]
   pull_request:
-    # branches: [ "starter" ]
     types: [opened, synchronize, edited, ready_for_review, reopened]
 
   # to be able to run this workflow manually from the Actions tab
@@ -109,88 +108,8 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        # Upload docs repository
-        path: 'docs'
+        # Upload docs built documentation and QA reports
+        path: 'docs/build'
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
-
-    # - name: Deploy to Github Pages
-    #   uses: actions/deploy-pages@v4
-    #   with:
-    #     folder: docs
-
-  # # job to dispatch gzipped docs folder for docsToPages workflow
-  # Dispatch:
-  #   needs: uv-django-ci
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: write
-  #   steps:
-  #     - name: upload docs folder
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: hm-docs-folder
-  #         path: ./docs
-
-    # - name: Deploy to GitHub Pages
-    #   uses: peaceiris/actions-gh-pages@v4
-    #   with:
-    #     github_token: ${{ secrets.GITHUB_TOKEN }}
-    #     publish_dir: ./docs  # Directory to deploy
-
-    # # To Do: create a step to run the docs with the name of uv-django-gh-pages
-    # - name: Run ghp-import
-    #   run: |
-    #     ghp-import -n -p -f docs
-
-  # # deploy to github pages
-  # # see: https://github.com/actions/deploy-pages
-  # deploy-to-pages:
-  #   # Add a dependency to the build job
-  #   needs: uv-django-ci
-
-  #   # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-  #   permissions:
-  #     pages: write      # to deploy to Pages
-  #     id-token: write   # to verify the deployment originates from an appropriate source
-
-  #   # Deploy to the github-pages environment
-  #   environment:
-  #     name: github-pages
-  #     url: ${{ steps.deployment.outputs.page_url }}
-
-  #   # Specify runner
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #     - name: Setup Pages
-  #       uses: actions/configure-pages@v5
-  #     - name: Upload artifact
-  #       uses: actions/upload-pages-artifact@v3
-  #       with:
-  #         # Upload entire repository
-  #         path: './docs'
-  #     - name: Deploy to GitHub Pages
-  #       id: deployment
-  #       uses: actions/deploy-pages@v4
-
-  # # https://github.com/marketplace/actions/copy-to-branch
-  # docs-to-ghp:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       # with:
-  #       #   fetch-depth: 0
-  #     - id: date
-  #       run: |
-  #         echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
-  #     - uses: tuftsrt/copy-to-branch@v1
-  #       with:
-  #         destination-branch: pages
-  #         clear-destination: "true"
-  #         copy: |
-  #           ./docs/|.
-  #         # replace: |
-  #         #   data/sample.csv|data.csv|*.ipynb
-  #         #   GH_ACTIONS_DATE|${{ steps.date.outputs.date }}
