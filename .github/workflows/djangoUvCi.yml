@@ -10,8 +10,8 @@ on:
     # branches: [ "starter" ]
     types: [opened, synchronize, edited, ready_for_review, reopened]
 
-# to be able to run this workflow manually from the Actions tab
-workflow_dispatch:
+  # to be able to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 # Allow only one concurrent workflow, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow production deployments to complete.
@@ -104,10 +104,21 @@ jobs:
         # uv run manage.py migrate
     - name: Run tests and generate sphinx docs
       run: nox -s goodToGo
-    - name: Deploy to Github Pages
-      uses: actions/deploy-pages@v4
+    - name: Setup Pages
+      uses: actions/configure-pages@v5
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
       with:
-        folder: docs
+        # Upload docs repository
+        path: 'docs'
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
+
+    # - name: Deploy to Github Pages
+    #   uses: actions/deploy-pages@v4
+    #   with:
+    #     folder: docs
 
   # # job to dispatch gzipped docs folder for docsToPages workflow
   # Dispatch:
