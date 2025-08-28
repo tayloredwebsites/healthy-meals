@@ -1,12 +1,12 @@
-# healthy_meals: Meet your Dietary Goals with Healthier Meals
+# healthy-meals: Meet your Dietary Goals with Healthier Meals
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/circleci/BZR3uzdbU6P9JdMbhCLMmZ/PhQcorR5decQrvhgn17chH/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/BZR3uzdbU6P9JdMbhCLMmZ/PhQcorR5decQrvhgn17chH/tree/main)
-[![Coverage Status](https://tayloredwebsites.github.io/healthy_meals/coverage/coverage_badge.svg)](https://tayloredwebsites.github.io/healthy_meals/coverage/html/index.html)
-[![Test Status](https://tayloredwebsites.github.io/healthy_meals/tests/tests_badge.svg)](https://tayloredwebsites.github.io/healthy_meals/tests/index.html)
-[![](https://tayloredwebsites.github.io/healthy_meals/flake8/flake8_badge.svg)](https://tayloredwebsites.github.io/healthy_meals/flake8/html/index.html)
-[![](https://tayloredwebsites.github.io/healthy_meals/mypy/mypy_badge.svg)](https://tayloredwebsites.github.io/healthy_meals/mypy/index.html)
+[![Coverage Status](https://tayloredwebsites.github.io/healthy-meals/coverage/coverage_badge.svg)](https://tayloredwebsites.github.io/healthy-meals/coverage/html/index.html)
+[![Test Status](https://tayloredwebsites.github.io/healthy-meals/tests/tests_badge.svg)](https://tayloredwebsites.github.io/healthy-meals/tests/index.html)
+[![](https://tayloredwebsites.github.io/healthy-meals/flake8/flake8_badge.svg)](https://tayloredwebsites.github.io/healthy-meals/flake8/html/index.html)
+[![](https://tayloredwebsites.github.io/healthy-meals/mypy/mypy_badge.svg)](https://tayloredwebsites.github.io/healthy-meals/mypy/index.html)
 
-[Documentation]("https://tayloredwebsites.github.io/healthy_meals/index.html")
+[Documentation](https://tayloredwebsites.github.io/healthy-meals/index.html)
 
 ## 🚀 Project Features
 
@@ -41,9 +41,9 @@
   - login with email/password using [allauth](https://docs.allauth.org/en/latest/)
   - signup
 
-#### Starter Base Project Todo List
+### Starter Base Project Todo List
 
-[To Do List in Documentation](file:///Users/dave/works/python/healthy-meals/docs/build/todos.html)
+[To Do List in Documentation](https://tayloredwebsites.github.io/healthy-meals/todos.html)
 
 ## 🚀 Features for Main Project
 
@@ -129,9 +129,9 @@ To use Pip, create a new virtual environment and then install all packages hoste
 
     * Note: <code folder> is your projects parent directory
     $ cd <code folder>
-    $ git clone git@github.com:<yourGithubUsername>/healthy_meals.git
-    $ cd healthy_meals
-    $ git remote add upstream git@github.com:tayloredwebsites/healthy_meals.git
+    $ git clone git@github.com:<yourGithubUsername>/healthy-meals.git
+    $ cd healthy-meals
+    $ git remote add upstream git@github.com:tayloredwebsites/healthy-meals.git
 
 ###  2) ASDF Installation (To Do: review this)
 
@@ -155,9 +155,9 @@ see: # [https://mdaverde.com/posts/python-venv-direnv-asdf/](https://mdaverde.co
     $ direnv allow
     $ which python
       * you should see python3 running from the .venv directory
-      *   <code folder>/healthy_meals/.venv/bin/python3
+      *   <code folder>/healthy-meals/.venv/bin/python3
     $ cd ..
-    $ cd healthy_meals
+    $ cd healthy-meals
       * you will see the following messages entering your directory
       *   direnv: loading .../.envrc
       *   direnv: export +PYTHONPATH +VIRTUAL_ENV ~PATH
