@@ -1,7 +1,8 @@
 # healthy-meals: Meet your Dietary Goals with Healthier Meals
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/circleci/BZR3uzdbU6P9JdMbhCLMmZ/PhQcorR5decQrvhgn17chH/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/BZR3uzdbU6P9JdMbhCLMmZ/PhQcorR5decQrvhgn17chH/tree/main)
-[![Coverage Status](https://tayloredwebsites.github.io/healthy-meals/coverage/coverage_badge.svg)](https://tayloredwebsites.github.io/healthy-meals/coverage/html/index.html)
+[![Python Code Coverage Status](https://tayloredwebsites.github.io/healthy-meals/coverage_py/coverage_badge.svg)](https://tayloredwebsites.github.io/healthy-meals/coverage_py/html/index.html)
+[![All Coverage Status](https://tayloredwebsites.github.io/healthy-meals/coverage/coverage_badge.svg)](https://tayloredwebsites.github.io/healthy-meals/coverage/html/index.html)
 [![Test Status](https://tayloredwebsites.github.io/healthy-meals/tests/tests_badge.svg)](https://tayloredwebsites.github.io/healthy-meals/tests/index.html)
 [![](https://tayloredwebsites.github.io/healthy-meals/flake8/flake8_badge.svg)](https://tayloredwebsites.github.io/healthy-meals/flake8/html/index.html)
 [![](https://tayloredwebsites.github.io/healthy-meals/mypy/mypy_badge.svg)](https://tayloredwebsites.github.io/healthy-meals/mypy/index.html)
@@ -15,6 +16,9 @@
 #### Features for basic website kept in the "BaseStarter" branch
 - Runs in Docker or locally (using a local web server).
 - Uses the nox tool for automating  and simplifying tasks.
+- Automated testing with 100% coverage of all python code.
+  - Testing using either testcase and pytest.
+  - efficient HTML coverage testing using beautiful soup.
 - Uses github actions to ensure all tests pass for pull requests.
   - Test and coverage badges displayed in documentation and in README.md
 - Github pages site for Documentation from Sphinx, Test Passing, & Coverage reports
