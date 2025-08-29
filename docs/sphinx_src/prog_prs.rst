@@ -67,3 +67,11 @@ To Do for Base Starter Branch:
   - turn on other ci from github
   - Prevent pull requests if errors (??)
   - prevent pull requests if coverage below a certain percentage (??)
+  - document the process to make documentation update pull requests
+  - getting MyPy QA tool working
+  - getting Ruff QA tool working
+  - getting any other QA tool working
+  - deploy of documentation to pages cleanup
+    - do not overwrite production docs during pull requests
+    - consider removing or producing a pull request version of documentation for review
+    - delete docs build artifact after upload to pages (maybe it needs a name and delete artifact action?)

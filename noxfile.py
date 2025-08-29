@@ -68,8 +68,8 @@ def sphinxDocs(session):
     as modules are manually entered into index.rst
 
     """
-    # session.run("uv", "run", "nox", "-s", "testing")
-    session.run("uv", "run", "nox", "-s", "testsToConsole")
+    session.run("uv", "run", "nox", "-s", "testing")
+    # session.run("uv", "run", "nox", "-s", "testsToConsole")
     session.run("uv", "run", "nox", "-s", "genNoxDocs")
     session.run("uv", "run", "make", "apidocs", "--directory=docs")
     session.run("uv", "run", "make", "allhtml", "--directory=docs")
@@ -79,65 +79,15 @@ def sphinxDocs(session):
 @nox.session(python=("3.12"), venv_backend="none")
 def testing(session):
     """Run automated tests (with test coverage)."""
-    with Path.open("./docs/build/coverage_run.txt", "w") as out:
-
-        # empty out tests and coverage directories
-        session.run("uv", "run", "rm", "-fr", "./docs/build/tests")
-        session.run("uv", "run", "rm", "-fr", "./docs/build/coverage")
-        session.run("uv", "run", "rm", "-fr", "./docs/build/coverage_py")
-        session.run("uv", "run", "mkdir", "-p", "./docs/build/coverage/html/")
-        session.run("uv", "run", "mkdir", "-p", "./docs/build/coverage_py/html/")
-        session.run("uv", "run", "mkdir", "-p", "./docs/build/tests/")
-
-        session.run("uv", "run", "coverage", "run", "-m", "pytest", "tests",
-            "--junitxml=./docs/build/tests/junit.xml",
-            "--html=./docs/build/tests/index.html",
-            stdout=out, # output to ran_coverage.txt
-        ) # run tests with coverage
-        session.run("uv", "run", "genbadge", "tests",
-            "--input-file", "./docs/build/tests/junit.xml",
-            "--output-file", "./docs/build/tests/tests_badge.svg",
-            stdout=out, # output to ran_coverage.txt
-        ) # create tests badge
-        session.run("uv", "run", "coverage", "xml",
-            "-o", "./docs/build/coverage/coverage.xml", # xml output file
-            stdout=out, # output to ran_coverage.txt
-        ) # create coverage.xml file
-        session.run("uv", "run", "coverage", "html",
-            "-d", "./docs/build/coverage/html/", # html output directory
-            stdout=out, # output to ran_coverage.txt
-        ) # create coverage HTML files
-        session.run("uv", "run", "genbadge", "coverage", "--name", "total coverage",
-            "--input-file", "./docs/build/coverage/coverage.xml",
-            "--output-file", "./docs/build/coverage/coverage_badge.svg",
-            stdout=out, # output to ran_coverage.txt
-        ) # create coverage badge
-        session.run("uv", "run", "coverage", "xml", "--omit=*.html,*.txt",
-            "-o", "./docs/build/coverage_py/coverage.xml", # xml output file
-            stdout=out, # output to ran_coverage.txt
-        ) # create python only coverage.xml file
-        session.run("uv", "run", "coverage", "html", "--omit=*.html,*.txt",
-            "-d", "./docs/build/coverage_py/html/", # html output directory
-            stdout=out, # output to ran_coverage.txt
-        ) # create python only coverage HTML files
-        session.run("uv", "run", "genbadge", "coverage", "--name", "python coverage",
-            "--input-file", "./docs/build/coverage_py/coverage.xml",
-            "--output-file", "./docs/build/coverage_py/coverage_badge.svg",
-            stdout=out, # output to ran_coverage.txt
-        ) # create coverage badge
-        # session.run("uv", "run", "rm", "-f",
-        #     "./docs/qa/coverage/html/.gitignore", # ensure all files go to repo
-        # )
-
-
-'''Todo see if we can avoid code duplication with the testing session'''
-@nox.session(python=("3.12"), venv_backend="none")
-def testsToConsole(session):
-    """Run automated tests (with test coverage) to console."""
+    # with Path.open("./docs/build/coverage_run.txt", "w") as out:
 
     # empty out tests and coverage directories
     session.run("uv", "run", "rm", "-fr", "./docs/build/tests")
     session.run("uv", "run", "rm", "-fr", "./docs/build/coverage")
+    session.run("uv", "run", "rm", "-fr", "./docs/build/coverage_py")
+    session.run("uv", "run", "mkdir", "-p", "./docs/build/coverage/html/")
+    session.run("uv", "run", "mkdir", "-p", "./docs/build/coverage_py/html/")
+    session.run("uv", "run", "mkdir", "-p", "./docs/build/tests/")
 
     session.run("uv", "run", "coverage", "run", "-m", "pytest", "tests",
         "--junitxml=./docs/build/tests/junit.xml",
@@ -157,14 +107,68 @@ def testsToConsole(session):
         "-d", "./docs/build/coverage/html/", # html output directory
         # stdout=out, # output to ran_coverage.txt
     ) # create coverage HTML files
-    # session.run("uv", "run", "rm", "-f",
-    #     "./docs/qa/coverage/html/.gitignore", # ensure all files go to repo
-    # )
-    session.run("uv", "run", "genbadge", "coverage",
+    session.run("uv", "run", "genbadge", "coverage", "--name", "total coverage",
         "--input-file", "./docs/build/coverage/coverage.xml",
         "--output-file", "./docs/build/coverage/coverage_badge.svg",
         # stdout=out, # output to ran_coverage.txt
     ) # create coverage badge
+    session.run("uv", "run", "coverage", "xml", "--omit=*.html,*.txt",
+        "-o", "./docs/build/coverage_py/coverage.xml", # xml output file
+        # stdout=out, # output to ran_coverage.txt
+    ) # create python only coverage.xml file
+    session.run("uv", "run", "coverage", "html", "--omit=*.html,*.txt",
+        "-d", "./docs/build/coverage_py/html/", # html output directory
+        # stdout=out, # output to ran_coverage.txt
+    ) # create python only coverage HTML files
+    session.run("uv", "run", "genbadge", "coverage", "--name", "python coverage",
+        "--input-file", "./docs/build/coverage_py/coverage.xml",
+        "--output-file", "./docs/build/coverage_py/coverage_badge.svg",
+        # stdout=out, # output to ran_coverage.txt
+    ) # create coverage badge
+    # session.run("uv", "run", "rm", "-f",
+    #     "./docs/qa/coverage/html/.gitignore", # ensure all files go to repo
+    # )
+
+
+# '''Todo see if we can avoid code duplication with the testing session'''
+# @nox.session(python=("3.12"), venv_backend="none")
+# def testsToConsole(session):
+#     """Run automated tests (with test coverage) to console."""
+
+#     # empty out tests and coverage directories
+#         session.run("uv", "run", "rm", "-fr", "./docs/build/tests")
+#         session.run("uv", "run", "rm", "-fr", "./docs/build/coverage")
+#         session.run("uv", "run", "rm", "-fr", "./docs/build/coverage_py")
+#         session.run("uv", "run", "mkdir", "-p", "./docs/build/coverage/html/")
+#         session.run("uv", "run", "mkdir", "-p", "./docs/build/coverage_py/html/")
+#         session.run("uv", "run", "mkdir", "-p", "./docs/build/tests/")
+
+#     session.run("uv", "run", "coverage", "run", "-m", "pytest", "tests",
+#         "--junitxml=./docs/build/tests/junit.xml",
+#         "--html=./docs/build/tests/index.html",
+#         # stdout=out, # output to ran_coverage.txt
+#     ) # run tests with coverage
+#     session.run("uv", "run", "genbadge", "tests",
+#         "--input-file", "./docs/build/tests/junit.xml",
+#         "--output-file", "./docs/build/tests/tests_badge.svg",
+#         # stdout=out, # output to ran_coverage.txt
+#     ) # create tests badge
+#     session.run("uv", "run", "coverage", "xml",
+#         "-o", "./docs/build/coverage/coverage.xml", # xml output file
+#         # stdout=out, # output to ran_coverage.txt
+#     ) # create coverage.xml file
+#     session.run("uv", "run", "coverage", "html",
+#         "-d", "./docs/build/coverage/html/", # html output directory
+#         # stdout=out, # output to ran_coverage.txt
+#     ) # create coverage HTML files
+#     # session.run("uv", "run", "rm", "-f",
+#     #     "./docs/qa/coverage/html/.gitignore", # ensure all files go to repo
+#     # )
+#     session.run("uv", "run", "genbadge", "coverage",
+#         "--input-file", "./docs/build/coverage/coverage.xml",
+#         "--output-file", "./docs/build/coverage/coverage_badge.svg",
+#         # stdout=out, # output to ran_coverage.txt
+#     ) # create coverage badge
 
 
 ##################################################################################
