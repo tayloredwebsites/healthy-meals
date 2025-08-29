@@ -61,7 +61,6 @@ To Do for Base Starter Branch:
 
   - confirm nox commands work in docker
   - obtain 100% coverage HTML code
-  - produce two coverage reports one each for: {py code, HTML code}
   - determine preferred testing approach: {pytest or testcase}
     - https://blog.jetbrains.com/pycharm/2024/03/pytest-vs-unittest/
   - turn on circle ci validation
