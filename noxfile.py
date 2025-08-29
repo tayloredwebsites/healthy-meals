@@ -20,8 +20,9 @@ def setupEnv(session):
     session.run("uv", "run", "rm", "-fr", "./docs/build")
     session.run("uv", "run", "rm", "-fr", "./docs/source")
     session.run("uv", "run", "cp", "-R", "./docs/sphinx_src/", "./docs/source/")
-    session.run("uv", "run", "mkdir", "-p", "./docs/coverage/html/")
-    session.run("uv", "run", "mkdir", "-p", "./docs/tests/")
+    session.run("uv", "run", "mkdir", "-p", "./docs/build/coverage/html/")
+    session.run("uv", "run", "mkdir", "-p", "./docs/build/coverage_py/html/")
+    session.run("uv", "run", "mkdir", "-p", "./docs/build/tests/")
     # Make sure that the database is fully migrated before proceeding
     '''Todo is there a better way that doesn't having this being run so often?'''
     session.run("uv", "run", "python", "manage.py", "makemigrations")
@@ -83,6 +84,10 @@ def testing(session):
         # empty out tests and coverage directories
         session.run("uv", "run", "rm", "-fr", "./docs/build/tests")
         session.run("uv", "run", "rm", "-fr", "./docs/build/coverage")
+        session.run("uv", "run", "rm", "-fr", "./docs/build/coverage_py")
+        session.run("uv", "run", "mkdir", "-p", "./docs/build/coverage/html/")
+        session.run("uv", "run", "mkdir", "-p", "./docs/build/coverage_py/html/")
+        session.run("uv", "run", "mkdir", "-p", "./docs/build/tests/")
 
         session.run("uv", "run", "coverage", "run", "-m", "pytest", "tests",
             "--junitxml=./docs/build/tests/junit.xml",
@@ -102,14 +107,27 @@ def testing(session):
             "-d", "./docs/build/coverage/html/", # html output directory
             stdout=out, # output to ran_coverage.txt
         ) # create coverage HTML files
-        # session.run("uv", "run", "rm", "-f",
-        #     "./docs/qa/coverage/html/.gitignore", # ensure all files go to repo
-        # )
-        session.run("uv", "run", "genbadge", "coverage",
+        session.run("uv", "run", "genbadge", "coverage", "--name", "total coverage",
             "--input-file", "./docs/build/coverage/coverage.xml",
             "--output-file", "./docs/build/coverage/coverage_badge.svg",
             stdout=out, # output to ran_coverage.txt
         ) # create coverage badge
+        session.run("uv", "run", "coverage", "xml", "--omit=*.html,*.txt",
+            "-o", "./docs/build/coverage_py/coverage.xml", # xml output file
+            stdout=out, # output to ran_coverage.txt
+        ) # create python only coverage.xml file
+        session.run("uv", "run", "coverage", "html", "--omit=*.html,*.txt",
+            "-d", "./docs/build/coverage_py/html/", # html output directory
+            stdout=out, # output to ran_coverage.txt
+        ) # create python only coverage HTML files
+        session.run("uv", "run", "genbadge", "coverage", "--name", "python coverage",
+            "--input-file", "./docs/build/coverage_py/coverage.xml",
+            "--output-file", "./docs/build/coverage_py/coverage_badge.svg",
+            stdout=out, # output to ran_coverage.txt
+        ) # create coverage badge
+        # session.run("uv", "run", "rm", "-f",
+        #     "./docs/qa/coverage/html/.gitignore", # ensure all files go to repo
+        # )
 
 
 '''Todo see if we can avoid code duplication with the testing session'''

@@ -12,7 +12,16 @@ Note: Click on image to see report.
     <a href="tests/index.html">
         <img src="tests/tests_badge.svg" alt="Automated Testing Report"/></a>
 
-Testing Coverage Report
+Python Code Coverage Report
+------------------------------------------------------------------------
+
+.. raw:: html
+
+    <a href="coverage_py/html/index.html">
+        <img src="coverage_py/coverage_badge.svg" alt="Python Code Coverage Report"/></a>
+
+
+Python Code & HTML Coverage Report
 ------------------------------------------------------------------------
 
 Note: Coverage includes Template HTML files. Click on image to see report.
@@ -20,4 +29,4 @@ Note: Coverage includes Template HTML files. Click on image to see report.
 .. raw:: html
 
     <a href="coverage/html/index.html">
-        <img src="coverage/coverage_badge.svg" alt="Tests Coverage Report"/></a>
+        <img src="coverage/coverage_badge.svg" alt="Python Code & HTML Coverage Report"/></a>
