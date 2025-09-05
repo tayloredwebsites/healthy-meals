@@ -14,24 +14,17 @@ import subprocess
 @nox.session(python=("3.12"), venv_backend="none")
 def setupEnv(session):
     '''Set up external environment as needed (no venv)).'''
-    # os.environ.update({"NOX_DEFAULT_VENV_BACKEND": "none"})
-    # first clean up documentation generated folders
-    # Note: documentation generated folder are written to by both sphinx and automated testing
-    session.run("uv", "run", "rm", "-fr", "./docs/build")
-    session.run("uv", "run", "rm", "-fr", "./docs/source")
-    session.run("uv", "run", "cp", "-R", "./docs/sphinx_src/", "./docs/source/")
-    session.run("uv", "run", "mkdir", "-p", "./docs/build/coverage/html/")
-    session.run("uv", "run", "mkdir", "-p", "./docs/build/coverage_py/html/")
-    session.run("uv", "run", "mkdir", "-p", "./docs/build/tests/")
+    # empty out tests and coverage directories
+    session.run("uv", "run", "nox", "-s", "cleanDocsBuild")
     # Make sure that the database is fully migrated before proceeding
-    '''Todo is there a better way that doesn't having this being run so often?'''
+    '''todo:: is there a better way that doesn't having this being run so often?'''
     session.run("uv", "run", "python", "manage.py", "makemigrations")
     session.run("uv", "run", "python", "manage.py", "migrate")
     # convert all SCSS files to CSS
     session.run("uv", "run","sass", "static/scss:static/css")
     # collect all static files to be deployed to the website
     session.run("uv", "run", "python", "manage.py", "collectstatic", "--noinput")
-    '''Todo prevent commits until goodToGo runs and recreates dev-requirements.txt (??)'''
+    '''todo:: prevent commits until goodToGo runs and recreates dev-requirements.txt (is this possible?)'''
     # session.run("uv", "run", "rm", "-f", "dev-requirements.txt")
 
 
@@ -76,99 +69,69 @@ def sphinxDocs(session):
     # session.run("uv", "run", "mv", "./docs/build/*", "./docs/")
 
 
-@nox.session(python=("3.12"), venv_backend="none")
-def testing(session):
-    """Run automated tests (with test coverage)."""
-    # with Path.open("./docs/build/coverage_run.txt", "w") as out:
 
-    # empty out tests and coverage directories
-    session.run("uv", "run", "rm", "-fr", "./docs/build/tests")
-    session.run("uv", "run", "rm", "-fr", "./docs/build/coverage")
-    session.run("uv", "run", "rm", "-fr", "./docs/build/coverage_py")
+
+@nox.session(python=("3.12"), venv_backend="none")
+def cleanDocsBuild(session):
+    """Clean out docs/build directories for running tests and coverage"""
+   # empty out tests and coverage directories
+    # Note: documentation generated folder are written to by both sphinx and automated testing
+    session.run("uv", "run", "rm", "-fr", "./docs/build")
+    # session.run("uv", "run", "rm", "-fr", "./docs/build/tests")
+    # session.run("uv", "run", "rm", "-fr", "./docs/build/coverage")
+    # session.run("uv", "run", "rm", "-fr", "./docs/build/coverage_py")
     session.run("uv", "run", "mkdir", "-p", "./docs/build/coverage/html/")
     session.run("uv", "run", "mkdir", "-p", "./docs/build/coverage_py/html/")
     session.run("uv", "run", "mkdir", "-p", "./docs/build/tests/")
+    session.run("uv", "run", "rm", "-fr", "./docs/source")
+    session.run("uv", "run", "mkdir", "-p", "./docs/source/")
+    session.run("uv", "run", "cp", "-R", "./docs/sphinx_src/", "./docs/source/")
+
+
+@nox.session(python=("3.12"), venv_backend="none")
+def testing(session):
+    """Run automated tests (with test coverage)."""
+    # not logging: with Path.open("./docs/build/coverage_run.txt", "w") as out:
+
+    # empty out tests and coverage directories
+    session.run("uv", "run", "nox", "-s", "cleanDocsBuild")
 
     session.run("uv", "run", "coverage", "run", "-m", "pytest", "tests",
         "--junitxml=./docs/build/tests/junit.xml",
         "--html=./docs/build/tests/index.html",
-        # stdout=out, # output to ran_coverage.txt
+        # not logging: stdout=out, # output to ran_coverage.txt
     ) # run tests with coverage
     session.run("uv", "run", "genbadge", "tests",
         "--input-file", "./docs/build/tests/junit.xml",
         "--output-file", "./docs/build/tests/tests_badge.svg",
-        # stdout=out, # output to ran_coverage.txt
+        # not logging: stdout=out, # output to ran_coverage.txt
     ) # create tests badge
     session.run("uv", "run", "coverage", "xml",
         "-o", "./docs/build/coverage/coverage.xml", # xml output file
-        # stdout=out, # output to ran_coverage.txt
+        # not logging: stdout=out, # output to ran_coverage.txt
     ) # create coverage.xml file
     session.run("uv", "run", "coverage", "html",
         "-d", "./docs/build/coverage/html/", # html output directory
-        # stdout=out, # output to ran_coverage.txt
+        # not logging: stdout=out, # output to ran_coverage.txt
     ) # create coverage HTML files
     session.run("uv", "run", "genbadge", "coverage", "--name", "total coverage",
         "--input-file", "./docs/build/coverage/coverage.xml",
         "--output-file", "./docs/build/coverage/coverage_badge.svg",
-        # stdout=out, # output to ran_coverage.txt
+        # not logging: stdout=out, # output to ran_coverage.txt
     ) # create coverage badge
     session.run("uv", "run", "coverage", "xml", "--omit=*.html,*.txt",
         "-o", "./docs/build/coverage_py/coverage.xml", # xml output file
-        # stdout=out, # output to ran_coverage.txt
+        # not logging: stdout=out, # output to ran_coverage.txt
     ) # create python only coverage.xml file
     session.run("uv", "run", "coverage", "html", "--omit=*.html,*.txt",
         "-d", "./docs/build/coverage_py/html/", # html output directory
-        # stdout=out, # output to ran_coverage.txt
+        # not logging: stdout=out, # output to ran_coverage.txt
     ) # create python only coverage HTML files
     session.run("uv", "run", "genbadge", "coverage", "--name", "python coverage",
         "--input-file", "./docs/build/coverage_py/coverage.xml",
         "--output-file", "./docs/build/coverage_py/coverage_badge.svg",
-        # stdout=out, # output to ran_coverage.txt
+        # not logging:  stdout=out, # output to ran_coverage.txt
     ) # create coverage badge
-    # session.run("uv", "run", "rm", "-f",
-    #     "./docs/qa/coverage/html/.gitignore", # ensure all files go to repo
-    # )
-
-
-# '''Todo see if we can avoid code duplication with the testing session'''
-# @nox.session(python=("3.12"), venv_backend="none")
-# def testsToConsole(session):
-#     """Run automated tests (with test coverage) to console."""
-
-#     # empty out tests and coverage directories
-#         session.run("uv", "run", "rm", "-fr", "./docs/build/tests")
-#         session.run("uv", "run", "rm", "-fr", "./docs/build/coverage")
-#         session.run("uv", "run", "rm", "-fr", "./docs/build/coverage_py")
-#         session.run("uv", "run", "mkdir", "-p", "./docs/build/coverage/html/")
-#         session.run("uv", "run", "mkdir", "-p", "./docs/build/coverage_py/html/")
-#         session.run("uv", "run", "mkdir", "-p", "./docs/build/tests/")
-
-#     session.run("uv", "run", "coverage", "run", "-m", "pytest", "tests",
-#         "--junitxml=./docs/build/tests/junit.xml",
-#         "--html=./docs/build/tests/index.html",
-#         # stdout=out, # output to ran_coverage.txt
-#     ) # run tests with coverage
-#     session.run("uv", "run", "genbadge", "tests",
-#         "--input-file", "./docs/build/tests/junit.xml",
-#         "--output-file", "./docs/build/tests/tests_badge.svg",
-#         # stdout=out, # output to ran_coverage.txt
-#     ) # create tests badge
-#     session.run("uv", "run", "coverage", "xml",
-#         "-o", "./docs/build/coverage/coverage.xml", # xml output file
-#         # stdout=out, # output to ran_coverage.txt
-#     ) # create coverage.xml file
-#     session.run("uv", "run", "coverage", "html",
-#         "-d", "./docs/build/coverage/html/", # html output directory
-#         # stdout=out, # output to ran_coverage.txt
-#     ) # create coverage HTML files
-#     # session.run("uv", "run", "rm", "-f",
-#     #     "./docs/qa/coverage/html/.gitignore", # ensure all files go to repo
-#     # )
-#     session.run("uv", "run", "genbadge", "coverage",
-#         "--input-file", "./docs/build/coverage/coverage.xml",
-#         "--output-file", "./docs/build/coverage/coverage_badge.svg",
-#         # stdout=out, # output to ran_coverage.txt
-#     ) # create coverage badge
 
 
 ##################################################################################
@@ -201,7 +164,7 @@ def dockerExecSh(session):
 @nox.session(python=("3.12"), venv_backend="none")
 def dockerExecPsql(session):
     '''to Open psql in db container.'''
-    session.run("docker", "exec", "-it", "healthy-meals-web-1", "psql", "--dbname=healthy_meals", "--username=healthy_meals")
+    session.run("docker", "exec", "-it", "healthy-meals-pg_db-1", "psql", "--dbname=healthy_meals", "--username=healthy_meals")
 
 
 @nox.session(python=("3.12"), venv_backend="none")
@@ -219,7 +182,10 @@ def dockerDown(session):
 
 @nox.session(python=("3.12"), venv_backend="none")
 def dockerSphinxDocs(session):
-    """to Generate the documentation using Sphinx through docker."""
+    """to Generate the documentation using Sphinx through docker.
+
+    Note: Requires healthy-meals docker container to be running
+    """
     session.run("docker", "exec", "-it", "healthy-meals-web-1", "nox", "-s", "sphinxDocs")
 
 
@@ -231,7 +197,10 @@ def dockerLogs(session):
 
 @nox.session(python=("3.12"), venv_backend="none")
 def dockerTesting(session):
-    """to Run automated tests (localtest) through docker."""
+    """to Run automated tests (localtest) through docker.
+
+    Note: Requires healthy-meals docker container to be running
+    """
     session.run("docker", "exec", "-it", "healthy-meals-web-1", "nox", "-s", "testing")
 
 

@@ -1,9 +1,9 @@
 Quality Assurance (QA) Guide
-=======================
+============================
 
 
 Testing Summary Report
-----------------------------------------------------------------------
+----------------------
 
 Note: Click on image to see report.
 
@@ -13,7 +13,7 @@ Note: Click on image to see report.
         <img src="tests/tests_badge.svg" alt="Automated Testing Report"/></a>
 
 Python Code Coverage Report
-------------------------------------------------------------------------
+---------------------------
 
 .. raw:: html
 
@@ -22,7 +22,7 @@ Python Code Coverage Report
 
 
 Python Code & HTML Coverage Report
-------------------------------------------------------------------------
+----------------------------------
 
 Note: Coverage includes Template HTML files. Click on image to see report.
 

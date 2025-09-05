@@ -9,9 +9,17 @@
 
 [Documentation](https://tayloredwebsites.github.io/healthy-meals/index.html)
 
-## 🚀 Project Features
+## 🚀 Table of Contents
+* [Project Features](#project-features)
+* [Next Steps for Project](#next-steps-for-project)
+* [Installation](#installation)
+* [Development Environment Guide](#development-environment-guide)
+* [Contributing](#contributing)
+* [License](#license)
 
-### 🚀 Keeping a Branch for Starter Base Projects
+## Project Features
+
+### Keeping a Branch for Starter Base Projects
 
 #### Features for basic website kept in the "BaseStarter" branch
 - Runs in Docker or locally (using a local web server).
@@ -49,7 +57,7 @@
 
 [To Do List in Documentation](https://tayloredwebsites.github.io/healthy-meals/todos.html)
 
-## 🚀 Features for Main Project
+## Next Steps for Project
 
 ### Completed Main Project Features
 
@@ -94,14 +102,7 @@ Sorry, we are just starting this.
 #### Major Step 4) and so much more...
 
 
-## 🚀 Table of Contents
-* [Installation](#installation)
-* [Development Environment Guide](#development-environment-guide)
-* [Next Steps](#next-steps)
-* [Contributing](#contributing)
-* [License](#license)
-
-## 🚀 Installation
+## Installation
 
 To Do: review installation instructions
 
@@ -229,7 +230,7 @@ Note: Our Dockerfile downloads dart-sass and adds it to the path
 
 ### Local Development
 
-## 🚀 Contributing
+## Contributing
 
 Please enter issues or pull requests (initially) for the following:
 - Documentation issues, updates, or feature requests
@@ -238,7 +239,7 @@ Please enter issues or pull requests (initially) for the following:
 
 If you have any questions, or are interested in contributing to the software development, please email [David Andrews Taylor of Taylored Web Sites](mailto:tayloredwebsites@me.com)
 
-## 🚀 License
+## License
 
 Copyright (C) 2025 David A. Taylor of Taylored Web Sites (tayloredwebsites.com)
 Licensed under [AGPL-3.0-only](https://opensource.org/license/agpl-v3/), and let me know how you wish to help.

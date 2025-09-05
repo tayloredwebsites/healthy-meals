@@ -15,6 +15,7 @@ Pull Requests (for code and documentation)
   - or reuse an existing related branch:
 
     - :code:`git status; git checkout <identifying_branch_name>; git pull --rebase upstream main`
+
     .. code-block:: shell
 
       git status # make sure all code is committed before continuing
@@ -53,25 +54,34 @@ Notes:
 ~~~~~~
 
 To Do for Base Starter Branch:
-----------------------------
+------------------------------
 
-.. ToDo:: Enhance Sphinx generated documentation as we go.
+.. ToDo:: If you are looking for an issue to work on to get going in healthy-meals, consider the following:
 
-.. ToDo:: Base Starter:
+  - enhance documentation regularly, create an issue for solution
+  - getting MyPy QA/lint tool working, create an issue for solution
+  - getting Ruff QA/lint tool working, create an issue for solution
+  - getting any other QA tools working, create an issue for solution
+  - update developer setup instructions in README.md (pip tools, not using asdf, windows, ...), create an issue for solution
+  - Helpful developer guidance into readme or docs would be great., create an issue for solution
+  - See if it is possible to prevent pull requests if automated testing errors, create an issue for solution
+  - See if it is possible to prevent requests if coverage below a certain percentage, create an issue for solution
+  - obtain 100% coverage HTML code (pending guidance from Dave)
 
-  - confirm nox commands work in docker
-  - obtain 100% coverage HTML code
-  - determine preferred testing approach: {pytest or testcase}
-    - https://blog.jetbrains.com/pycharm/2024/03/pytest-vs-unittest/
-  - turn on circle ci validation
-  - turn on other ci from github
-  - Prevent pull requests if errors (??)
-  - prevent pull requests if coverage below a certain percentage (??)
-  - document the process to make documentation update pull requests
-  - getting MyPy QA tool working
-  - getting Ruff QA tool working
-  - getting any other QA tool working
-  - deploy of documentation to pages cleanup
-    - do not overwrite production docs during pull requests
-    - consider removing or producing a pull request version of documentation for review
-    - delete docs build artifact after upload to pages (maybe it needs a name and delete artifact action?)
+
+.. ToDo:: Dave's todo list:
+
+  - obtain coverage of noxfile.py, and mark nox (docker?) tests as slow tests
+      - (done) add slow test marker code.See: tests/conftest.py & tests/nox/test_docker_nox.py
+          - https://docs.pytest.org/en/latest/example/simple.html#control-skipping-of-tests-according-to-command-line-option
+          - https://docs.pytest.org/en/latest/example/simple.html#control-skipping-of-tests-according-to-command-line-option
+      - see tests/nox/test_docker_nox.py for docker nox scripts
+      - see tests/nox/test_local_nox.py for local nox scripts
+  - write guidance in programmer docs for getting coverage of HTML files
+  - deploy website to lifeguides.info
+  - github pages cleanup
+      - do not overwrite production docs during pull requests
+      - consider having pull request version of documentation for review
+      - delete docs build artifact after upload to pages (maybe it needs a name and delete artifact action?)
+  - turn on circle CI validation
+  - consider turning on other CI
