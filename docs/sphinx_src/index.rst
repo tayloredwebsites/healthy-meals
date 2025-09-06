@@ -19,10 +19,9 @@ Table of Contents
    Quality Assurance</qa>
    Index<genindex>
    Module Index<modindex>
-   User Accounts Module</accounts>
-   Misc. Pages Module</pages>
-   Tests Module</tests>
+   Modules</modules>
    Programmers Guide<prog_guide>
+   Testing Guide<testing_guide>
    Documentation Guide</docs_guide>
 
 ..

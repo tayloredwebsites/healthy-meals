@@ -48,6 +48,12 @@ extensions = [
     "sphinx.ext.todo", # see: https://www.sphinx-doc.org/en/master/usage/extensions/todo.htm
 ]
 
+# https://github.com/sphinx-doc/sphinx/issues/825#issuecomment-180197293
+source_parsers = {
+    '.md': 'recommonmark.parser.CommonMarkParser',
+}
+source_suffix = ['.rst', '.md']
+
 '''Configure the path to the Django settings module'''
 django_settings = "healthy_meals.settings"
 

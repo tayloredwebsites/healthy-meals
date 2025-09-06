@@ -1,5 +1,5 @@
 UV - Ffast Python Package and Project Manager
-===========================================
+=============================================
 
 
 Note: we are no longer using /requirements.txt to keep our dependencies up to date.  We are using pyproject.toml with `UV <https://docs.astral.sh/uv/>`_, which provides excellent [features](https://docs.astral.sh/uv/getting-started/features/)
