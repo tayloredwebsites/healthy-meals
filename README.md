@@ -9,7 +9,7 @@
 
 [Documentation](https://tayloredwebsites.github.io/healthy-meals/index.html)
 
-## 🚀 Table of Contents
+## Table of Contents
 * [Project Features](#project-features)
 * [Next Steps for Project](#next-steps-for-project)
 * [Installation](#installation)
@@ -18,6 +18,8 @@
 * [License](#license)
 
 ## Project Features
+
+[TOC](#table-of-contents)
 
 ### Keeping a Branch for Starter Base Projects
 
@@ -59,6 +61,8 @@
 
 ## Next Steps for Project
 
+[TOC](#table-of-contents)
+
 ### Completed Main Project Features
 
 Sorry, we are just starting this.
@@ -76,6 +80,7 @@ Sorry, we are just starting this.
 - Development and Documentation standards enhancements
   - suggestions for standards are best done earlier in project development
   - getting QA tools working, such as MyPy or Ruff will be greatly apprecieated.
+- see: [todo items, especially the If you are looking for an issue to work on... todo list](https://tayloredwebsites.github.io/healthy-meals/todos.html#current-to-do-items-listings)
 
 
 #### Major Step 1) Wiki (with built in references tooling)
@@ -103,6 +108,8 @@ Sorry, we are just starting this.
 
 
 ## Installation
+
+[TOC](#table-of-contents)
 
 To Do: review installation instructions
 
@@ -226,11 +233,15 @@ Note: Our Dockerfile downloads dart-sass and adds it to the path
 
 ## Development Environment Guide
 
+[TOC](#table-of-contents)
+
 ### Docker Development
 
 ### Local Development
 
 ## Contributing
+
+[TOC](#table-of-contents)
 
 Please enter issues or pull requests (initially) for the following:
 - Documentation issues, updates, or feature requests
@@ -240,6 +251,8 @@ Please enter issues or pull requests (initially) for the following:
 If you have any questions, or are interested in contributing to the software development, please email [David Andrews Taylor of Taylored Web Sites](mailto:tayloredwebsites@me.com)
 
 ## License
+
+[TOC](#table-of-contents)
 
 Copyright (C) 2025 David A. Taylor of Taylored Web Sites (tayloredwebsites.com)
 Licensed under [AGPL-3.0-only](https://opensource.org/license/agpl-v3/), and let me know how you wish to help.

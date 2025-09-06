@@ -7,10 +7,9 @@ Automated Testing Philosophy
 
 Although there is a defacto standard to have 70% automated testing coverage of your code, I believe this is not sufficient.  I believe that if you have written the code, it should have near 100% coverage.  I will expand upon this as this project proceeds.
 
-However, I have found that there is one obvious exception to the importance of having 100% coverage, which is when validating parameters in a function.  If we are writing a library, with a function that is designed to work anywhere, yes, it needs to have strict adherence to testing all possible values.  If however, we are writing a function for an application, it makes sense to validate the parameters coming in, but it does not make sense to write tests that have nothing to do with how the functions are being used.
+However, I have found that there is one obvious exception to the importance of having 100% coverage, which is when validating parameters in a function.  If we are writing a function for an application (not a library), it does not make sense to write tests that have nothing to do with how the functions are being used.  It would however make sense to  to have standard validations of parameters coming into the function for possible future use (or prevention of abuse).  However, if you see the strong potential that a function might eventually belong in a library, then I would say that it would be very important to write all of the unit tests for the function in a proper test driven mode so that all of the nuances of the code are validated as they are being created and understood.
 
-At the start of this project, I we have 100% coverage of the python code (the Accounts module) in this project, but only about 70% if you include the HTML code (hopefully soon to be remedied).  I believe that there is a strong argument for HTML code coverage
-
+At the start of this project, I we have 100% coverage of the python code (the Accounts module) in this project, but only about 70% if you include the HTML code (hopefully soon to be remedied).  I believe that there is a strong argument for HTML code coverage.  Additionally, I would like to work on extending automated testing to include other aspects of software development, including all of the tools being used, such as nox automation.  I have been making an initial go at this, by at least having nox automation scripts at least tested (if posssible).  I would like to also extend this, to detect obvious configuration errors, that will break the functionality of the tools.  I will be expanding upon this as we go.
 
 
 Preferred Testing Tools
@@ -50,9 +49,9 @@ To run pytest in verbose mode:
 
     "uv run pytest -v"
 
-Note: the verbose listing will list each test that is run.
+Note: the verbose listing will list the full 'long_test_name' of each test that is run.
 
-To run a single test with print statements output, copy the (long) name of the test that was printed out in verbose mode <long_test_name>, and paste it into the following command:
+To run a single test with print statements output, copy the <long_test_name> of the test that was printed out in verbose mode <long_test_name>, and paste it into the following command:
 
 .. code-block:: shell
 
@@ -72,4 +71,4 @@ To view the documentation
 
 1. double click the docs/build/index.html file.
 2. In your browser, you will see all of the documentation that will eventually be sent to `Github Pages <https://tayloredwebsites.github.io/healthy-meals/index.html>`_
-3. The Quality Assurance Item will contain the testing, coverage, (and other QA reports when configured to run)
+3. The Quality Assurance Item will contain the testing, coverage, (and other QA/linting reports when configured to run)

@@ -77,8 +77,10 @@ To Do for Base Starter Branch:
           - https://docs.pytest.org/en/latest/example/simple.html#control-skipping-of-tests-according-to-command-line-option
       - see tests/nox/test_docker_nox.py for docker nox scripts
       - see tests/nox/test_local_nox.py for local nox scripts
+  - protect the BaseStarter branch
   - write guidance in programmer docs for getting coverage of HTML files
   - deploy website to lifeguides.info
+  - add project and lifeguides to tayloredwebsites.com
   - github pages cleanup
       - do not overwrite production docs during pull requests
       - consider having pull request version of documentation for review
