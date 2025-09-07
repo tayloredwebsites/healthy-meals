@@ -71,6 +71,7 @@ To Do for Base Starter Branch:
 
 .. ToDo:: Dave's todo list:
 
+  - prevent pull requests if nox -s goodToGo fails, as this causes failure in pull request validation.
   - obtain coverage of noxfile.py, and mark nox (docker?) tests as slow tests
       - (done) add slow test marker code.See: tests/conftest.py & tests/nox/test_docker_nox.py
           - https://docs.pytest.org/en/latest/example/simple.html#control-skipping-of-tests-according-to-command-line-option

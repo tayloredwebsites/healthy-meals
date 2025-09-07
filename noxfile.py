@@ -1,11 +1,15 @@
 from pathlib import Path
+from git import Repo
+from typing import Tuple
+from textwrap import dedent
 
+import typing
+import sys
 import os
 import nox
 import subprocess
 
-
-# from utils.shell_cmds import clear_docker
+PROTECTED_BRANCHES: Tuple[str, ...] = ('main', 'BaseStarter') # https://typing.python.org/en/latest/spec/tuples.html
 
 ##################################################################################
 # Local Server tasks
@@ -26,6 +30,103 @@ def setupEnv(session):
     session.run("uv", "run", "python", "manage.py", "collectstatic", "--noinput")
     '''todo:: prevent commits until goodToGo runs and recreates dev-requirements.txt (is this possible?)'''
     # session.run("uv", "run", "rm", "-f", "dev-requirements.txt")
+
+
+@nox.session(python=("3.12"), venv_backend="none")
+def checkStatus(session):
+    ''' Check various statuses to help prevent pull request issues
+
+    (done) make sure status is good.
+    - do or make sure a git pull --rebase upstream main is done
+      - https://www.askpython.com/python/examples/gitpython-to-pull-remote-repository
+      - https://gitpython.readthedocs.io/en/stable/reference.html#git.remote.Remote.pull
+      - https://stackoverflow.com/questions/38723571/how-to-git-pull-rebase-using-gitpython-library#answer-50358779
+    - set a flag at the end indicating pull has been done???
+    -  write nox scripts for doing pull rebase upstream main
+    - write setup script
+      - to ensure upstream is github/tws/healthy-meals
+      - ensure log-list is set up
+    - ensure git pull rebase upstream main is run before good to go
+    - write a script to ensure we are not on main or BaseStarter branches for commits???
+    - ensure that goodToGo succeeds before pull request???
+    '''
+    repo = Repo('.')
+    num_mods = len(repo.index.diff(None))
+    num_untracked = len(repo.untracked_files)
+    num_staged = len(repo.index.diff("HEAD"))
+    num_updates = num_mods + num_untracked + num_staged
+    any_updates = True if num_updates > 0 else False
+    latest_commit = repo.head.commit
+
+    print(f"Current branch: {repo.head.ref.name}")
+    if 'Merge pull request #' not in latest_commit.message:
+        print(f'''There are commits on this branch since a pull request:
+        {latest_commit.message}''')
+    else:
+        print(f'''Latest Commit:
+        {latest_commit.message}''')
+
+    # confirm we have the remote named 'upstream' pointing to https://github.com/tayloredwebsites/healthy-meals
+    print(f'\nRemotes: {repo.remotes}')
+    remote_names = list(map(lambda r: r.name, repo.remotes))
+    print(f'Remote Names: {remote_names}\n')
+
+    # # git pull --rebase of upstream main
+    if 'upstream' in remote_names:
+        if repo.remotes.upstream.url != 'git@github.com:tayloredwebsites/healthy-meals.git':
+            quit(f"""ERROR!!!
+            Quitting 'checkStatus'
+            your 'upstream' remote is not pointing to 'git@github.com:tayloredwebsites/healthy-meals.git'
+            It is currently pointing to: '{repo.remotes.upstream.url}'
+            The following console commands should fix it:
+                git remote remove upstream
+                git remote add upstream git@github.com:tayloredwebsites/healthy-meals.git
+            """)
+        print(f'last commit on main branch:\n{repo.remotes.upstream.refs.main.commit.message}')
+        '''make sure that we have the last pr in upstream main in our current branch:
+
+        compare strings of commit messages from beginning to from(if it exists - should if from pr)
+        use for commit in repo.iter_commits to get commits
+        break on match of text up to # in Merge pull request #23 from
+        fail if not correct pr id -> tell user to do git pull --rebase upstream main
+        '''
+
+        quit(f"We might eventually run a 'git pull --rebase upstream main' to ensure we have all main branch pull requests in this branch")
+        repo.remotes.upstream.pull('main', rebase=True)
+        '''.. todo:: fix the following error/warning message:
+
+        Enter passphrase for key '/Users/dave/.ssh/id_ed25519':
+        git.remote > Fetch head lines do not match lines provided via progress information
+        length of progress lines 2 should be equal to lines in FETCH_HEAD file 1
+        Will ignore extra progress lines or fetch head lines.
+        git.remote > b"info lines: [' * branch            main       -> FETCH_HEAD', ' = [up to date]      main       -> upstream/main']"
+        git.remote > b'head info: ["f19fc5e9aa174617cffcc77a0f4faf878583a4f9\\t\\tbranch \'main\' of github.com:tayloredwebsites/healthy-meals\\n"]'
+        nox > Session checkStatus was successful.
+
+        Consider telling user to run the following command:
+            git pull --rebase upstream main
+
+        Consider seeing if the latest commit has been pulled down
+        '''
+
+    else:
+        quit("""ERROR!!!
+        Quitting 'checkStatus' - you are missing your 'upstream' remote.  The following console command should fix it:
+            git remote add upstream git@github.com:tayloredwebsites/healthy-meals.git
+        """)
+
+    # see if branch is clean of updates
+    if num_mods > 0 or num_untracked > 0 or num_staged > 0:
+        print(f'There are {num_mods} changed, {num_untracked} untracked, and {num_staged} staged changes')
+    if repo.head.ref.name in PROTECTED_BRANCHES:
+        if any_updates:
+            print('\nERROR!!!')
+            print(f'There are {num_updates} updates to this branch')
+        else:
+            print('WARNING!')
+        print(f'Do not make any commits to this branch ({repo.head.ref.name})')
+        print(f'This branch is a protected branch, and no pull requests are allowed to run on it.')
+        quit()
 
 
 @nox.session(python=("3.12"), venv_backend="none")

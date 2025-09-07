@@ -80,6 +80,7 @@ dev = [
   "coverage>=7.9.2",
   "factory-boy>=3.3.3",
   "genbadge>=1.1.2",
+  "gitpython>=3.1.45",
   "ipython==8.31.0",
   "pytest (>=8.4.1,<9.0.0)",
   # "pytest-cookies",
