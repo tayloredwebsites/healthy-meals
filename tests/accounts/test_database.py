@@ -16,6 +16,12 @@ def test_user_soft_delete():
         - all_deleted (custom function) return the deleted custom users
         - run as large test to minimize database setup and teardown
 
+        .. ToDo::
+            test_database.py:
+                - update to match test_database_cases.py updates:
+                    - do setup as done in test_database_cases
+                    - split out duplicate email tests from soft delete tests 
+
     '''
     # get starting user record count
     print('Starting TestUserModel::test_user_soft_delete')

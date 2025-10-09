@@ -74,6 +74,8 @@ Sorry, we are just starting this.
 - Documentation Updates
   - make a pull request with documentation updates
   - document the process to make documentation update pull requests
+- Implement Type Checking on all new code
+  - see some code you would like to get types, create an issue, and lets get you going on this
 - Feature Requests
   - Please feel free to make feature requests
     - note we are very early in project development

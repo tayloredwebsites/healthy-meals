@@ -67,24 +67,30 @@ To Do for Base Starter Branch:
   - See if it is possible to prevent pull requests if automated testing errors, create an issue for solution
   - See if it is possible to prevent requests if coverage below a certain percentage, create an issue for solution
   - obtain 100% coverage HTML code (pending guidance from Dave)
+  - change all print statements to logger statements
+  - research database I18n.  See if python has a solution like ruby's https://github.com/shioyama/mobility
 
 
-.. ToDo:: Dave's todo list:
-
-  - prevent pull requests if nox -s goodToGo fails, as this causes failure in pull request validation.
-  - obtain coverage of noxfile.py, and mark nox (docker?) tests as slow tests
-      - (done) add slow test marker code.See: tests/conftest.py & tests/nox/test_docker_nox.py
-          - https://docs.pytest.org/en/latest/example/simple.html#control-skipping-of-tests-according-to-command-line-option
-          - https://docs.pytest.org/en/latest/example/simple.html#control-skipping-of-tests-according-to-command-line-option
-      - see tests/nox/test_docker_nox.py for docker nox scripts
-      - see tests/nox/test_local_nox.py for local nox scripts
-  - protect the BaseStarter branch
-  - write guidance in programmer docs for getting coverage of HTML files
-  - deploy website to lifeguides.info
-  - add project and lifeguides to tayloredwebsites.com
-  - github pages cleanup
-      - do not overwrite production docs during pull requests
-      - consider having pull request version of documentation for review
-      - delete docs build artifact after upload to pages (maybe it needs a name and delete artifact action?)
-  - turn on circle CI validation
-  - consider turning on other CI
+.. ToDo::
+    Dave's todo list:
+        - prevent pull requests if nox -s goodToGo fails, as this causes failure in pull request validation.
+            -  added new checkStatus nox script to confirm local git status
+            - write tests (with good coverage) for checkStatus
+                - do we see coverage in noxfile.py?
+                - https://stackoverflow.com/questions/32381251/how-to-write-unit-tests-for-gitpython-clone-pull-functions
+        - obtain coverage of noxfile.py, and mark nox (docker?) tests as slow tests
+              - (done) add slow test marker code.See: tests/conftest.py & tests/nox/test_docker_nox.py
+                    - https://docs.pytest.org/en/latest/example/simple.html#control-skipping-of-tests-according-to-command-line-option
+                    - https://docs.pytest.org/en/latest/example/simple.html#control-skipping-of-tests-according-to-command-line-option
+              - see tests/nox/test_docker_nox.py for docker nox scripts
+              - see tests/nox/test_local_nox.py for local nox scripts
+        - protect the BaseStarter branch
+        - write guidance in programmer docs for getting coverage of HTML files
+        - deploy website to lifeguides.info
+        - add project and lifeguides to tayloredwebsites.com
+        - github pages cleanup
+              - do not overwrite production docs during pull requests
+              - consider having pull request version of documentation for review
+              - delete docs build artifact after upload to pages (maybe it needs a name and delete artifact action?)
+        - turn on circle CI validation
+        - consider turning on other CI

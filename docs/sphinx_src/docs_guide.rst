@@ -56,25 +56,26 @@ First, confirm you are in the root directory (directory containing manage.py)
 
     The sphinx extension `apidoc <https://www.sphinx-doc.org/en/master/man/sphinx-apidoc.html>`_ is used to automatically document code using signatures and docstrings from the code, and place it in .rst files (and then later into .html files).
 
-    We needed an exclusion list of modules to ignore because we are not using an apps/ folder.
-    This is because we are following the standard django structure (to have all apps off of root):
-    `djangoproject.com (Creating an app). <https://docs.djangoproject.com/en/2.2/intro/tutorial01/#s-creating-the-polls-app>`_ .
-    All exclusions are listed after the '.' (the root folder) see `docs/Makefile` and `docs/source/conf.py`.
+    We use an exclusion listing of modules in docs/conf.py because:
+      - following the standard django structure (to have all apps directly off of root).
+        - (django documentation). <https://docs.djangoproject.com/en/2.2/intro/tutorial01/#s-creating-the-polls-app>`_
+      - which means we not using an apps/ or src/ folder to simplify finding modules to generate documentation from.
+      - I hope we will eventually stop getting mixed messages on the structure of django projects.
 
 To Build the Documentation:
 
 We will use nox to run the sphinxDocs automation session, which will:
-- remove the build and source directories within docs
+
+- remove the docs/build and docs/source directories within docs
 - copy in our manually created rst files into a new docs/source directory from docs/sphinx_src
-- run nox -s testing to run all of the tests, coverage and generate their badges
-- run nox -s genNoxDocs to list all of the automations that nox can do.
+- `run nox -s testing_final` to run all of the tests, coverage and generate their badges
+- `run nox -s genNoxDocs` to generate a listing of all of the automations that nox can do.
+- `run make apidocs --directory=docs` to generate documentation from the code into the docs/source directory.
+- `run make allhtml --directory=docs` to generate the html into the docs/build directory.
 
-  - Note: we create a text file of the nox --list command to display all of the commands (sessions)
-  - Note: we need to do this because sphinx autodoc does not extract the docstrings from noxfile.py.
+  - Note: we need to do run the genNoxDocs nox session because sphinx autodoc does not extract the docstrings from noxfile.py.
 
-- run sphinx-apidoc to extract docstrings from the project source files into .rst files in the docs/source directory.
-- run the sphinx-build to generate html in the docs/build directory from the .rst files in the docs/source directory.
-- This is all done by the following nox command:
+To generate the sphinxDocs:
 
 .. code-block:: shell
 
@@ -82,39 +83,6 @@ We will use nox to run the sphinxDocs automation session, which will:
 
   # or using Docker
   nox -s dockerMakeDocs
-
-  # or using make
-  make apidocs --directory=docs
-  make html --directory=docs
-
-To Rebuild the Documentation (ensures all old links and pages are gone):
-
-.. code-block:: shell
-
-  nox -s remakeDocs
-
-  # or using Docker
-  nox -s dockerRemakeDocs
-
-  # or using make
-  make apidocs --directory=docs
-  make allhtml --directory=docs
-
-The final HTML documention main index page is generated to: `docs/build/html/index.html`
-
-.. code-block:: shell
-
-   # or alternatively
-   make -C docs
-
-   # or alternatively
-   make html --directory=docs
-
-   # or alternatively
-   make html -C docs
-
-   # or manually
-    sphinx-build -M html docs/source docs/build
 
 Notes:
 - you may want to review the output of the make for warnings or errors
@@ -165,7 +133,7 @@ The Table of Contents (TOC) is what shows up in the sidebar navigation.  It has 
 - the ``/accounts`` apidoc generated file (``User Accounts``) module for the Custom User accounts.
 - the ``/pages`` apidoc generated file (``Misc. Pages``) module for simple pages such as home, or about.
 - the ``/tests`` apidoc generated file (``Tests``, automated testing doc strings generated documentation.
-- the custom ``/prog_guide`` (`Programmers Guide`) includes many technical details about how this project has been programmed, philosophy, standards, and the To Do list pulled from the code base and documentation.
+- the custom ``/prog_guide`` (`Programmers Guide`) includes many technical details about how this project has been programmed, philosophy, standards, and the To Do generate a listing of pulled from the code base and documentation.
 - the custom ``/docs_guide`` (this Documentation Guide file) is added to introduce the documentation philosophy of healthy-meals, and provide a step by step breakdown of the documentation process.
 
 Note: the format of the entries in the TOC is as follows:  "The Name With Spaces<[optional /]rst_filename_without_extension>"

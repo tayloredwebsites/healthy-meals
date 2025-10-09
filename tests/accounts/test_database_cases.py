@@ -14,7 +14,14 @@ class UserModelsTestCase(TestCase):
     '''
     def setUp(self):
         # Setup run before every test method.
-        pass
+        # get starting user record count
+        count = CustomUser.objects.count()
+        # confirm no users
+        assert count == 0
+        # create 4 test users
+        test_users = CustomUserFactory.create_batch(4)
+        # confirm we now have 4 more
+        assert count + 4 == CustomUser.objects.count()
 
     def tearDown(self):
         # Clean up run after every test method.
@@ -28,15 +35,17 @@ class UserModelsTestCase(TestCase):
             - all_deleted (custom function) return the deleted custom users
 
         '''
-        # get starting user record count
+        # get starting 4 users and record count from init
         count = CustomUser.objects.count()
-        # confirm no users
-        assert count == 0
-        # create 4 test users
-        test_users = CustomUserFactory.create_batch(4)
-        # confirm we now have 4 more
-        assert count + 4 == CustomUser.objects.count()
+        assert count == 4
+        test_users = CustomUser.objects.all()
         user0 = test_users[0]
+
+        # confirm we have all 4 users, and show that none are soft deleted
+        self.assertEqual(CustomUser.objects.all().count(), 4)
+        self.assertEqual(CustomUser.objects.all_with_deleted().count(), 4)
+        self.assertEqual(CustomUser.objects.all_deleted().count(), 0)
+
         print(f'user0 history count: {user0.rec_history_count()}')
         assert user0.rec_history_count() == 1
         assert not user0.rec_history_field_changed(0, 'deleted')
@@ -46,6 +55,13 @@ class UserModelsTestCase(TestCase):
         # soft delete the first user
         user0.delete()
         print(f'Soft Deleted: {user0.email}: {user0.username}, {user0.deleted}')
+
+        # confirm it was soft deleted
+        self.assertEqual(CustomUser.objects.all().count(), 3)
+        self.assertEqual(CustomUser.objects.all_with_deleted().count(), 4)
+        self.assertEqual(CustomUser.objects.all_deleted().count(), 1)
+
+        # confirm user history is updated
         hist_recs_count = user0.rec_history_count()
         print(f'user0 after deleted history count: {hist_recs_count}')
         for n in range(hist_recs_count):
@@ -57,12 +73,26 @@ class UserModelsTestCase(TestCase):
         assert user0.rec_history_field_was(0, 'deleted') == 'None'
         assert user0.rec_history_field_is_now(0, 'deleted') == user0.deleted.strftime("%Y-%m-%d %H:%M:%S.%f")
 
-        # confirm we have one less
-        self.assertEqual(CustomUser.objects.all_with_deleted().count(), 4)
-        self.assertEqual(CustomUser.objects.all_deleted().count(), 1)
+        # # look at all of the records
+        # for rec in CustomUser.objects.all_with_deleted():
+        #     print(f'After factory attempt to create duplicate of record 0: {rec.email}: {rec.username}, {rec.deleted}')
+        
+        # undelete the user
+        user0.undelete()
 
-        ''' .. ToDo::  make sure the database does not allow duplicate emails for custom_users'''
-        # -
+        # confirm we have all 4 users again
+        self.assertEqual(CustomUser.objects.all().count(), 4)
+        self.assertEqual(CustomUser.objects.all_with_deleted().count(), 4)
+        self.assertEqual(CustomUser.objects.all_deleted().count(), 0)
+        print(f'Restored: {test_users[0].email}: {test_users[0].username}, {test_users[0].deleted}')
+
+    def test_unique_emails(self):
+        '''Ensure emails are ensured to be unique.'''
+        # get starting user record count and test_users from init
+        count = CustomUser.objects.count()
+        assert count == 4
+        test_users = CustomUser.objects.all()
+        # confirm adding a duplicate record generates an IntegrityError
         with self.assertRaises(IntegrityError):
             '''tests the pre_save signal that copies the email into the username field
 
@@ -76,13 +106,5 @@ class UserModelsTestCase(TestCase):
                     first_name=test_users[0].first_name,
                     last_name=test_users[0].last_name,
                 )
-        for rec in CustomUser.objects.all_with_deleted():
-            print(f'After factory attempt to create duplicate of record 0: {rec.email}: {rec.username}, {rec.deleted}')
-        self.assertEqual(CustomUser.objects.all_with_deleted().count(), 4)
-        self.assertEqual(CustomUser.objects.all_deleted().count(), 1)
-        test_users[0].undelete()
-        self.assertEqual(CustomUser.objects.all_with_deleted().count(), 4)
-        self.assertEqual(CustomUser.objects.all_deleted().count(), 0)
-        print(f'Restored: {test_users[0].email}: {test_users[0].username}, {test_users[0].deleted}')
 
     ''' .. :Todo test to make sure that undeleted users can still log into the system and function properly.'''

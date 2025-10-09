@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     # Local
     "accounts",
     "pages",
+    "hm_utils",
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#middleware
@@ -247,3 +248,19 @@ CSRF_TRUSTED_ORIGINS = [
 # import socket
 # hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 # INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+        },
+    },
+}

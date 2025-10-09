@@ -41,15 +41,10 @@ To run the automated tests:
 
 .. code-block:: shell
 
-    "nox -s testing"
-
-To run pytest in verbose mode:
-
-.. code-block:: shell
-
-    "uv run pytest -v"
-
-Note: the verbose listing will list the full 'long_test_name' of each test that is run.
+    "nox -s testing" # summnary run of tests. 
+    "nox -s testing_deb" # debugging run of tests.
+    "nox -s testing_cov" # summary run of tests with coverage reports.
+    "nox -s testing_final" # summary run of tests with coverage reports and badge creation.
 
 To run a single test with print statements output, copy the <long_test_name> of the test that was printed out in verbose mode <long_test_name>, and paste it into the following command:
 
@@ -58,7 +53,7 @@ To run a single test with print statements output, copy the <long_test_name> of 
     "uv run pytest -s <long_test_name>"
 
 
-Viewing Automated tests, Coverage, and other reports:
+Generate Documentation, as well as Automated tests, and Coverage reports:
 -----------------------------------------------------
 
 To generate all of the documentation, which includes the Automated test reports, Coverage reports, etc,:
@@ -67,7 +62,7 @@ To generate all of the documentation, which includes the Automated test reports,
 
     "uv run nox -s sphinxdocs"
 
-To view the documentation
+To view the local documentation (without having to go through a pull request to send them to Github Pages).
 
 1. double click the docs/build/index.html file.
 2. In your browser, you will see all of the documentation that will eventually be sent to `Github Pages <https://tayloredwebsites.github.io/healthy-meals/index.html>`_

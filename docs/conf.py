@@ -65,15 +65,13 @@ https://pypi.org/project/sphinx-rtd-theme/
 '''
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
-html_css_files = ['css/custom.css'] # custom css for full width pages
+html_css_files = ['css/custom.css'] # custom css for full width pages in _static/ directory
 
 '''Other settings'''
 templates_path = ['_templates']
-exclude_patterns = ["**/healthy_meals"]
+exclude_patterns = ["**/healthy_meals"] # needed because we are using the standard django structure (no src/ or apps/ folder)
 autosummary_generate = True
-# Include the database table names of Django models
-django_show_db_tables = True                # Boolean, default: False
-# Add abstract database tables names (only takes effect if django_show_db_tables is True)
-django_show_db_tables_abstract = True       # Boolean, default: False
+django_show_db_tables = True # Include the database table names of Django models - Boolean, default: False
+django_show_db_tables_abstract = True # Add abstract database tables names - Boolean, default: False
 todo_include_todos = True   # see: https://www.sphinx-doc.org/en/master/usage/extensions/todo.htm
 # todo_emit_warnings = False   # see: https://github.com/sphinx-doc/sphinx/issues/2680

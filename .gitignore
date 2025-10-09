@@ -163,3 +163,6 @@ GitHub.sublime-settings
 
 # Screencast
 Lithium_Demo_2025.mp4
+
+# Temporary Files
+tmp/
