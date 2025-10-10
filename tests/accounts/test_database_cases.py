@@ -87,7 +87,7 @@ class UserModelsTestCase(TestCase):
         print(f'Restored: {test_users[0].email}: {test_users[0].username}, {test_users[0].deleted}')
 
     def test_unique_emails(self):
-        '''Ensure emails are ensured to be unique.'''
+        '''Make sure that emails are always unique.'''
         # get starting user record count and test_users from init
         count = CustomUser.objects.count()
         assert count == 4
@@ -106,5 +106,3 @@ class UserModelsTestCase(TestCase):
                     first_name=test_users[0].first_name,
                     last_name=test_users[0].last_name,
                 )
-
-    ''' .. :Todo test to make sure that undeleted users can still log into the system and function properly.'''

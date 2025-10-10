@@ -231,17 +231,31 @@ def cleanDocsBuild(session):
 @nox.session(python=("3.12"), venv_backend="none")
 def testing(session):
     """Run condensed output automated tests)."""
+
+    logger = logging.getLogger(__name__)
+
     # empty out docs, tests, and coverage directories in docs/build
     session.run("uv", "run", "nox", "-s", "cleanTestsBuild")
 
-    session.run("uv", "run", "pytest", "tests",
-        "--tb=short", # output one line per failure
-    ) # run tests with debugging output
+    try:
+        session.run("uv", "run", "pytest", "tests",
+            "--tb=no", # output no debugging statements on error
+            "--log-cli-level=INFO", # do not output debug statements
+        ) # run tests with debugging output
+    except Exception as ex:
+        print(f'''pytest Automated Testing failure: {ex}
+        To run an individual failed test, copy the filename in beginning of the FAILED message (aka <filename>)
+        To run an individual test, run the following command in the command line:
+            uv run pytest <filename>
+        ''')
+    
+    logging.disable(logging.NOTSET)
+
 
 
 @nox.session(python=("3.12"), venv_backend="none")
 def testing_debug(session):
-    """Run automated tests with expanded debugging statements."""
+    """Run all automated tests with expanded debugging statements."""
     # empty out docs, tests, and coverage directories in docs/build
     session.run("uv", "run", "nox", "-s", "cleanTestsBuild")
 
