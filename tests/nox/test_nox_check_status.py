@@ -22,11 +22,12 @@ logger = logging.getLogger(__name__)
 .. ToDo: test_nox_check_status.py: replace TMP_GIT_REPO_DIR with pytest tmp_path fixture
 '''
 
-def test_chkstat_clean(setUpAndDown, tmp_path, conftest_constants):
+def test_chkstat_clean(setUpAndDown):
     '''make sure that all is reported as good when the git repo is clean (unchanged).
 
     Args:
-        setUpAndDown mixin: a pytest fixture to create a gitpython (git) Repo to test against
+        setUpAndDown is a pytest test setup and teardown fixture.
+        - it is used to create a gitpython (git) Repo to test against, then cleanup afterwards.
         conftest_constants mixin: shared testing constants from tests/conftest.py
         tmp_path fixture: temporary path. see: https://docs.pytest.org/en/7.1.x/how-to/tmp_path.html#tmp-path-handling
 
@@ -41,9 +42,6 @@ def test_chkstat_clean(setUpAndDown, tmp_path, conftest_constants):
     # obtain setup data
     repo = setUpAndDown
 
-    logger.debug(f'test_chkstat_clean tmp_path @ {tmp_path}')
-    logger.debug(f'test_chkstat_clean tmp_path @ {tmp_path}')
-    logger.debug(f'test_chkstat_clean repo directory: {os.listdir(Path(conftest_constants['TMP_GIT_REPO_DIR']))}')
 
     num_mods = len(repo.git.diff(None))
     logger.info(f'test_chkstat_clean num_mods: {num_mods}')
@@ -62,33 +60,32 @@ def test_chkstat_clean(setUpAndDown, tmp_path, conftest_constants):
 
 def test_tmp_path(tmp_path):
     logger.debug(f'test_tmp_path tmp_path @ {tmp_path}')
-    logger.debug(f'test_tmp_path tmp_path @ {tmp_path}')
     # confirm tmp_path doesn't change within a test
     assert tmp_path == tmp_path
 
 ############################################ pytest fixtures ######################################
 
 @pytest.fixture
-def setUpAndDown(conftest_constants):
+def setUpAndDown(tmp_path):
     logger.debug('set up using setUpAndDown of test_nox_check_status.py')
 
     # delete git repo file if it exists
     # cannot run tests in parallel with this coding
     try:
-        shutil.rmtree(conftest_constants['TMP_GIT_REPO_DIR'])
+        shutil.rmtree(tmp_path / 'repo')
     except:
-        if os.path.isdir(conftest_constants['TMP_GIT_REPO_DIR']):
-            print(f'Unable to remove directory: {conftest_constants['TMP_GIT_REPO_DIR']}')
+        if os.path.isdir(tmp_path / 'repo'):
+            print(f"Unable to remove directory: {tmp_path / 'repo'}")
             quit()
 
     # create the temporary repo
-    repo = git.Repo.init(Path(conftest_constants['TMP_GIT_REPO_DIR']))
-    logger.debug(f'created repo @ {os.listdir(Path(conftest_constants['TMP_GIT_REPO_DIR']))}')
+    repo = git.Repo.init(Path(tmp_path / 'repo'))
+    logger.debug(f"created repo @ {os.listdir(Path(tmp_path / 'repo'))}")
 
     # create a file, and do first commit
-    app_file_name = Path(conftest_constants['TMP_GIT_REPO_DIR']) / 'initial_file'
+    app_file_name = Path(tmp_path / 'repo') / 'initial_file'
     open(app_file_name, 'w').close()
-    logger.debug(f'added to repo @ {os.listdir(Path(conftest_constants['TMP_GIT_REPO_DIR']))}')
+    logger.debug(f"added to repo @ {os.listdir(Path(tmp_path / 'repo'))}")
 
     repo.index.add(['initial_file'])
     repo.index.commit("initial commit")
@@ -106,17 +103,17 @@ def setUpAndDown(conftest_constants):
 
     data: Tuple[git.Repo] = (repo)
 
-    # yield to tests, passing data to them
+    # yield repo (and possibly other items) to tests, passing data to them
     yield data
 
     logger.debug('tear down of setUpAndDown of test_nox_check_status.py')
     # delete git repo file if it exists
     # cannot run tests in parallel with this coding
     try:
-        shutil.rmtree(conftest_constants['TMP_GIT_REPO_DIR'])
+        shutil.rmtree(tmp_path / 'repo')
     except:
-        if os.path.isdir(conftest_constants['TMP_GIT_REPO_DIR']):
-            print(f'Unable to remove directory: {conftest_constants['TMP_GIT_REPO_DIR']}')
+        if os.path.isdir(tmp_path / 'repo'):
+            print(f'Unable to remove directory: {tmp_path / 'repo'}')
             quit()
 
-    logger.error('removed repo')
+    logger.info('removed repo')

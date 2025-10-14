@@ -56,7 +56,6 @@ def checkStatus(session):
     - ensure that goodToGo succeeds before pull request???
     '''
 
-    logging.basicConfig(level=logging.DEBUG)
     logger = logging.getLogger(__name__)
 
     logger.debug(f"nox -s checkStatus - 'BASE_DIR' path.parent: {Path(__file__).resolve().parent}")
@@ -64,28 +63,38 @@ def checkStatus(session):
     repo = Repo(Path(__file__).resolve().parent)
 
     '''
-        .. ToDo:: get these arguments from constants, so they can be replaced in testing
+        creation of GitInfo instance:
+        - We have (created and) specified that the repo is for the current root directory, so we are working the non-testing environment
+        - 
     '''
     git_info = GitInfo(repo, config('UPSTREAM_GIT'), config('UPSTREAM_REPO_URL'), config('COMMIT_UNIQUE_MAIN_HEXSHA'))
+    logger.debug('********* GitInfo initialized ********')
+    logger.debug(f"Current branch: {git_info.attr['cur_branch']}")
+    ''' ..ToDo:: add test to confirm GitInfo attr is immutable '''
+    # git_info.attr['cur_branch'] = 'bad idea'
+    # logger.debug(f"Current branch: {git_info.attr['cur_branch']}")
 
-    # Validations include:
-    # - Confirm that the latest PR on origin/main is the last commit (and latest PR) on upstream
+    # confirm we have our remotes configured correctly
+    # - GitInfo validated UPSTREAM_GIT is the upstream remote
+    # - GitInfo validated UPSTREAM_REPO_URL is the github repo is properly pointed to
+    # - We have use the environment variable COMMIT_UNIQUE_MAIN_HEXSHA to be used to confirm the github repo has a particular commit in its history
+
+    # Confirm that the latest PR on origin/main is the last commit (and latest PR) on upstream
     #   - if not, Give warning to user and tell user to git pull --rebase on origin main and then push
 
-    # - Confirm this repo was created as a clone of a fork of a particular github repo:
-    #     - has an 'origin' remote that points to (upstream_repo_url).
-    # - Confirm that there is an 'upstream' remote pointing to the upstream_git.
-    # - Help validate the 'origin' tracking/upstream of the current local branch.
+    # Confirm this repo was created as a clone of a fork of a particular github repo:
+    #     - has an 'upstream' remote that points to (upgit).
+    # Confirm that there is an 'upstream' remote pointing to the upstream_git.
+    # Help validate the 'origin' tracking/upstream of the current local branch.
     #   - note: new branches cannot have a tracking/upstream branch until pushed to 'origin'
-    # - Help ensure that pushes will go to an 'origin' branch that will be good for a pull request to an 'upstream' branch.
-    # - Check for matching commits and pull request between local and 'origin' branch.
+    # Help ensure that pushes will go to an 'origin' branch that will be good for a pull request to an 'upstream' branch.
+    # Check for matching commits and pull request between local and 'origin' branch.
     #   - Philosophy:  Maintain a clean linear history, so history and pull requests are kept separate
     #     - Use git pull --rebase always on local branches.  When in doubt do 'git pull --rebase upstream main'
     #     - The standard merge of pull requests are linear, because the local repo has history separated from new code
 
+    sys.exit()
 
-
-    logger.debug(f"Current branch: {repo.head.ref.name}")
     if 'Merge pull request #' not in latest_commit_msg:
         logger.debug(f'''There are commits on this branch since a pull request:
         {latest_commit_msg}''')
