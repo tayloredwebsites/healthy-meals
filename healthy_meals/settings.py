@@ -37,6 +37,30 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     # Third-party
+    ######### django-wiki #########
+    # see plugins to optionally install at https://django-wiki.readthedocs.io/en/latest/plugins.html
+    # Add/remove the following to your settings.INSTALLED_APPS to enable/disable the core plugins:
+    # 'wiki.plugins.attachments.apps.AttachmentsConfig'
+    # 'wiki.plugins.editsection.apps.EditSectionConfig'
+    # 'wiki.plugins.globalhistory.apps.GlobalHistoryConfig'
+    # 'wiki.plugins.help.apps.HelpConfig'
+    # 'wiki.plugins.images.apps.ImagesConfig'
+    # 'wiki.plugins.links.apps.LinksConfig'
+    # 'wiki.plugins.macros.apps.MacrosConfig'
+    # 'wiki.plugins.notifications.apps.NotificationsConfig'
+    # 'django.contrib.sites.apps.SitesConfig',
+    # 'django.contrib.humanize.apps.HumanizeConfig',
+    'django_nyt.apps.DjangoNytConfig',
+    'mptt',
+    'sekizai',
+    'sorl.thumbnail',
+    # 'wiki.apps.WikiConfig',
+    # 'wiki.plugins.attachments.apps.AttachmentsConfig',
+    # 'wiki.plugins.notifications.apps.NotificationsConfig',
+    # 'wiki.plugins.images.apps.ImagesConfig',
+    # 'wiki.plugins.macros.apps.MacrosConfig',
+    ######### django-wiki #########
+    # other 3rd party apps
     "allauth",
     "allauth.account",
     "crispy_forms",
@@ -85,6 +109,12 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.request',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                "sekizai.context_processors.sekizai",
             ],
             "debug": True, # needed for https://github.com/nedbat/django_coverage_plugin
         },
@@ -247,3 +277,6 @@ CSRF_TRUSTED_ORIGINS = [
 # import socket
 # hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 # INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
+
+# https://django-wiki.readthedocs.io/en/latest/installation.html
+WIKI_ACCOUNT_HANDLING = False

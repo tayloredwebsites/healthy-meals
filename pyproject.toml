@@ -72,6 +72,12 @@ dependencies = [
   "whitenoise ~=6.7",
   "commonmark>=0.9.1",
   "recommonmark>=0.7.1",
+  "pillow>=11.3.0",
+  "django-nyt>=1.4.2",
+  "django-mptt>=0.18.0",
+  "django-sekizai>=4.1.0",
+  "sorl-thumbnail>=12.11.0",
+  "wiki>=0.0.23",
 ]
 
 [dependency-groups]
