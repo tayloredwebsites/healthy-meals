@@ -58,32 +58,25 @@ To Do for Base Starter Branch:
 
 .. ToDo:: If you are looking for an issue to work on to get going in healthy-meals, consider the following:
 
-  - enhance documentation regularly, create an issue for solution
-  - getting MyPy QA/lint tool working, create an issue for solution
-  - getting Ruff QA/lint tool working, create an issue for solution
-  - getting any other QA tools working, create an issue for solution
-  - update developer setup instructions in README.md (pip tools, not using asdf, windows, ...), create an issue for solution
-  - Helpful developer guidance into readme or docs would be great., create an issue for solution
-  - See if it is possible to prevent pull requests if automated testing errors, create an issue for solution
-  - See if it is possible to prevent requests if coverage below a certain percentage, create an issue for solution
-  - obtain 100% coverage HTML code (pending guidance from Dave)
+  - enhance documentation regularly, create an issue for solution outside of existing standards
+  - getting MyPy QA/lint tool working, create an issue for solution outside of existing standards
+  - getting Ruff QA/lint tool working, create an issue for solution outside of existing standards
+  - getting any other QA tools working, create an issue for solution outside of existing standards
+  - update developer setup instructions in README.md (pip tools, not using asdf, windows, ...), create an issue for solution outside of existing standards
+  - Helpful developer guidance into readme or docs would be great., create an issue for solution outside of existing standards
+  - See if it is possible to prevent pull requests if automated testing errors, create an issue for solution outside of existing standards
+  - See if it is possible to prevent requests if coverage below a certain percentage, create an issue for solution outside of existing standards
+  - obtain 100% coverage HTML code (pending documentation and examples from Dave)
+  - Write up an issue for something that would improve Healthy Meals
+  - Contact `Dave @ Taylored Web Sites <mailto:tayloredwebsites@me.com>`_ if you wish to share some thoughts, or help on the project.
 
 
 .. ToDo:: Dave's todo list:
 
-  - obtain coverage of noxfile.py, and mark nox (docker?) tests as slow tests
-      - (done) add slow test marker code.See: tests/conftest.py & tests/nox/test_docker_nox.py
-          - https://docs.pytest.org/en/latest/example/simple.html#control-skipping-of-tests-according-to-command-line-option
-          - https://docs.pytest.org/en/latest/example/simple.html#control-skipping-of-tests-according-to-command-line-option
-      - see tests/nox/test_docker_nox.py for docker nox scripts
-      - see tests/nox/test_local_nox.py for local nox scripts
-  - protect the BaseStarter branch
+  - pull request to update github pages documentation
+  - obtain good coverage of noxfile.py
+  - nox -s status for improved git status message for git warnings against potential git repo problems.
   - write guidance in programmer docs for getting coverage of HTML files
-  - deploy website to lifeguides.info
-  - add project and lifeguides to tayloredwebsites.com
-  - github pages cleanup
-      - do not overwrite production docs during pull requests
-      - consider having pull request version of documentation for review
-      - delete docs build artifact after upload to pages (maybe it needs a name and delete artifact action?)
-  - turn on circle CI validation
-  - consider turning on other CI
+  - review need for utils/docker_clear.py
+  - create starter branch before working on core programming.
+  - start on first core table: references (References).
