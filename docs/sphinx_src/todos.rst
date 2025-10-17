@@ -86,7 +86,7 @@ If python has the following docstring:
 ----
 
 
-Current To Do items Listings:
+Current To Do items Listings (combined from all docs):
 =============================
 
 .. todolist::
