@@ -21,6 +21,8 @@ def setupEnv(session):
     # collect all static files to be deployed to the website
     session.run("uv", "run", "python", "manage.py", "collectstatic", "--noinput")
     # session.run("uv", "run", "rm", "-f", "dev-requirements.txt")
+    session.run("uv", "run", "ls", "-al", "./docs/source/") # confirm docs source directory exists
+
 
 
 
@@ -62,6 +64,7 @@ def sphinxDocs(session):
     session.run("uv", "run", "nox", "-s", "testing_final")
     session.run("uv", "run", "nox", "-s", "genNoxDocs")
     session.run("uv", "run", "make", "apidocs", "--directory=docs")
+    session.run("uv", "run", "ls", "-al", "./docs/source/") # confirm docs source directory exists
     session.run("uv", "run", "make", "allhtml", "--directory=docs")
 
 
