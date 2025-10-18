@@ -90,7 +90,7 @@ def cleanDocsBuild(session):
     session.run("uv", "run", "mkdir", "-p", "./docs/build/tests/")
     # Note: documentation generated folder are written to by both sphinx and automated testing
     session.run("uv", "run", "rm", "-fr", "./docs/source")
-    session.run("uv", "run", "mkdir", "-p", "./docs/source/")
+    # session.run("uv", "run", "mkdir", "-p", "./docs/source/")
     session.run("uv", "run", "cp", "-R", "./docs/sphinx_src/", "./docs/source/")
 
 
