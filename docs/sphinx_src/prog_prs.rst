@@ -74,6 +74,9 @@ To Do for Base Starter Branch:
 .. ToDo:: Dave's todo list:
 
   - pull request to update github pages documentation
+  - analysis of pull request 46 run of .github/workflows/djangoUvCi.yml failure, to help prevent it in the future
+    - run nox -s goodToGo successfully
+    - run uv sync? locally (or ?), to ensure that installed modules locally match modules in github workflow.
   - obtain good coverage of noxfile.py
   - nox -s status for improved git status message for git warnings against potential git repo problems.
   - write guidance in programmer docs for getting coverage of HTML files
