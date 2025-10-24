@@ -21,6 +21,31 @@ Code Documentation Process Overview
 Code is being documented using the `Sphinx <https://www.sphinx-doc.org/>`_ toolset, which is the defacto standard tool for documenting django/python.  The Sphinx toolset recognizes `NumPy <https://numpy.org/doc/stable/>`_ , `Google <https://google.github.io/styleguide/pyguide.html>`_ , and `rst <https://peps.python.org/pep-0287/>`_ code documentation standards.  This is achieved by using the `Napoleon <https://sphinxcontrib-napoleon.readthedocs.io/en/latest/>`_ extension to Sphinx.  When code has docstrings appropriately placed within it, Sphinx will automatically pull them into the documentation in the docs directory.  The healthy-meals github repository has been set up to automatically deliver the documentation to a `github pages site on the internet <https://tayloredwebsites.github.io/healthy-meals/build/index.html>`_.
 
 
+Example Google Style Docstring for a function:
+----------------------------------------------
+
+def example_function(param1, param2):
+ """Summary of the function.
+
+    Detailed description of the function.
+
+    Args:
+        param1 (int): Description of the first parameter.
+
+        param2 (str): Description of the second parameter.
+
+    Returns:
+        bool: Description of the return value.
+
+    Raises:
+        ValueError: If param1 is negative.
+
+    Examples:
+        
+          $ example_function(1, "test")
+
+          True
+    """
 Generation of the Documentation.
 ----------------------------------
 

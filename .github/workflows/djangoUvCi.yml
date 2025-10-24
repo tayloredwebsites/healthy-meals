@@ -75,6 +75,12 @@ jobs:
       # https://nox.thea.codes/en/stable/tutorial.html
       # https://github.com/fjwillemsen/setup-nox2
       uses: fjwillemsen/setup-nox2@v3.0.0
+      '''' consider using wntrblm version.
+      # see: https://edward-jazzhands.github.io/posts/python-testing-with-nox-and-uv/
+      #  - name: Setup Nox
+      #    uses: wntrblm/nox@2025.05.01
+
+
     - name: Confirm nox is installed
       run: nox --version
 

@@ -1,8 +1,17 @@
+'''
+Healthy Meals Web Site
+Copyright (C) 2025 David A. Taylor of Taylored Web Sites (tayloredwebsites.com)
+Licensed under AGPL-3.0-only.  See https://opensource.org/license/agpl-v3/
+
+https://github.com/tayloredwebsites/healthy-meals - accounts/models.py
+'''
 from pathlib import Path
 
 import os
 import nox
 import subprocess
+
+import logging
 
 
 # from utils.shell_cmds import clear_docker
@@ -140,7 +149,10 @@ def testing(session):
 @nox.session(python=("3.12"), venv_backend="none")
 def dockerUpBg(session):
     '''Bring up Healthy Meals in docker in background.'''
+    logger = logging.getLogger(__name__)
+    logger.debug(f'*** nox -s dockerUpBg - started')
     session.run("docker", "compose", "up", "--build", "--detach")
+    logger.debug(f'*** nox -s dockerUpBg - done')
 
 
 @nox.session(python=("3.12"), venv_backend="none")
@@ -151,20 +163,29 @@ def dockerUpLog(session):
 
 @nox.session(python=("3.12"), venv_backend="none")
 def dockerEnsureUp(session):
-    '''to Only bring up Healthy Meals in docker if not up already.'''
+    '''bring up Healthy Meals in docker (in background) if not up already.'''
+    logger = logging.getLogger(__name__)
+    logger.debug(f'*** nox -s dockerEnsureUp - started')
     session.run("docker", "compose", "up", "--build", "--detach", "--no-recreate")
+    logger.debug(f'*** nox -s dockerEnsureUp - done')
 
 
 @nox.session(python=("3.12"), venv_backend="none")
 def dockerExecSh(session):
-    '''to Open shell in web container.'''
+    '''to Open shell in web container, need to type "exit" to shut it down'''
+    logger = logging.getLogger(__name__)
+    logger.debug(f'*** nox -s dockerExecSh - started')
     session.run("docker", "exec", "-it", "healthy-meals-web-1", "sh")
+    logger.debug(f'*** nox -s dockerExecSh - done')
 
 
 @nox.session(python=("3.12"), venv_backend="none")
 def dockerExecPsql(session):
-    '''to Open psql in db container.'''
+    '''to Open psql in db container, need to type \\q to shut it down.'''
+    logger = logging.getLogger(__name__)
+    logger.debug(f'*** nox -s dockerExecPsql - started')
     session.run("docker", "exec", "-it", "healthy-meals-pg_db-1", "psql", "--dbname=healthy_meals", "--username=healthy_meals")
+    logger.debug(f'*** nox -s dockerExecPsql - done')
 
 
 @nox.session(python=("3.12"), venv_backend="none")
@@ -175,9 +196,12 @@ def dockerDown(session):
     a pipe is used to pass the container ids between the docker ps command and the docker stop command
     xargs is used to feed the container ids into docker stop command as arguments
     '''
+    logger = logging.getLogger(__name__)
+    logger.debug(f'*** nox -s dockerDown - started')
     # session.run("docker", "stop", "healthy-meals-web-1")
     # session.run("docker", "stop", "healthy_meals-pg_db-1")
     session.run("bash", "-c", "docker ps -q --filter 'name=healthy-meals*' | xargs docker stop")
+    logger.debug(f'*** nox -s dockerDown - done')
 
 
 @nox.session(python=("3.12"), venv_backend="none")
@@ -186,13 +210,19 @@ def dockerSphinxDocs(session):
 
     Note: Requires healthy-meals docker container to be running
     """
+    logger = logging.getLogger(__name__)
+    logger.debug(f'*** nox -s dockerSphinxDocs - started')
     session.run("docker", "exec", "-it", "healthy-meals-web-1", "nox", "-s", "sphinxDocs")
+    logger.debug(f'*** nox -s dockerSphinxDocs - done')
 
 
 @nox.session(python=("3.12"), venv_backend="none")
 def dockerLogs(session):
     """to Output docker logs out to console. (hit <ctrl>c to stop)."""
+    logger = logging.getLogger(__name__)
+    logger.debug(f'*** nox -s dockerLogs - started')
     session.run("docker", "compose", "logs", "--follow")
+    logger.debug(f'*** nox -s dockerLogs - done')
 
 
 @nox.session(python=("3.12"), venv_backend="none")
@@ -201,7 +231,10 @@ def dockerTesting(session):
 
     Note: Requires healthy-meals docker container to be running
     """
+    logger = logging.getLogger(__name__)
+    logger.debug(f'*** nox -s dockerTesting - started')
     session.run("docker", "exec", "-it", "healthy-meals-web-1", "nox", "-s", "testing")
+    logger.debug(f'*** nox -s dockerTesting - done')
 
 
 

@@ -162,7 +162,7 @@ omit = [
     "*requirements*.txt",
     "docs/*",
     ".nox/*",
-    # "noxfile.py",
+    "noxfile.py", # Not sure how to test this, if possible.
     "*/__init__.py"
 ]
 # include (check coverage on) .html and .txt files

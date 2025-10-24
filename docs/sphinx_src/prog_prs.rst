@@ -58,32 +58,34 @@ To Do for Base Starter Branch:
 
 .. ToDo:: If you are looking for an issue to work on to get going in healthy-meals, consider the following:
 
-  - enhance documentation regularly, create an issue for solution
-  - getting MyPy QA/lint tool working, create an issue for solution
-  - getting Ruff QA/lint tool working, create an issue for solution
-  - getting any other QA tools working, create an issue for solution
-  - update developer setup instructions in README.md (pip tools, not using asdf, windows, ...), create an issue for solution
-  - Helpful developer guidance into readme or docs would be great., create an issue for solution
-  - See if it is possible to prevent pull requests if automated testing errors, create an issue for solution
-  - See if it is possible to prevent requests if coverage below a certain percentage, create an issue for solution
-  - obtain 100% coverage HTML code (pending guidance from Dave)
+  - ongoing enhancements to documentation
+    - Helpful developer guidance
+    - better coverage
+    - improved developer setup instructions
+      - pip tools being used with UV?
+      - replace asdf with UV 
+  - getting MyPy QA/lint tool working
+  - getting Ruff QA/lint tool working
+  - getting any other worthwhile QA tools working
+  - update developer setup instructions in README.md (pip tools?, not using asdf, windows, using hatch, ...)
 
 
 .. ToDo:: Dave's todo list:
 
-  - obtain coverage of noxfile.py, and mark nox (docker?) tests as slow tests
-      - (done) add slow test marker code.See: tests/conftest.py & tests/nox/test_docker_nox.py
-          - https://docs.pytest.org/en/latest/example/simple.html#control-skipping-of-tests-according-to-command-line-option
-          - https://docs.pytest.org/en/latest/example/simple.html#control-skipping-of-tests-according-to-command-line-option
-      - see tests/nox/test_docker_nox.py for docker nox scripts
-      - see tests/nox/test_local_nox.py for local nox scripts
-  - protect the BaseStarter branch
   - write guidance in programmer docs for getting coverage of HTML files
-  - deploy website to lifeguides.info
-  - add project and lifeguides to tayloredwebsites.com
   - github pages cleanup
       - do not overwrite production docs during pull requests
       - consider having pull request version of documentation for review
       - delete docs build artifact after upload to pages (maybe it needs a name and delete artifact action?)
   - turn on circle CI validation
   - consider turning on other CI
+  - nox automated testing coverage
+    - confirm all scripts have a returncode of 0
+    - note slow docker scripts!
+  - nox "status" script to validate git environment
+    - remotes set up properly
+    - current local branch up to date for pull requests
+    - main branch up to date for pull requests
+    - warning to not do pull request if automated testing errors
+    - warning to not do pull request if coverage below a certain percentage
+    - handle updates to new "starter" branch
