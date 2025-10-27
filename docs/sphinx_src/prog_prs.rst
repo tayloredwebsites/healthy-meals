@@ -58,28 +58,34 @@ To Do for Base Starter Branch:
 
 .. ToDo:: If you are looking for an issue to work on to get going in healthy-meals, consider the following:
 
-  - enhance documentation regularly, create an issue for solution outside of existing standards
-  - getting MyPy QA/lint tool working, create an issue for solution outside of existing standards
-  - getting Ruff QA/lint tool working, create an issue for solution outside of existing standards
-  - getting any other QA tools working, create an issue for solution outside of existing standards
-  - update developer setup instructions in README.md (pip tools, not using asdf, windows, ...), create an issue for solution outside of existing standards
-  - Helpful developer guidance into readme or docs would be great., create an issue for solution outside of existing standards
-  - See if it is possible to prevent pull requests if automated testing errors, create an issue for solution outside of existing standards
-  - See if it is possible to prevent requests if coverage below a certain percentage, create an issue for solution outside of existing standards
-  - obtain 100% coverage HTML code (pending documentation and examples from Dave)
-  - Write up an issue for something that would improve Healthy Meals
-  - Contact `Dave @ Taylored Web Sites <mailto:tayloredwebsites@me.com>`_ if you wish to share some thoughts, or help on the project.
+  - ongoing enhancements to documentation
+    - Helpful developer guidance
+    - better coverage
+    - improved developer setup instructions
+      - pip tools being used with UV?
+      - replace asdf with UV 
+  - getting MyPy QA/lint tool working
+  - getting Ruff QA/lint tool working
+  - getting any other worthwhile QA tools working
+  - update developer setup instructions in README.md (pip tools?, not using asdf, windows, using hatch, ...)
 
 
 .. ToDo:: Dave's todo list:
 
-  - pull request to update github pages documentation
-  - analysis of pull request 46 run of .github/workflows/djangoUvCi.yml failure, to help prevent it in the future
-    - run nox -s goodToGo successfully
-    - run uv sync? locally (or ?), to ensure that installed modules locally match modules in github workflow.
-  - obtain good coverage of noxfile.py
-  - nox -s status for improved git status message for git warnings against potential git repo problems.
   - write guidance in programmer docs for getting coverage of HTML files
-  - review need for utils/docker_clear.py
-  - create starter branch before working on core programming.
-  - start on first core table: references (References).
+  - github pages cleanup
+      - do not overwrite production docs during pull requests
+      - consider having pull request version of documentation for review
+      - delete docs build artifact after upload to pages (maybe it needs a name and delete artifact action?)
+  - turn on circle CI validation
+  - consider turning on other CI
+  - nox automated testing coverage
+    - confirm all scripts have a returncode of 0
+    - note slow docker scripts!
+  - nox "status" script to validate git environment
+    - remotes set up properly
+    - current local branch up to date for pull requests
+    - main branch up to date for pull requests
+    - warning to not do pull request if automated testing errors
+    - warning to not do pull request if coverage below a certain percentage
+    - handle updates to new "starter" branch
