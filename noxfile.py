@@ -18,7 +18,7 @@ PYTHON_VERSION = "3.12"
 
 # set up nox shared uv session
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
-def setup(session):
+def uv_sync(session):
     f"""Installs dependencies into the shared venv."""
     session.run_install("uv", "sync", "--quiet",
         external=True,
@@ -31,7 +31,7 @@ def setup(session):
 # @nox_uv.session(python=PYTHON_VERSIONS) # venv_backend="uv", 
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def setupEnv(session):
-    session.notify("setup")
+    session.notify("uv_sync")
     '''Set up external environment as needed (no venv)).'''
     # empty out tests and coverage directories
     session.run("uv", "run", "nox", "-s", "cleanDocsBuild")
@@ -49,7 +49,7 @@ def setupEnv(session):
 # @nox.session(venv_backend="uv", python=PYTHON_VERSIONS)
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def goodToGo(session):
-    session.notify("setup")
+    session.notify("uv_sync")
     ''' Check to confirm that all is good to go (for push / commit / etc.).'''
     session.run("uv", "run", "nox", "-s", "setupEnv") # make sure session is set up if needed
     session.run("uv", "run", "nox", "-s", "sphinxDocs") # generate docs locally
@@ -60,14 +60,14 @@ def goodToGo(session):
 
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def localUp(session: nox.Session):
-    session.notify("setup")
+    session.notify("uv_sync")
     ''' Bring up Healthy Meals in local server.'''
     session.run("uv", "run", "python", "manage.py", "runserver", "0.0.0.0:8000")
 
 
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def genNoxDocs(session: nox.Session):
-    session.notify("setup")
+    session.notify("uv_sync")
     ''' Generate nox documentation into a file for inclusion into Sphinx.'''
     with Path.open("./docs/qa/nox_docs.txt", "w") as out:
         session.run("uv", "run", "nox", "--list",
@@ -77,7 +77,7 @@ def genNoxDocs(session: nox.Session):
 
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def sphinxDocs(session: nox.Session):
-    session.notify("setup")
+    session.notify("uv_sync")
     """Rebuild all documentation to Sphinx (cleans up old docs).
 
     Ignore the warning about modules.rst not included in the toctree,
@@ -99,7 +99,7 @@ def sphinxDocs(session: nox.Session):
 # def cleanTestsBuild(session: nox.Session):
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def cleanTestsBuild(session):
-    session.notify("setup")
+    session.notify("uv_sync")
     """Clean out docs/build directories for running tests and coverage"""
    # empty out only the tests and coverage directories in the doc/build directory
     session.run("uv", "run", "rm", "-fr", "./docs/build/tests")
@@ -112,7 +112,7 @@ def cleanTestsBuild(session):
 
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def cleanDocsBuild(session):
-    session.notify("setup")
+    session.notify("uv_sync")
     """Clean out docs/build directories for running tests and coverage"""
     # empty out and rebuild the entire docs/build directory
     session.run("uv", "run", "rm", "-fr", "./docs/build")
@@ -131,7 +131,7 @@ def cleanDocsBuild(session):
 # def testing(session: nox.Session):
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def testing(session):
-    session.notify("setup")
+    session.notify("uv_sync")
     """Run condensed output automated tests)."""
 
     logger = logging.getLogger(__name__)
@@ -157,7 +157,7 @@ def testing(session):
 
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def testing_debug(session):
-    session.notify("setup")
+    session.notify("uv_sync")
     """Run all automated tests with expanded debugging statements."""
     # empty out docs, tests, and coverage directories in docs/build
     session.run("uv", "run", "nox", "-s", "cleanTestsBuild")
@@ -170,7 +170,7 @@ def testing_debug(session):
 
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def testing_cov(session):
-    session.notify("setup")
+    session.notify("uv_sync")
     """Run condensed output automated tests with coverage reports."""
     # empty out docs, tests, and coverage directories in docs/build
     session.run("uv", "run", "nox", "-s", "cleanTestsBuild")
@@ -201,7 +201,7 @@ def testing_cov(session):
 
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def testing_final(session):
-    session.notify("setup")
+    session.notify("uv_sync")
     """Run final automated tests and coverage reports with output to coverage_run.txt file."""
     with Path.open("./docs/build/coverage_run.txt", "w") as out:
 
@@ -251,7 +251,7 @@ def testing_final(session):
 
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def dockerUpBg(session):
-    session.notify("setup")
+    session.notify("uv_sync")
     '''Bring up Healthy Meals in docker in background.'''
     logger = logging.getLogger(__name__)
     logger.debug(f'*** nox -s dockerUpBg - started')
@@ -261,14 +261,14 @@ def dockerUpBg(session):
 
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def dockerUpLog(session):
-    session.notify("setup")
+    session.notify("uv_sync")
     '''Bring up Healthy Meals in docker, with log to console.'''
     session.run("docker", "compose", "up", "--build")
 
 
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def dockerEnsureUp(session):
-    session.notify("setup")
+    session.notify("uv_sync")
     '''bring up Healthy Meals in docker (in background) if not up already.'''
     logger = logging.getLogger(__name__)
     logger.debug(f'*** nox -s dockerEnsureUp - started')
@@ -278,7 +278,7 @@ def dockerEnsureUp(session):
 
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def dockerExecSh(session):
-    session.notify("setup")
+    session.notify("uv_sync")
     '''to Open shell in web container, need to type "exit" to shut it down'''
     logger = logging.getLogger(__name__)
     logger.debug(f'*** nox -s dockerExecSh - started')
@@ -288,7 +288,7 @@ def dockerExecSh(session):
 
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def dockerExecPsql(session):
-    session.notify("setup")
+    session.notify("uv_sync")
     '''to Open psql in db container, need to type \\q to shut it down.'''
     logger = logging.getLogger(__name__)
     logger.debug(f'*** nox -s dockerExecPsql - started')
@@ -298,7 +298,7 @@ def dockerExecPsql(session):
 
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def dockerDown(session):
-    session.notify("setup")
+    session.notify("uv_sync")
     '''Bring down all Healthy Meals Docker Containers
 
     We get the active docker procs that are wild card filtered to match the names of all healthy-meal containers
@@ -315,7 +315,7 @@ def dockerDown(session):
 
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def dockerSphinxDocs(session):
-    session.notify("setup")
+    session.notify("uv_sync")
     """to Generate the documentation using Sphinx through docker.
 
     Note: Requires healthy-meals docker container to be running
@@ -328,7 +328,7 @@ def dockerSphinxDocs(session):
 
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def dockerLogs(session):
-    session.notify("setup")
+    session.notify("uv_sync")
     """to Output docker logs out to console. (hit <ctrl>c to stop)."""
     logger = logging.getLogger(__name__)
     logger.debug(f'*** nox -s dockerLogs - started')
@@ -338,7 +338,7 @@ def dockerLogs(session):
 
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def dockerTesting(session):
-    session.notify("setup")
+    session.notify("uv_sync")
     """to Run automated tests (localtest) through docker.
 
     Note: Requires healthy-meals docker container to be running
@@ -355,7 +355,7 @@ def dockerTesting(session):
 
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def mypy(session):
-    session.notify("setup")
+    session.notify("uv_sync")
     with Path.open("./docs/qa/mypy_run.txt", "w") as out:
         session.run("mypy",
             "./healthymeals",
@@ -367,14 +367,14 @@ def mypy(session):
 
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def ruff(session):
-    session.notify("setup")
+    session.notify("uv_sync")
     with Path.open("./docs/qa/ruff_run.txt", "w") as out:
         session.run("ruff", "check", stdout=out) # optional parameter: "--fix")
 
 
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def flake8(session):
-    session.notify("setup")
+    session.notify("uv_sync")
     with Path.open("./docs/qa/flake8_run.txt", "w") as out:
         session.run(
             "flake8",
@@ -399,12 +399,12 @@ def flake8(session):
 
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def djlint(session):
-    session.notify("setup")
+    session.notify("uv_sync")
     with Path.open("./docs/qa/djlint_run.txt", "w") as out:
         session.run("djlint", "./healthymeals")
 
 @nox.session(python=(PYTHON_VERSION), venv_backend="none")
 def pylint(session):
-    session.notify("setup")
+    session.notify("uv_sync")
     with Path.open("./docs/qa/pylint_run.txt", "w") as out:
         session.run("pylint", "./healthymeals")
