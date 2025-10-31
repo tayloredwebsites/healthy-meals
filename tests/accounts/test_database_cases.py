@@ -6,12 +6,16 @@ from accounts.models import CustomUser
 
 from django.db import IntegrityError, transaction
 
+import datetime
+
+
 class UserModelsTestCase(TestCase):
     '''using testcase with factoryboy for testing updates to the database.
 
     - run as large test to minimize database setup and teardown
 
     '''
+
     def setUp(self):
         # Setup run before every test method.
         pass
@@ -27,16 +31,29 @@ class UserModelsTestCase(TestCase):
             - CustomUser prints out as expected,
             - all_deleted (custom function) return the deleted custom users
 
+        .. ToDo:: tests for new created and updated datetime fields
+
         '''
         # get starting user record count
         count = CustomUser.objects.count()
         # confirm no users
         assert count == 0
+        start_time = datetime.datetime.now(datetime.UTC)
         # create 4 test users
         test_users = CustomUserFactory.create_batch(4)
         # confirm we now have 4 more
         assert count + 4 == CustomUser.objects.count()
         user0 = test_users[0]
+
+        # validate the created and updated fields (should be within 1 second from start_time)
+        print(f'*** user0 created_at time: {user0.created_at}')
+        diff_created = user0.created_at - start_time
+        print(f'*** diff_created: {diff_created}')
+        assert diff_created.total_seconds() < 1.0
+        diff_updated = user0.updated_at - start_time
+        print(f'*** diff_updated: {diff_updated}')
+        assert diff_updated.total_seconds() < 1.0
+
         print(f'user0 history count: {user0.rec_history_count()}')
         assert user0.rec_history_count() == 1
         assert not user0.rec_history_field_changed(0, 'deleted')
@@ -53,7 +70,7 @@ class UserModelsTestCase(TestCase):
         for rec in CustomUser.objects.all_with_deleted():
             print(f'After soft delete record 0: {rec.email}: {rec.username}, {rec.deleted}')
         assert user0.rec_history_count() == 2
-        assert user0.rec_history_field_changed(0, 'deleted') # record 0 is the latest
+        assert user0.rec_history_field_changed(0, 'deleted')  # record 0 is the latest
         assert user0.rec_history_field_was(0, 'deleted') == 'None'
         assert user0.rec_history_field_is_now(0, 'deleted') == user0.deleted.strftime("%Y-%m-%d %H:%M:%S.%f")
 
