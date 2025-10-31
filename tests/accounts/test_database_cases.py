@@ -6,6 +6,8 @@ from accounts.models import CustomUser
 
 from django.db import IntegrityError, transaction
 
+import datetime
+
 class UserModelsTestCase(TestCase):
     '''using testcase with factoryboy for testing updates to the database.
 
@@ -27,16 +29,30 @@ class UserModelsTestCase(TestCase):
             - CustomUser prints out as expected,
             - all_deleted (custom function) return the deleted custom users
 
+        .. ToDo:: tests for new created and updated datetime fields
+
         '''
         # get starting user record count
         count = CustomUser.objects.count()
         # confirm no users
         assert count == 0
+        start_time = datetime.datetime.now(datetime.UTC)
         # create 4 test users
         test_users = CustomUserFactory.create_batch(4)
         # confirm we now have 4 more
         assert count + 4 == CustomUser.objects.count()
         user0 = test_users[0]
+
+
+        # validate the created and updated fields (should be within 1 second from start_time)
+        print(f'*** user0 created time: {user0.created}')
+        diff_created = user0.created - start_time
+        print(f'*** diff_created: {diff_created}')
+        assert diff_created.total_seconds() < 1.0
+        diff_updated = user0.updated - start_time
+        print(f'*** diff_updated: {diff_updated}')
+        assert diff_updated.total_seconds() < 1.0
+
         print(f'user0 history count: {user0.rec_history_count()}')
         assert user0.rec_history_count() == 1
         assert not user0.rec_history_field_changed(0, 'deleted')

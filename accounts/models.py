@@ -1,5 +1,4 @@
 """ Accounts model (CustomUser records) for storing users customized to allow login by email, etc.
-[Source: https://toxigon.com]
 
 Mix in SafeDeleteManager into CustomUserManager for Soft Deletes using safedelete
 
@@ -9,11 +8,12 @@ Mix in SafeDeleteManager into CustomUserManager for Soft Deletes using safedelet
 
 """
 from django.contrib.auth.models import AbstractUser, UserManager
-from safedelete.models import SafeDeleteModel
-from safedelete.models import SOFT_DELETE_CASCADE
+from common.base_model import BaseModel
+# from safedelete.models import SafeDeleteModel
+# from safedelete.models import SOFT_DELETE_CASCADE
 from safedelete.managers import SafeDeleteManager
 from auditlog.registry import auditlog
-from auditlog.models import AuditlogHistoryField
+# from auditlog.models import AuditlogHistoryField
 
 
 class CustomUserManager(SafeDeleteManager, UserManager):
@@ -33,6 +33,10 @@ class CustomUserManager(SafeDeleteManager, UserManager):
     def all_deleted(self):
         """Returns all soft deleted customuser records.
 
+        .. ToDo:: remove this, and replace usage with SafeDeleteManager.deleted_only()
+            - note: these functions are only found in model manager classes
+            -  thus: all models must declare their custom manager based off of SafeDeleteManager
+
         No arguments are passed to this function when calling it
 
         Returns:
@@ -49,53 +53,17 @@ class CustomUserManager(SafeDeleteManager, UserManager):
         """
         return self.all_with_deleted().filter(deleted__isnull=False)
 
-# Mix in SafeDeleteModel into CustomUser Model for Soft Deletes using safedelete
-# - https://django-safedelete.readthedocs.io/en/latest/managers.html
 
-class CustomUser(SafeDeleteModel, AbstractUser):
-    '''CustomUser model - Abstract User customized to allow login by email'''
-    history = AuditlogHistoryField()
+class CustomUser(BaseModel, AbstractUser):
+    '''CustomUser model - Abstract User customized to allow login by email
 
-    _safedelete_policy = SOFT_DELETE_CASCADE
-    '''Tell SafeDelete to cascade soft deletes of records (also delete child records)'''
-
+    Mix in BaseModel to provide:
+    - soft deletes using  django-safedelete
+        - https://django-safedelete.readthedocs.io/en/latest/index.html
+    - record history / versioning through django-auditlog
+        - https://github.com/jazzband/django-auditlog
+    '''
     objects = CustomUserManager()
-
-    def rec_history_count(self):
-        '''Return the count of all of the history records for this user.'''
-        return self.history.all().count()
-
-    def rec_history_field_was(self, user_rec, field_name):
-        '''Return a dictionary of the previous values for this field, for this record.'''
-        rec = self.history.all()[user_rec]
-        return self.__get_field_changes(rec,field_name)[0]
-
-    def rec_history_field_is_now(self, user_rec, field_name):
-        ''' What is the rec_history_field_is_now functionality?
-
-        .. ToDo:: Research what the accounts.models.CustomUser.rec_history_field_is_now function was supposed to do.  Is this needed?
-
-        '''
-        rec = self.history.all()[user_rec]
-        return self.__get_field_changes(rec,field_name)[1]
-
-    def rec_history_field_changed(self, user_rec, field_name):
-        '''Return the number of records that are maintained in CustomUser's history table.'''
-        rec = self.history.all()[user_rec]
-        changes = self.__get_field_changes(rec,field_name)
-        # print(f'changes: {changes}')
-        return changes[0] != changes[1]
-
-    def __get_field_changes(self, hist_rec, field_name):
-        '''Return a dictionary of the history for this record's field values.'''
-        try:
-            changes = hist_rec.changes_dict[field_name]
-            # print(f'changes: {changes}')
-            return changes
-        except KeyError as e:
-            # there was no change, audit log does not log values that do not change, so return array of None strings
-            print(f'expected key error auditlog - no changes for field: {e}')
-            return ['None', 'None']
 
     def name_or_email(self):
         '''Return the user's full name, otherwise return their email.'''
