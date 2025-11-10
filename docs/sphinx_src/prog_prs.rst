@@ -50,13 +50,12 @@ Pull Requests (for code and documentation)
     - # Go to your pull request:
       - # Pull requests / <your pull request>
 
-Notes:
-~~~~~~
 
-To Do for Base Starter Branch:
-------------------------------
+Programmers Guide To Do Items:
+================================
 
-.. ToDo:: If you are looking for an issue to work on to get going in healthy-meals, consider the following:
+
+.. ToDo:: Starter or Introduction items todo list:
 
   - ongoing enhancements to documentation
     - Helpful developer guidance
@@ -70,7 +69,7 @@ To Do for Base Starter Branch:
   - update developer setup instructions in README.md (pip tools?, not using asdf, windows, using hatch, ...)
 
 
-.. ToDo:: Dave's todo list:
+.. ToDo:: Configuration items todo list:
 
   - write guidance in programmer docs for getting coverage of HTML files
   - github pages cleanup
