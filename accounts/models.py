@@ -33,7 +33,9 @@ class CustomUserManager(SafeDeleteManager, UserManager):
     def all_deleted(self):
         """Returns all soft deleted customuser records.
 
-        .. ToDo:: remove this, and replace usage with SafeDeleteManager.deleted_only()
+        .. ToDo:: replace accounts.models.CustomUserManager.all_deleted with SafeDeleteManager.deleted_only()
+
+            - see: https://django-safedelete.readthedocs.io/en/latest/managers.html
             - note: these functions are only found in model manager classes
             -  thus: all models must declare their custom manager based off of SafeDeleteManager
 

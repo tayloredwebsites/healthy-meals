@@ -28,9 +28,6 @@ class UserModelsTestCase(TestCase):
             - emails are ensured to be unique,
             - CustomUser prints out as expected,
             - all_deleted (custom function) return the deleted custom users
-
-        .. ToDo:: tests for new created and updated datetime fields
-
         '''
         # get starting user record count
         count = CustomUser.objects.count()
