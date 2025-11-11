@@ -1,11 +1,11 @@
 Quality Assurance (QA) Guide
 ============================
 
+Click on image to see report.
+-----------------------------
 
 Testing Summary Report
 ----------------------
-
-Note: Click on image to see report.
 
 .. raw:: html
 
@@ -14,6 +14,8 @@ Note: Click on image to see report.
 
 Python Code Coverage Report
 ---------------------------
+
+Note: no coverage of noxfile.py nox configuration file.
 
 .. raw:: html
 
@@ -24,7 +26,7 @@ Python Code Coverage Report
 Python Code & HTML Coverage Report
 ----------------------------------
 
-Note: Coverage includes Template HTML files. Click on image to see report.
+Note: Coverage includes Template HTML files (no noxfile.py coverage also).
 
 .. raw:: html
 
