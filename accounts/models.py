@@ -5,7 +5,6 @@ Mix in SafeDeleteManager into CustomUserManager for Soft Deletes using safedelet
 - https://django-safedelete.readthedocs.io/en/latest/managers.html
 - safe delete of custom users example found at;
 - https://codeberg.org/mvlaev/Cars/src/branch/main/cars/users_app/models.py"
-
 """
 from django.contrib.auth.models import AbstractUser, UserManager
 from common.base_model import BaseModel
@@ -21,8 +20,7 @@ from auditlog.registry import auditlog
 class CustomUserManager(SafeDeleteManager, UserManager):
     """Custom User model Manager class ('objects').
 
-    Manager class for CustomUsers (Accounts).  Access to this class is through the 'objects'
-    instance attribute of the CustomUser Class.
+    Manager class for CustomUsers (Accounts).  Access to this class is through the 'objects' instance attribute of the CustomUser Class.
 
     Soft Delete of Users are implemented through SafeDelete.
     See: https://django-safedelete.readthedocs.io/en/latest/managers.html
