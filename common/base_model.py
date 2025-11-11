@@ -24,7 +24,7 @@ class BaseModel(SafeDeleteModel):
 
     SOFT DELETE FUNCTIONALITY
     Note: The customized functions for soft deletion are only found in model manager classes
-    Thus: to use the methods found in 'objects', their models must declare their custom manager based off of SafeDeleteManager
+    Thus??: to use the methods found in 'objects', their models must declare their custom manager based off of SafeDeleteManager (This should be validated!!!)
     See: accounts/models.py for an example
 
     - all_with_deleted() # Show all model records including the soft deleted models.
