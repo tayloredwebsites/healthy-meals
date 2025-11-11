@@ -15,7 +15,7 @@ def test_user_soft_delete():
 
         - emails are ensured to be unique,
         - CustomUser prints out as expected,
-        - all_deleted (custom function) return the deleted custom users
+        - deleted_only (custom function) return the deleted custom users
         - run as large test to minimize database setup and teardown
     '''
     # get starting user record count
@@ -62,7 +62,7 @@ def test_user_soft_delete():
 
     # confirm we have one less
     assert CustomUser.objects.all_with_deleted().count() == 4
-    assert CustomUser.objects.all_deleted().count() == 1
+    assert CustomUser.objects.deleted_only().count() == 1
 
     # make sure the database does not allow duplicate emails for custom_users
     # tests the pre_save signal that copies the email into the username field
@@ -78,10 +78,10 @@ def test_user_soft_delete():
     for rec in CustomUser.objects.all_with_deleted():
         print(f'After factory attempt to create duplicate of record 0: {rec.email}: {rec.username}, {rec.deleted}')
     assert CustomUser.objects.all_with_deleted().count() == 4
-    assert CustomUser.objects.all_deleted().count() == 1
+    assert CustomUser.objects.deleted_only().count() == 1
     test_users[0].undelete()
     assert CustomUser.objects.all_with_deleted().count() == 4
-    assert CustomUser.objects.all_deleted().count() == 0
+    assert CustomUser.objects.deleted_only().count() == 0
     print(f'Restored: {test_users[0].email}: {test_users[0].username}, {test_users[0].deleted}')
 
     ''' .. :Todo test to make sure that undeleted users can still log into the system and function properly'''

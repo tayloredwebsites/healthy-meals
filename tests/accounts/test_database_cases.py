@@ -27,7 +27,7 @@ class UserModelsTestCase(TestCase):
 
             - emails are ensured to be unique,
             - CustomUser prints out as expected,
-            - all_deleted (custom function) return the deleted custom users
+            - deleted_only - return the deleted custom users, see: https://django-safedelete.readthedocs.io/en/latest/managers.html
         '''
         # get starting user record count
         count = CustomUser.objects.count()
@@ -72,7 +72,7 @@ class UserModelsTestCase(TestCase):
 
         # confirm we have one less
         self.assertEqual(CustomUser.objects.all_with_deleted().count(), 4)
-        self.assertEqual(CustomUser.objects.all_deleted().count(), 1)
+        self.assertEqual(CustomUser.objects.deleted_only().count(), 1)
 
         ''' .. ToDo::  make sure the database does not allow duplicate emails for custom_users'''
         # -
@@ -92,10 +92,10 @@ class UserModelsTestCase(TestCase):
         for rec in CustomUser.objects.all_with_deleted():
             print(f'After factory attempt to create duplicate of record 0: {rec.email}: {rec.username}, {rec.deleted}')
         self.assertEqual(CustomUser.objects.all_with_deleted().count(), 4)
-        self.assertEqual(CustomUser.objects.all_deleted().count(), 1)
+        self.assertEqual(CustomUser.objects.deleted_only().count(), 1)
         test_users[0].undelete()
         self.assertEqual(CustomUser.objects.all_with_deleted().count(), 4)
-        self.assertEqual(CustomUser.objects.all_deleted().count(), 0)
+        self.assertEqual(CustomUser.objects.deleted_only().count(), 0)
         print(f'Restored: {test_users[0].email}: {test_users[0].username}, {test_users[0].deleted}')
 
     ''' .. :Todo test to make sure that undeleted users can still log into the system and function properly.'''

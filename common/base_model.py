@@ -21,6 +21,15 @@ class BaseModel(SafeDeleteModel):
         - https://django-safedelete.readthedocs.io/en/latest/index.html
     - has record history / versioning through django-auditlog
         - https://github.com/jazzband/django-auditlog
+
+    Note: The customized functions for soft deletion are only found in model manager classes
+    Thus: to use the methods found in 'objects', their models must declare their custom manager based off of SafeDeleteManager
+    See: accounts/models.py for an example
+
+    - all_with_deleted() # Show all model records including the soft deleted models.
+    - deleted_only() # Only show the soft deleted model records.
+    - all(**kwargs) -> django.db.models.query.QuerySet # Show deleted model records. (default: {None})
+    - update_or_create(defaults=None, **kwargs) -> Tuple[django.db.models.base.Model, bool] # https://django-safedelete.readthedocs.io/en/latest/managers.html#safedelete.managers.SafeDeleteManager.update_or_create
     """
     created = models.DateTimeField(default=timezone.now)
     updated = models.DateTimeField(auto_now=True)
