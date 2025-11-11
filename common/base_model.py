@@ -22,6 +22,7 @@ class BaseModel(SafeDeleteModel):
     - has record history / versioning through django-auditlog
         - https://github.com/jazzband/django-auditlog
 
+    SOFT DELETE FUNCTIONALITY
     Note: The customized functions for soft deletion are only found in model manager classes
     Thus: to use the methods found in 'objects', their models must declare their custom manager based off of SafeDeleteManager
     See: accounts/models.py for an example
@@ -30,6 +31,18 @@ class BaseModel(SafeDeleteModel):
     - deleted_only() # Only show the soft deleted model records.
     - all(**kwargs) -> django.db.models.query.QuerySet # Show deleted model records. (default: {None})
     - update_or_create(defaults=None, **kwargs) -> Tuple[django.db.models.base.Model, bool] # https://django-safedelete.readthedocs.io/en/latest/managers.html#safedelete.managers.SafeDeleteManager.update_or_create
+
+    AUDITLOG VERSIONING HISTORY FUNCTIONALITY
+    - has record history / versioning through django-auditlog (https://github.com/jazzband/django-auditlog)
+        - this provides the ability to see all of the changes to fields (except fields excluded when registered in the model)
+        - see: https://django-auditlog.readthedocs.io/en/latest/usage.html
+    Note: To register auditlog to automatically log all changes to a model, it must be registered in the model
+    To register auditlog, the last line of the model should have the auditlog.register statement.
+    For Example (as can be seen in accounts/models.py): 
+        auditlog.register(CustomUser, exclude_fields=[
+            'password', # protect this field for security reasons
+            'last_login', # do not update audit log for each login
+            ]
     """
     created = models.DateTimeField(default=timezone.now)
     updated = models.DateTimeField(auto_now=True)
@@ -50,11 +63,7 @@ class BaseModel(SafeDeleteModel):
         return self.__get_field_changes(rec,field_name)[0]
 
     def rec_history_field_is_now(self, user_rec, field_name):
-        ''' What is the rec_history_field_is_now functionality?
-
-        .. ToDo:: Research what the accounts.models.CustomUser.rec_history_field_is_now function was supposed to do.  Is this needed?
-
-        '''
+        '''Return the latest history record value for this field (should be identical to current field value)'''
         rec = self.history.all()[user_rec]
         return self.__get_field_changes(rec,field_name)[1]
 
