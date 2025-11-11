@@ -70,6 +70,7 @@ html_css_files = ['css/custom.css'] # custom css for full width pages
 '''Other settings'''
 templates_path = ['_templates']
 exclude_patterns = ["**/healthy_meals"]
+# include_patterns = ['**', '/README.md'] # doesn't seem to work - https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-include_patterns
 autosummary_generate = True
 # Include the database table names of Django models
 django_show_db_tables = True                # Boolean, default: False

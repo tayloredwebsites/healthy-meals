@@ -23,14 +23,12 @@
 
 ### Keeping a Branch for Starter Base Projects
 
-#### Features for basic website kept in the "BaseStarter" branch
+#### Features for basic website kept in the "starter" branch
 - Runs in Docker or locally (using a local web server).
 - Uses the nox tool for automating  and simplifying tasks.
 - Automated testing with 100% coverage of all python code.
   - Testing using either testcase and pytest.
   - efficient HTML coverage testing using beautiful soup.
-- Uses github actions to ensure all tests pass for pull requests.
-  - Test and coverage badges displayed in documentation and in README.md
 - Github pages site for Documentation from Sphinx, Test Passing, & Coverage reports
   - Sphinx generated documentation generated in github action and deployed to github pages
   - Automated Testing documentation generated in github action and deployed to github pages
@@ -46,7 +44,10 @@
 - Custom 404, 500, and 403 error pages
 - Internationalization (i18n) of strings in code
 - Soft Delete functionality of database records
+- has record history / versioning through django-auditlog (https://github.com/jazzband/django-auditlog), providing:
+  - provides the ability to see all of the changes to fields (except fields excluded when auditlog is registered in the model)
 - Base HTML Template
+  - bootstrap 5
   - sub-template blocks for pages and partial pages
   - SCSS translation to CSS using Dart SASS
     - [libsass is deprecated, dart sass is recommended](https://sass-lang.com/blog/libsass-is-deprecated/)
@@ -83,25 +84,27 @@ Sorry, we are just starting this.
 - see: [todo items, especially the If you are looking for an issue to work on... todo list](https://tayloredwebsites.github.io/healthy-meals/todos.html#current-to-do-items-listings)
 
 
-#### Major Step 1) Wiki (with built in references tooling)
+#### Major Step 1) References Model
 
-- include django_wiki project to deliver main UI to site
+Note: This is an important aspect of this app.  This is provided so that any information provided by this app could provide the source of the information provided.  This should allow all information to be transparent.  This could help with any discussion about possible adjustments to information on the app, as appropriate.  Note: It is hoped that by integrating a wiki with this app in the future should be able to provide a mechanism for handling the discussion and possible adjustment of any information provided.
 
-- references table will be integrated with the wiki to provide references to information on wiki, as well as who put in the information.
+The References Model will be used to provide references to information on any possible information provided by Healthy Meals.  For example if the nutritional value (ConsumableAspects Model) of a particular Food (Consumables Model) sample data item is added to the database, a URL and/or document that was used to provide the source of the data is provided in this model.
 
-#### Major Step 2) Consumables Table
+#### Major Step 2) Consumables Model
 
 - This table will be designed so that all variety of consumables such as food, supplements, herbs, medicines will be in this system.
 
-#### Major Step 3) Consumable Aspects Table
+#### Major Step 3) Consumable Aspects Model
 
-- This table will be used to keep track of the important dietary aspects of consumables.  This will include:
+- This table will be used to keep track of the important dietary aspects of consumables.  This can include:
   - Vitamins
   - Minerals
   - Nutrients
   - Anti-nutrients (such as oxalates).
   - Additives
   - Preservatives
+  - Pesticides
+  - Herbicides
 - The amounts from the aspect's sample analysis will be stored such that an average value and variance of the aspect will be available for display
 
 #### Major Step 4) and so much more...
@@ -111,7 +114,7 @@ Sorry, we are just starting this.
 
 [TOC](#table-of-contents)
 
-To Do: review installation instructions
+.. todo:: review installation instructions
 
 ### 1) fork and clone repo(sitory) from github
 
@@ -243,12 +246,12 @@ Note: Our Dockerfile downloads dart-sass and adds it to the path
 
 [TOC](#table-of-contents)
 
-Please enter issues or pull requests (initially) for the following:
+Please enter issues (initially) or pull requests for the following:
 - Documentation issues, updates, or feature requests
-- Base Starter branch issues, updates, or feature requests
+- 'starter' branch issues, updates, or feature requests
 - Application feature requests
 
-If you have any questions, or are interested in contributing to the software development, please email [David Andrews Taylor of Taylored Web Sites](mailto:tayloredwebsites@me.com)
+If you have any questions, or are interested in contributing to the software development, please email [David A. Taylor of Taylored Web Sites](mailto:tayloredwebsites@me.com)
 
 ## License
 
