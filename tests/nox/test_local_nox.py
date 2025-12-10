@@ -8,7 +8,7 @@ https://github.com/tayloredwebsites/healthy-meals - tests/nox/test_local_nox.py
 import pytest
 from subprocess import run
 
-@pytest.mark.skip(reason="Is there any way to test this?")
+@pytest.mark.skip(reason="Is this untestable? Do dev tools need to be tested? Delete this?")
 def test_local_nox_scripts():
     '''Ensure nox scripts are working on the local server
 

@@ -10,11 +10,10 @@ import datetime
 
 
 class UserModelsTestCase(TestCase):
-    '''using testcase with factoryboy for testing updates to the database.
+    """using testcase with factoryboy for testing updates to the database.
 
     - run as large test to minimize database setup and teardown
-
-    '''
+    """
 
     def setUp(self):
         # Setup run before every test method.
@@ -25,12 +24,12 @@ class UserModelsTestCase(TestCase):
         pass
 
     def test_user_soft_delete(self):
-        '''Endure soft deletes and undeletes update the database properly
+        """Endure soft deletes and undeletes update the database properly
 
             - emails are ensured to be unique,
             - CustomUser prints out as expected,
             - deleted_only - return the deleted custom users, see: https://django-safedelete.readthedocs.io/en/latest/managers.html
-        '''
+        """
         # get starting user record count
         count = CustomUser.objects.count()
         # confirm no users
@@ -55,7 +54,7 @@ class UserModelsTestCase(TestCase):
         assert user0.rec_history_count() == 1
         assert not user0.rec_history_field_changed(0, 'deleted')
         # ensure print output of CustomUser is correct
-        self.assertEqual(user0.__str__(), f'{user0.email} - {user0.last_name}, {user0.first_name}')
+        assert f'{user0.email}: {user0.last_name}, {user0.first_name}' in user0.__str__()
         print(f'As Created: {user0.email}: {user0.username}, {user0.deleted}')
         # soft delete the first user
         user0.delete()

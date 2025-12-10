@@ -14,3 +14,8 @@ class CustomUserFactory(django.DjangoModelFactory):
     last_name=Faker('first_name')
     first_name=Faker('last_name')
     # deleted=None
+class SuperUserFactory(CustomUserFactory):
+    '''Make a CustomUser a superuser'''
+    class Meta:
+        model = models.CustomUser
+    is_superuser = True

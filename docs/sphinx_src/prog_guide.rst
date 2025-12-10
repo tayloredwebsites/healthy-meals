@@ -7,6 +7,7 @@ Programming Guide
    :maxdepth: 2
    :caption: Contents:
 
+   Code As Documentation</docs_guide>
    Nox Automation</prog_nox_docs>
    Pull Requests</prog_prs>
    uv</prog_uv>

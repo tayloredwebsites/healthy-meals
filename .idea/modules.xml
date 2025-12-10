@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../django/.idea/django.iml" filepath="$PROJECT_DIR$/../django/.idea/django.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../django-allauth/.idea/django-allauth.iml" filepath="$PROJECT_DIR$/../django-allauth/.idea/django-allauth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/healthy-meals.iml" filepath="$PROJECT_DIR$/.idea/healthy-meals.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../lithium/.idea/lithium.iml" filepath="$PROJECT_DIR$/../lithium/.idea/lithium.iml" />
+    </modules>
+  </component>
+</project>

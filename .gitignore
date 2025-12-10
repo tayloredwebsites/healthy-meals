@@ -96,7 +96,6 @@ pip-delete-this-directory.txt
 # - note: the source directory will be built from the following steps:
 #   - the "sphinx-apidoc" command will create the rst files from the project source files into the "source" directory.
 #   - also the nox "sphinxDocs" session will copy all of the files in the "sphinx_src" directory into the "source" directory
-
 docs/build
 docs/qa
 docs/source
@@ -126,6 +125,7 @@ ENV/
 env.bak/
 venv.bak/
 .direnv
+.tool-versions
 
 # mkdocs documentation
 /site
@@ -163,3 +163,8 @@ GitHub.sublime-settings
 
 # Screencast
 Lithium_Demo_2025.mp4
+
+# Temporary Files
+tmp/**
+
+node_modules

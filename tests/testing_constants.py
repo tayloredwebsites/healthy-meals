@@ -1,0 +1,6 @@
+INITIAL_USER_EMAIL = 'firstuser@sample.org'
+SIMPLE_PASSWORD = 'password'
+INITIAL_USER_PASSWORD = 'NotSimple#123'
+INITIAL_USER_FNAME = 'First',
+INITIAL_USER_LNAME = 'User',
+INITIAL_USERNAME = 'Username',

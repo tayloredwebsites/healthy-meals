@@ -32,7 +32,7 @@ Running long running tests (slow) examples:
 
 
 # @pytest.mark.slow #
-@pytest.mark.skip(reason="no need to test this, at this point")
+@pytest.mark.skip(reason="Is this untestable? Do can and should docker config to be tested? Delete this?")
 def test_docker_running():
     '''Ensure docker container is running
     

@@ -1,4 +1,3 @@
-
 import pytest
 from accounts.models import CustomUser
 from django.db import IntegrityError, transaction
@@ -7,29 +6,30 @@ from django.urls import reverse
 from bs4 import BeautifulSoup
 from tests.accounts.factories import CustomUserFactory
 
+
 @pytest.mark.django_db
 def test_base_not_logged_in():
     # get starting user record count
-    print('Starting Starting test_base_template.py::test_user_soft_delete')
+    print('Starting Starting test_base_template.py::test_base_not_logged_in')
 
     client = Client()
     # get home page for any user (logged in or not)
     resp = client.get(reverse("home"))
     # confirm response is OK
     assert resp.status_code == 200
-    ### Check the Header Font Sizers
+    # Check the Header Font Sizers
     # parse the html response
     soup = BeautifulSoup(resp.content, 'html.parser')
-    ### confirm we are on the home page of this site
+    # confirm we are on the home page of this site
     assert soup.h1.get_text() == "Healthy Meals: Diet Assistant"
     assert soup.h2.get_text() == "Home"
     # confirm the 5 font sizers are in the header
     sizer_tags = soup.find(id='fontSizer').find_all('a')
     assert len(sizer_tags) == 5
-    ### Check the Header Nav bar
+    # Check the Header Nav bar
     # confirm the navigation bar has two items - (home and about)
     nav_tags = soup.find(id='topMenu').find_all('a')
-    assert len(nav_tags) == 3 # 3 top navigation items
+    assert len(nav_tags) == 3  # 3 top navigation items
     nav_home_link_tag = soup.find(id='topMenu').find_all('a', href='/')
     assert len(nav_home_link_tag) == 1
     nav_about_link_tag = soup.find(id='topMenu').find_all('a', href='/about/')
@@ -38,7 +38,7 @@ def test_base_not_logged_in():
     # confirm not logged in at home page with displays for user as not logged in
     tsm = soup.find(id="topSysMenu")
     print(f'tm : {tsm}')
-    tsm_ne =  tsm.find(id="tsm_friend")
+    tsm_ne = tsm.find(id="tsm_friend")
     print(f'tsm_ne: {tsm_ne}')
     assert "Friend" in tsm_ne
     # confirm the navigation bar has two items - (password change and logout)
@@ -52,11 +52,11 @@ def test_base_not_logged_in():
 
 @pytest.mark.django_db
 def test_base_logged_in():
-    '''
+    """
     - Validate base template display
     - ensure user with name is displayed using their name
     - pytest tests/pages/test_base_template.py::test_base_logged_in
-    '''
+    """
     print('Starting test_base_template.py::test_base_logged_in')
 
     #############################################
@@ -72,7 +72,7 @@ def test_base_logged_in():
     # response = client.login(email='test@sample.com', password='password#123')
     # assert response == True
 
-     # # unable to use standard login, must force_login
+    # # unable to use standard login, must force_login
     client.force_login(user)
 
     # get home page for logged in user
@@ -87,7 +87,7 @@ def test_base_logged_in():
     # confirm logged in at home page with displays for user as logged in
     tsm = soup.find(id="topSysMenu")
     print(f'tm : {tsm}')
-    tsm_ne =  tsm.find(id="tsm_name_email")
+    tsm_ne = tsm.find(id="tsm_name_email")
     print(f'tsm_ne: {tsm_ne}')
     assert "{fname} {lname}".format(fname=user.first_name, lname=user.last_name) in tsm_ne
     # confirm the navigation bar has two items - (password change and logout)
@@ -97,16 +97,16 @@ def test_base_logged_in():
 
 @pytest.mark.django_db
 def test_no_name_has_email():
-    '''
+    """
     - ensure user without a name is displayed using their email
     - pytest tests/pages/test_base_template.py::test_no_name_has_email
-    '''
+    """
     print('Starting test_no_name_has_email')
-    client = Client() # get web client
+    client = Client()  # get web client
 
     # create a user and log in to the test system
     user = CustomUserFactory.create(email='test@sample.com', password='password#123', first_name='', last_name='')
-     # # unable to use standard login, must force_login
+    # # unable to use standard login, must force_login
     client.force_login(user)
 
     # get home page for logged in user
@@ -121,7 +121,7 @@ def test_no_name_has_email():
     # confirm logged in at home page with displays for user as logged in
     tsm = soup.find(id="topSysMenu")
     print(f'tm : {tsm}')
-    tsm_ne =  tsm.find(id="tsm_name_email")
+    tsm_ne = tsm.find(id="tsm_name_email")
     print(f'tsm_ne: {tsm_ne}')
     assert user.first_name == ''
     assert user.last_name == ''
@@ -129,27 +129,26 @@ def test_no_name_has_email():
     print(f'email: {user.email}')
     assert user.email in tsm_ne
 
+#############################################
+# Check Logged in page displays email if missing first or last name
+#############################################
 
-    #############################################
-    # Check Logged in page displays email if missing first or last name
-    #############################################
+#############################################
+# Check Logged in - change password process works correctly
+#############################################
 
-    #############################################
-    # Check Logged in - change password process works correctly
-    #############################################
+#############################################
+# Check log out process works correctly
+#############################################
 
-    #############################################
-    # Check log out process works correctly
-    #############################################
+#############################################
+# Check password change process works correctly
+#############################################
 
-    #############################################
-    # Check password change process works correctly
-    #############################################
+#############################################
+# Check password reset process works correctly
+#############################################
 
-    #############################################
-    # Check password reset process works correctly
-    #############################################
-
-    #############################################
-    # Check signup process works correctly
-    #############################################
+#############################################
+# Check signup process works correctly
+#############################################

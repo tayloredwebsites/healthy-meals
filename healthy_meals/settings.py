@@ -1,9 +1,9 @@
 from pathlib import Path
 from decouple import config
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
@@ -15,6 +15,7 @@ SECRET_KEY = config('SECRET_KEY')
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
+# DEBUG = config('DEBUG', default=False) # to allow playwright debugging with DEBUG=pw:api uv run pytest ...
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", "tayloredwebsites.github.io"]
@@ -43,8 +44,8 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "debug_toolbar",
     "safedelete",
-    "compressor", # https://www.accordbox.com/blog/how-use-scss-sass-your-django-project-python-way/
-    "auditlog", # https://django-auditlog.readthedocs.io/en/latest/installation.html
+    "compressor",  # https://www.accordbox.com/blog/how-use-scss-sass-your-django-project-python-way/
+    "auditlog",  # https://django-auditlog.readthedocs.io/en/latest/installation.html
     # Local
     "accounts",
     "pages",
@@ -64,7 +65,7 @@ MIDDLEWARE = [
     # "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",  # django-allauth
     # all Request altering middleware need to be registered above/before auditlog middleware, e.g., Django's default middleware classes
-    "auditlog.middleware.AuditlogMiddleware", # https://django-auditlog.readthedocs.io/en/latest/installation.html
+    "auditlog.middleware.AuditlogMiddleware",  # https://django-auditlog.readthedocs.io/en/latest/installation.html
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
@@ -86,7 +87,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
-            "debug": True, # needed for https://github.com/nedbat/django_coverage_plugin
+            "debug": True,  # needed for https://github.com/nedbat/django_coverage_plugin
         },
     },
 ]
@@ -106,12 +107,12 @@ DATABASES = {
         "NAME": config('DATABASE_NAME'),
         "USER": config('DATABASE_USER'),
         "PASSWORD": config('DATABASE_PASSWORD'),
-        "HOST": config('DATABASE_HOST'), # "db",  # set in docker-compose.yml
-        "PORT": config('DATABASE_PORT'), # 5432,  # default postgres port
+        "HOST": config('DATABASE_HOST'),  # "db",  # set in docker-compose.yml
+        "PORT": config('DATABASE_PORT'),  # 5432,  # default postgres port
         "TEST": {
-            "NAME": config('TEST_DATABASE_NAME'),# Documentation Purposes and allowing for override
-        }
-    }
+            "NAME": config('TEST_DATABASE_NAME'),  # Documentation Purposes and allowing for override
+        },
+    },
 }
 
 # Password validation
@@ -131,7 +132,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
 # https://docs.djangoproject.com/en/dev/ref/settings/#language-code
@@ -141,7 +141,7 @@ LANGUAGES = [
     ('en', 'English'),
 ]
 
-LOCALE_PATHS = ((BASE_DIR / 'locale'), )
+LOCALE_PATHS = ((BASE_DIR / 'locale'),)
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#time-zone
 TIME_ZONE = "UTC"
@@ -218,22 +218,27 @@ SITE_ID = 1
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
 LOGIN_REDIRECT_URL = "home"
-
-# https://django-allauth.readthedocs.io/en/latest/views.html#logout-account-logout
-ACCOUNT_LOGOUT_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "home"
 
 # https://django-allauth.readthedocs.io/en/latest/installation.html?highlight=backends
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
 )
-# https://django-allauth.readthedocs.io/en/latest/configuration.html
+
+# https://django-allauth.readthedocs.io/en/latest/account/configuration.html
+ACCOUNT_LOGOUT_REDIRECT_URL = "home"
+ACCOUNT_SIGNUP_REDIRECT_URL = "home"
 ACCOUNT_SESSION_REMEMBER = True
-ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_UNIQUE_EMAIL = True # does not work at database level
+# ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
+# ACCOUNT_USERNAME_REQUIRED = False
+# ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_LOGIN_METHODS = {'email'}
+# ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_UNIQUE_EMAIL = True
+# ACCOUNT_EMAIL_ADDRESS_MODEL = 'accounts.CustomEmailAddress'
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#csrf-trusted-origins
 CSRF_TRUSTED_ORIGINS = [
@@ -247,3 +252,47 @@ CSRF_TRUSTED_ORIGINS = [
 # import socket
 # hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 # INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
+
+# https://python.plainenglish.io/end-to-end-testing-in-django-with-selenium-a-complete-guide-for-beginners-and-advanced-developers-ad0b017fd4f1
+# Use the test database
+TESTING = True
+# Allow running tests without needing a real browser (headless mode)
+SELENIUM_HEADLESS = True
+
+"""Logging Levels:
+
+Example:
+
+    .. code-block:: python
+
+    import logging
+
+    def some_function():
+        logger = logging.getLogger(__name__)
+        logger.debug('This is to log a debugging message')
+        logger.error('This is to log an error message')
+"""
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        # "level": "CRITICAL",
+        # "level": "ERROR",  # will display logger.error() and above
+        # "level": "WARNING",
+        # "level": "INFO",
+        "level": "DEBUG",  # will display logger.debug() and above (e.g. warning, error, ...)
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
+            "propagate": False,
+        },
+    },
+}

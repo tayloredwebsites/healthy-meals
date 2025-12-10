@@ -5,47 +5,246 @@ Documentation Guide
 Code Documentation Philosophy
 -----------------------------
 
-The philosophy of documentation in the Healthy Meals project is to have the documentation be part of what is being documented (aka: `Docs as Code <https://www.writethedocs.org/guide/docs-as-code/>`_).
+The philosophy of documentation in the Healthy Meals project includes the following thoughts:
 
-The choice to use the google style documentation was motivated by an sphinx article on `napoleon legible docstrings <https://sphinxcontrib-napoleon.readthedocs.io/en/latest/#google-vs-numpy>`_.  It is recommended to use one style through out a project, and the `google style <https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html>`_ seems to be more popular, especially for non-scientific applications.
+The code should be written to be part of the documentation.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Using docstrings for code documentation:
+  - see: `Docs as Code <https://www.writethedocs.org/guide/docs-as-code/>`_
+  - see: `Fowler, Code as Docs <https://martinfowler.com/bliki/CodeAsDocumentation.html>`_
 
-- `Google Style Python Docstrings <https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html>`_.
-- `Describing code in Sphinx <https://www.sphinx-doc.org/en/master/tutorial/describing-code.html>`_.
+Code should be written to be read.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Readability: As I am writing code, and end up reading some related code, I sometimes realize that what what the code is saying is not very clear.
+
+  - If the issue is simply that a docstring or comment statement needs to be clarified, it should be updated immediately, and appropriate notes included in the commit and pull request.  This helps ensure code clarity without risking delayed or lost documentation updates.
+
+  - Refactoring: I have found the following rules to be helpful in deciding when and how to refactor code:
+
+    - Never refactor code until there are a few sets of duplicated code.
+    - Only change a functions interface (name, parameter names, or parameter functionality) when:
+
+      - If backward compatibility is an issue, this should be reviewed by the team or senior developer.  If agreed this is a good time to do the interface change, a new function should be created, and the old function should be deprecated.
+      - If the name of the function has a confusing or misleading name, it should (hopefully, eventually) to be changed to have a more descriptive name.
+      - If the parameters of the function do not describe what they are or how they fit into what the function is doing, they should also (hopefully, eventually) be changed.
+
+    - Never put functionality into a function unless it is being used right now.  This will ensure that:
+
+      - all of the appropriate automated testing can be correctly written.
+      - only required, and well understood code features are put into the code.
+
+    - Normally put refactoring code at least in a separate commit, and consider putting it in a separate pull request (by creating a `.. todo::` item or an issue for a large amount of code).
+
+PEP 8
+~~~~~
+
+In general, I treat `PEP 8 <https://peps.python.org/pep-0008/>`_ as a warning if it is not part of project standards.
+
+- Note: In the PEP 8 link above, it says:
+
+  A Foolish Consistency is the Hobgoblin of Little Minds
+
+  One of Guido’s key insights is that code is read much more often than it is written. The guidelines provided here are intended to improve the readability of code and make it consistent across the wide spectrum of Python code. As PEP 20 says, “Readability counts”.
+
+  A style guide is about consistency. Consistency with this style guide is important. Consistency within a project is more important. Consistency within one module or function is the most important.
+
+  However, know when to be inconsistent – sometimes style guide recommendations just aren’t applicable. When in doubt, use your best judgment. Look at other examples and decide what looks best. And don’t hesitate to ask!
+
+  In particular: do not break backwards compatibility just to comply with this PEP!
+
+  Some other good reasons to ignore a particular guideline:
+
+    1. When applying the guideline would make the code less readable, even for someone who is used to reading code that follows this PEP.
+    2. To be consistent with surrounding code that also breaks it (maybe for historic reasons) – although this is also an opportunity to clean up someone else’s mess (in true XP style).
+    3. Because the code in question predates the introduction of the guideline and there is no other reason to be modifying that code.
+    4. When the code needs to remain compatible with older versions of Python that don’t support the feature recommended by the style guide.
+
+- `line-too-long (E501) <https://docs.astral.sh/ruff/rules/line-too-long/>`_  This is a controversial rule.
+
+  - note that if you look at the description of the E501 statement, that does not meet its own requirements, because it is an explanation, not a code statement.
+  - Explanations should never be limited in length so we can ensure the best possible explanation.
+  - I believe that we should let the developer set the code window width as they please, and let it wrap explanations as it will, as it will be fairly readable, especially if it was written as a good explanation.
+  - We should never have the developer waste any time thinking about how explanations should wrap.
+  - I see the E501 rule as one that is too broad, without a good explanation and without full insight in regards to all the the aspects and issues involved.  Thus:
+
+    - I have no problem with long comment lines, long strings, URLs, and any other non-code lines.  Examples:
+
+      - Comments should wrap as they will, and let the user choose the width of viewable text for readability.
+      - assert statements:
+
+        - For readability, it is important to have an informative error string that is as long as necessary to describe what is being tested.  Do not even think about shortening your explanation, think about how readable it is!!!!
+        - When I see an assert statement, personally do not care if the explanation of the error being checked is wrapped.
+        - It is nice to be able to the assert code on the first line, and the explanation indented on the next line (which is as long as necessary).  This makes reading the assert statements easy to read.
+
+      - etc.  (feel free to add to this).
+
+- The `commented-out-code (ERA001) <https://docs.astral.sh/ruff/rules/commented-out-code/>`_.
+
+  - I sometimes leave in commented out logger.debug statements.
+
+    - Why I use logger.debug statements:
+
+      - I use logger.info and logger.debug statements in the code to assist in following the flow of (longer) tests.  This is helpful because I often use longer tests to minimize test setup and shut down time.
+      - if I have tests or code with debug statements that were involved in resolving a bug, I will often leave the debugging code in if I think it will help debugging issues in the future
+      - However, I will comment out logger.debug or logger.info statements when the output they produce clutter the test flow logging (especially when it produces a lot of output).
+
+  - I sometimes leave in time.sleep statements in Selenium tests, to give enough time see the output page in the middle of a selenium test (for future debugging purposes).
+
+  - Any existing print() statements should be removed or converted to logger.debug, logger.info, or logger.error as appropriate.
+  - Sometimes issues are found when reading code, such as a project standard, a small refactor, a clean up of messy or unclear code.  If such issues are found, and the issues do not exist in an existing project issue or `.. todo::` item, then:
+
+    - if any developer sees a small issue with the code, the developer may place (near the code) a docstring with:
+
+      - a `.. todo::` item to describe the issue to resolve
+      - possibly include any suggestions for how best to resolve it.
+      - if the developer is a senior developer, they may additionally add code (suggested, or attempted) into a `..  code::` section, with any current or potential issues with that code.
+      - put an appropriate note in their current pull request, or preferably create a new pull request (if it is not too disruptive to the current issue being worked on).
+
+    - if any developer sees a large issue with the code, they should create an issue, being sure to add notes about any possible related issues.  This issue should:
+
+      - describe the issue clearly
+      - note how the issue may relate to other issues, if appropriate.
+      - include references to the program file names, Class Names, and other identifying aspects of the issue.
+
+    - if a senior developer sees there is a code change is to meet existing standards, and the amount of changes appear small enough, a senior developer may fix the code.  This will require updating all appropriate documentation, putting a note in the pull request, and have automated testing for coverage and edge cases.
+    - If a senior developer sees any commented out code for a potential future large enhancement, it should be separated out into a repository branch, in its own pull request, with an appropriate issue created as necessary, and with a pull request started.
 
 
 Code Documentation Process Overview
 -----------------------------------
 
-Code is being documented using the `Sphinx <https://www.sphinx-doc.org/>`_ toolset, which is the defacto standard tool for documenting django/python.  The Sphinx toolset recognizes `NumPy <https://numpy.org/doc/stable/>`_ , `Google <https://google.github.io/styleguide/pyguide.html>`_ , and `rst <https://peps.python.org/pep-0287/>`_ code documentation standards.  This is achieved by using the `Napoleon <https://sphinxcontrib-napoleon.readthedocs.io/en/latest/>`_ extension to Sphinx.  When code has docstrings appropriately placed within it, Sphinx will automatically pull them into the documentation in the docs directory.  The healthy-meals github repository has been set up to automatically deliver the documentation to a `github pages site on the internet <https://tayloredwebsites.github.io/healthy-meals/build/index.html>`_.
+Google Docs Style Docstrings
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The choice to use the google style documentation was motivated by an sphinx article on `napoleon legible docstrings <https://sphinxcontrib-napoleon.readthedocs.io/en/latest/#google-vs-numpy>`_.  It is recommended to use one style through out a project I have chosen the `google style <https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html>`_ which seems to be more popular, especially for non-scientific applications.
+
+Using docstrings for code documentation:
+
+  - Use `Google Style Python Docstrings <https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html>`_.
+  - See `Describing code in Sphinx <https://www.sphinx-doc.org/en/master/tutorial/describing-code.html>`_.
+  - The Sphinx toolset recognizes `NumPy <https://numpy.org/doc/stable/>`_ , `Google <https://google.github.io/styleguide/pyguide.html>`_ , and `rst <https://peps.python.org/pep-0287/>`_ code documentation standards.
+  - The `Napoleon <https://sphinxcontrib-napoleon.readthedocs.io/en/latest/>`_ extension to Sphinx extension us used allows us to use the `Google Python Style Guide <http://google.github.io/styleguide/pyguide.html>`_.
+  - When code has docstrings appropriately placed within it, Sphinx will automatically pull them into the documentation in the docs directory.
+  - The healthy-meals github repository has been set up to automatically deliver the documentation to a `github pages site on the internet <https://tayloredwebsites.github.io/healthy-meals/build/index.html>`_.
 
 
-Example Google Style Docstring for a function:
+Example Google Style Docstrings:
 ----------------------------------------------
 
-def example_function(param1, param2):
- """Summary of the function.
+This demonstrates documentation as specified by the `Google Style Python Style Guide <http://google.github.io/styleguide/pyguide.html>`_.
 
-    Detailed description of the function.
 
-    Args:
-        param1 (int): Description of the first parameter.
+Docstrings In General:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        param2 (str): Description of the second parameter.
+.. code-block:: python
 
-    Returns:
-        bool: Description of the return value.
+    '''Summary of docstring.
 
-    Raises:
-        ValueError: If param1 is negative.
+    Docstrings may extend over multiple lines.
+    Sections are created with a section header and a colon followed by a block of indented text.
 
-    Examples:
-        
-          $ example_function(1, "test")
+    Literal Text Block::
 
-          True
-    """
+        Literal Text blocks are created by indenting following a line ending with DOUBLE colons, and a blank line.
+        They may be continued with lines at the same indentation, even after blank lines.
+
+    .. code-block:: python
+
+        # this is a code block to contain python code.
+        res = aFunction(something, goes, in)
+        print(res.avalue)
+
+    Todo:
+        * For module TODOs
+        * You have to also use ``sphinx.ext.todo`` extension
+    '''
+
+
+
+Example Class Docstring:
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+    class ExampleClass(object):
+        '''Summary of Class functionality.
+
+        Detail description of the class functionality.
+
+        Attributes:
+            module_level_variable1 (int): Module level variables are preferably documented in
+                the ``Attributes`` section of the class docstring.
+        ''''
+        @property
+        def readonly_property(self):
+            """str: Properties should be documented in their getter method."""
+            return 'readonly_property'
+
+        @property
+        def readwrite_property(self):
+            """:obj:`list` of :obj:`str`: Properties with both a getter and setter
+            should only be documented in their getter method.
+
+            If the setter method contains notable behavior, it should be
+            mentioned here.
+            """
+            return ['readwrite_property']
+
+        @readwrite_property.setter
+        def readwrite_property(self, value):
+            value
+
+
+Example Method Docstring:
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+    def example_function(param1: int, param2: str):
+        """Summary of the function.
+
+        Detailed description of the function.
+
+        Args:
+            param1 (int): Description of the first parameter.
+            param2 (str): Description of the second parameter.
+
+        Note::
+
+            - We assume that parameters will be typed for readability and code quality.
+            - We do not put self in the Args section for Class level functions
+
+        Returns:
+            bool: True if successful, False otherwise.
+
+            The ``Returns`` section may span multiple lines and paragraphs.
+
+            The ``Returns`` section supports any reStructuredText formatting,
+            including literal blocks::
+
+                {
+                    'param1': param1,
+                    'param2': param2
+                }
+
+        Raises:
+            AttributeError: The ``Raises`` section is a list of all exceptions
+                that are relevant to the interface.
+            ValueError: If param1 is not 42.
+
+        Examples:
+
+              $ example_function(1, "test")
+
+              True
+        """
+        if param1 != 42:
+            raise ValueError('param1 must be 42')
+        return True
+
+
 Generation of the Documentation.
 ----------------------------------
 
@@ -166,32 +365,33 @@ It has a table of contents that looks like:
 
 .. code-block:: rst
 
-  Table of Contents
-  -----------------
+    Table of Contents
+    -----------------
 
-  .. toctree::
-    :maxdepth: 2
-    :caption: Contents:
+    .. toctree::
+        :maxdepth: 2
+        :caption: Contents:
 
-    Quality Assurance</qa>
-    Index<genindex>
-    Module Index<modindex>
-    User Accounts Module</accounts>
-    Misc. Pages Module</pages>
-    Tests Module</tests>
-    Programmers Guide<prog_guide>
-    Documentation Guide</docs_guide>
+        Quality Assurance</qa>
+        Index<genindex>
+        Module Index<modindex>
+        Modules</modules>
+        Programmers Guide<prog_guide>
+        Testing Guide<testing_guide>
+        Documentation Guide</docs_guide>
+
+
 
 The Table of Contents (TOC) is what shows up in the sidebar navigation.  It has been customized in the following ways:
 
 - the custom ``qa`` tool (labeled ``Quality Assurance``) has been placed at the top to provide access to the testing reports.
 - the ``genindex`` tool (labeled ``Index``) standard utility to provide an index to the entire project.
 - the ``modindex`` tool (labeled ``Module Index``) standard utility to provide an index to all modules of the project.
-- the ``/accounts`` apidoc generated file (``User Accounts``) module for the Custom User accounts.
-- the ``/pages`` apidoc generated file (``Misc. Pages``) module for simple pages such as home, or about.
-- the ``/tests`` apidoc generated file (``Tests``, automated testing doc strings generated documentation.
+- the ``/modules`` apidoc generated file (``healthy-meals``) modules / apps for the Healthy Meals project.
+    - The modules detailed here are: {accounts - CustomUser; common; noxfile; pages; and tests}
 - the custom ``/prog_guide`` (`Programmers Guide`) includes many technical details about how this project has been programmed, philosophy, standards, and the To Do list pulled from the code base and documentation.
-- the custom ``/docs_guide`` (this Documentation Guide file) is added to introduce the documentation philosophy of healthy-meals, and provide a step by step breakdown of the documentation process.
+- the custom ``/testing_guide`` is added to introduce the testing philosophy of healthy-meals, and provide a step by step breakdown of the documentation process.
+- the custom ``/docs_guide`` (this Documentation Guide file) is added to introduce the documentation philosophy of healthy-meals, and describe the tools, and processes used.
 
 Note: the format of the entries in the TOC is as follows:  "The Name With Spaces<[optional /]rst_filename_without_extension>"
 

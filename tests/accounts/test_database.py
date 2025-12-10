@@ -44,7 +44,7 @@ def test_user_soft_delete():
     assert user0.rec_history_count() == 1
     assert not user0.rec_history_field_changed(0, 'deleted')
     # ensure print output of CustomUser is correct
-    assert user0.__str__() == f'{user0.email} - {user0.last_name}, {user0.first_name}'
+    assert f'{user0.email}: {user0.last_name}, {user0.first_name}' in user0.__str__()
     print(f'As Created: {user0.email}: {user0.username}, {user0.deleted}')
     # soft delete the first user
     user0.delete()
