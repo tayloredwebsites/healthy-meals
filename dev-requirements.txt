@@ -37,7 +37,7 @@ defusedxml==0.7.1
     #   python3-openid
 distlib==0.4.0
     # via virtualenv
-django==5.2.9
+django==6.0
     # via
     #   crispy-bootstrap5
     #   django-allauth
