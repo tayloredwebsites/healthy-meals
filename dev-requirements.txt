@@ -23,7 +23,7 @@ colorama==0.4.6 ; sys_platform == 'win32'
     # via colorlog
 colorlog==6.9.0
     # via nox
-coverage==7.9.2
+coverage==7.13.0
     # via django-coverage-plugin
 crispy-bootstrap5==2024.10
     # via healthy-meals
