@@ -44,7 +44,7 @@ dependencies = [
   "cffi",
   "charset-normalizer",
   "commonmark>=0.9.1",
-  "crispy-bootstrap5 ~=2024.10",
+  "crispy-bootstrap5~=2025.6",
   "cryptography==44.0.1",
   "defusedxml==0.7.1",
   "django>=5.2",

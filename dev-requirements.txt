@@ -25,7 +25,7 @@ colorlog==6.9.0
     # via nox
 coverage==7.9.2
     # via django-coverage-plugin
-crispy-bootstrap5==2024.10
+crispy-bootstrap5==2025.6
     # via healthy-meals
 cryptography==44.0.1
     # via
