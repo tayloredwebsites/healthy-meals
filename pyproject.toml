@@ -54,7 +54,7 @@ dependencies = [
   "django_coverage_plugin==3.1.0",
   "django-crispy-forms==2.3",
   "django-debug-toolbar ~=4.4",
-  "django-safedelete==1.4.0",
+  "django-safedelete==1.4.1",
   "gunicorn ~=23.0",
   "idna==3.7",
   "nox>=2025.10.16",
