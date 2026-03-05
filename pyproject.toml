@@ -2,112 +2,107 @@
 name = "healthy-meals"
 version = "0.1.0"
 description = "Meet your Dietary Goals with Healthier Meals."
-readme = {file = "README.md", content-type = "text/markdown"}
-requires-python = "==3.12.*"
+readme = { file = "README.md", content-type = "text/markdown" }
+requires-python = ">=3.12,<3.15"
 license = { text = "AGPL-3.0-only" }
 authors = [
-  { name = "David A. Taylor", email = "tayloredwebsites@me.com" },
+    { name = "David A. Taylor", email = "tayloredwebsites@me.com" },
 ]
 urls = { Repository = "https://github.com/tayloredwebsites/healthy-meals" }
 keywords = [
-  "python",
-  "django",
-  "nutrition",
-  "goals",
-  "bodybuilding",
-  "health",
-  "antinflammatory",
-  "autoimmunity",
-  "glycemia",
-  "diet",
-  "planning",
-  "recipes",
-  "preparation",
-  "cooking",
+    "python",
+    "django",
+    "nutrition",
+    "goals",
+    "bodybuilding",
+    "health",
+    "antinflammatory",
+    "autoimmunity",
+    "glycemia",
+    "diet",
+    "planning",
+    "recipes",
+    "preparation",
+    "cooking",
 ]
 classifiers = [
-  "Development Status :: 4 - Alpha",
-  "Environment :: Web",
-  "Framework :: Django :: 5.0",
-  "Intended Audience :: All interested",
-  "License :: OSI Approved :: AGPL-3.0-only",
-  "Natural Language :: English",
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.12",
-  "Topic :: Health",
+    "Development Status :: 4 - Alpha",
+    "Environment :: Web",
+    "Framework :: Django :: 5.0",
+    "Intended Audience :: All interested",
+    "License :: OSI Approved :: AGPL-3.0-only",
+    "Natural Language :: English",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Health",
 ]
 # dependencies include all libraries that are used in both production and dev(elopment)
 dependencies = [
-  "asgiref",
-  "certifi",
-  "cffi",
-  "charset-normalizer",
-  "commonmark>=0.9.1",
-  "crispy-bootstrap5 ~=2024.10",
-  "cryptography==44.0.1",
-  "defusedxml==0.7.1",
-  "django>=5.2",
-  "django-allauth[openid,socialaccount] ~=65.2",
-  "django-auditlog==3.0.0",
-  "django_compressor==4.5.1",
-  "django_coverage_plugin==3.1.0",
-  "django-crispy-forms==2.3",
-  "django-debug-toolbar ~=4.4",
-  "django-safedelete==1.4.0",
-  "gunicorn ~=23.0",
-  "idna==3.7",
-  "nox>=2025.10.16",
-  "nox-uv>=0.6.3",
-  "oauthlib==3.2.2",
-  "psycopg ~=3.2",
-  "psycopg-binary ~=3.2",
-  "pycparser==2.21",
-  "PyJWT==2.6.0",
-  "python3-openid==3.2.0",
-  "python-decouple==3.8",
-  "recommonmark>=0.7.1",
-  "requests==2.32.4",
-  "requests-oauthlib==1.3.1",
-  "sqlparse==0.5.0",
-  "typing_extensions ~=4.12",
-  "urllib3==2.6.0",
-  "whitenoise ~=6.7",
+    "asgiref",
+    "certifi",
+    "cffi",
+    "charset-normalizer",
+    "commonmark~=0.9.1",
+    "crispy-bootstrap5>=2024.10",
+    "cryptography==44.0.1",
+    "defusedxml==0.7.1",
+    "django>=5.2",
+    "django-allauth[openid,socialaccount] ~=65.2",
+    "django-auditlog==3.0.0",
+    "django_compressor==4.5.1",
+    "django_coverage_plugin==3.1.0",
+    "django-crispy-forms==2.3",
+    "django-debug-toolbar ~=4.4",
+    "django-safedelete==1.4.0",
+    "gunicorn ~=23.0",
+    "idna==3.7",
+    "nox>=2025.10.16",
+    "nox-uv>=0.6.3",
+    "oauthlib==3.2.2",
+    "psycopg ~=3.2",
+    "psycopg-binary ~=3.2",
+    "pycparser==2.21",
+    "PyJWT==2.6.0",
+    "python3-openid==3.2.0",
+    "python-decouple==3.8",
+    "recommonmark>=0.7.1",
+    "requests==2.32.4",
+    "requests-oauthlib==1.3.1",
+    "sqlparse==0.5.0",
+    "typing_extensions ~=4.12",
+    "urllib3==2.6.0",
+    "whitenoise ~=6.7",
+    "black>=26.5.1",
 ]
 
 [dependency-groups]
 dev = [
-  "beautifulsoup4>=4.13.4",
-  "coverage>=7.9.2",
-  "factory-boy>=3.3.3",
-  "genbadge>=1.1.2",
-  "ipython==8.31.0",
-  "pytest (>=8.4.1,<9.0.0)",
-  # "pytest-cookies",
-  "pytest-django>=4.11.1",
-  "pytest-factoryboy (>=2.8.1,<3.0.0)",
-  "pytest-html>=4.1.1",
-  # "pytest-instafail",
-  "pytest-postgresql==7.0.1",
-  "sphinx>=8.2.3",
-  "sphinx-mdinclude>=0.6.2",
-  "sphinx-rtd-theme>=3.0.2",
-  "sphinxcontrib-django>=2.5",
-  "sphinxcontrib-napoleon>=0.7",
-  # "sphinx.ext.autodoc",
-  # "sphinx.ext.autosummary",
-  # "sphinx.ext.intersphinx", # provides links to other .rst files
-  # "sphinx.ext.viewcode",
-  # "sphinxcontrib_django", # https://pypi.org/project/sphinxcontrib-django/
-  # "sphinx_mdinclude", # https://pypi.org/project/sphinx_mdinclude/
-  # "sphinx.ext.todo", # see: https://www.sphinx-doc.org/en/master/usage/extensions/todo.htm
-  # "sphinx-autobuild",
-  # "pytest-xdist",
-  # "black",
-  # "djlint",
-  # "flake8",
-  # "myst-parser>=4",
-  # "ruff==0.11.2",
+    "beautifulsoup4>=4.13.4",
+    "coverage>=7.9.2",
+    "factory-boy>=3.3.3",
+    "genbadge>=1.1.2",
+    "ipython==8.31.0",
+    "pylint-django>=2.5.5",
+    "pylint>=3.1.0",
+    "pytest (>=8.4.1,<9.0.0)",
+    # "pytest-cookies",
+    "pytest-django>=4.11.1",
+    "pytest-factoryboy (>=2.8.1,<3.0.0)",
+    "pytest-html>=4.1.1",
+    # "pytest-instafail",
+    "pytest-postgresql==7.0.1",
+    "selenium>=4.39.0",
+    "sphinx>=8.2.3",
+    "sphinx-mdinclude>=0.6.2",
+    "sphinx-rtd-theme>=3.0.2",
+    "sphinxcontrib-django>=2.5",
+    "sphinxcontrib-napoleon>=0.7",
+    # "black",
+    # "djlint",
+    # "flake8",
+    # "myst-parser>=4",
+    # "ruff==0.11.2",
 ]
 # # "dev" dependency group includes libraries for development
 # # - "dev" includes development, testing, linting, and documentation libraries
@@ -124,27 +119,27 @@ py-modules = []
 
 # ==== pytest ====
 [tool.pytest.ini_options]
-minversion = "6.0"
+minversion = "5.2"
 # addopts = "--ds=config.settings.test --reuse-db --import-mode=importlib"
 # addopts = "-v --tb=short"
 norecursedirs = [
-  ".nox",
-  ".git",
-  "*/migrations/*",
-  "*/static/*",
-  "docs",
-  ".venv",
-  "*/__pycache__/*",
+    ".nox",
+    ".git",
+    "*/migrations/*",
+    "*/static/*",
+    "docs",
+    ".venv",
+    "*/__pycache__/*",
 ]
 DJANGO_SETTINGS_MODULE = "healthy_meals.settings"
 python_files = [
-    "tests.py",
     "test_*.py",
-    "*_tests.py",
-    "case_*.py",
-    "cases_*.py",
-    "*_case.py",
-    "*_cases.py"
+    #    "atest_*.py", # alpha tests - tests not ready, need alpha analysis and bug fixing
+    #    "btest_*.py", # beta tests - tests not ready, need beta reviews
+    #    "case_*.py", # Test Cases are under consideration for being used
+    #    "cases_*.py", # Test Cases are under consideration for being used
+    #    "*_case.py", # Test Cases are under consideration for being used
+    #    "*_cases.py",  # Test Cases are under consideration for being used
 ]
 
 # ==== Coverage ====
@@ -164,7 +159,8 @@ omit = [
     "docs/*",
     ".nox/*",
     "noxfile.py", # Not sure how to test this, if possible.
-    "*/__init__.py"
+    "*/__init__.py",
+    ".docs/*",
 ]
 # include (check coverage on) .html and .txt files
 # To Do: write automated tests for .html and .txt files
@@ -193,9 +189,27 @@ directory = "docs/qa/coverage/html/"
 output = "docs/qa/coverage/coverage.xml"
 
 [tool.django.coverage.plugin]
- # include .html and .txt files
+# include .html and .txt files
 template_extensions = ["html", "txt", ""]
 
+# ==== pylint ====
+[tool.pylint.main]
+django-settings-module = "healthy_meals.settings"
+load-plugins = ["pylint_django"]
+max-line-length = 120
+ignore-long-lines = "^\\s*(# )?<?https?://\\S+>?$|^\\s*#.*https?://.*"
+disable = [
+    "line-too-long",  # Allow long lines in docstrings/comments
+    "invalid-name",  # Allow non-conventional names in migrations, etc.
+    # "too-many-arguments",
+    # "too-many-instance-attributes",
+    # "too-few-public-methods",
+]
+ignore-patterns = [
+    "tests/.*",
+    "manage\\.py",
+    ".*/migrations/.*",
+]
 
 # # ==== mypy ====
 # [tool.mypy]
@@ -228,7 +242,7 @@ template_extensions = ["html", "txt", ""]
 # ignore = "H006,H030,H031,T002"
 # include = "H017,H035"
 # indent = 2
-# max_line_length = 119
+# max_line_length = 120
 # profile = "django"
 
 # [tool.djlint.css]
@@ -313,6 +327,7 @@ template_extensions = ["html", "txt", ""]
 #           # https://github.com/astral-sh/ruff/issues/7871
 #   "RUF100", # prevent claiming directive is not used when it is
 #             # it is prevent individual lines from having errors
+#   "W505", # doc line too long
 # #   "ERA001", # Does  not allow for commented out code
 # #             # it is important to allow this in configuration files
 # ]
@@ -329,7 +344,7 @@ template_extensions = ["html", "txt", ""]
 # #   got error: parsing errors: 'pyproject.toml - [line 13]: ']\n'  # noqa: ERA001
 # #   it doesn't seem to like multi-line arrays  # noqa: ERA001
 # # [tool.flake8]  # noqa: ERA001
-# # max_line_length = 120  # noqa: ERA001
+# max_line_length = 120  # noqa: ERA001
 # # exclude = [  # noqa: ERA001
 # #     "migrations",  # noqa: ERA001
 # # ]  # noqa: ERA001

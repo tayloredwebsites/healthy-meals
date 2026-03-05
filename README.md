@@ -10,6 +10,7 @@
 [Documentation](https://tayloredwebsites.github.io/healthy-meals/index.html)
 
 ## Table of Contents
+
 * [Project Features](#project-features)
 * [Next Steps for Project](#next-steps-for-project)
 * [Installation](#installation)
@@ -24,19 +25,21 @@
 ### Keeping a Branch for Starter Base Projects
 
 #### Features for basic website kept in the "starter" branch
+
 - Runs in Docker or locally (using a local web server).
-- Uses the nox tool for automating  and simplifying tasks.
+- Uses the nox tool for automating and simplifying tasks.
 - Automated testing with 100% coverage of all python code.
-  - Testing using either testcase and pytest.
-  - efficient HTML coverage testing using beautiful soup.
+    - Testing using either testcase and pytest.
+    - efficient HTML coverage testing using beautiful soup.
 - Github pages site for Documentation from Sphinx, Test Passing, & Coverage reports
-  - Sphinx generated documentation generated in github action and deployed to github pages
-  - Automated Testing documentation generated in github action and deployed to github pages
+    - Sphinx generated documentation generated in github action and deployed to github pages
+    - Automated Testing documentation generated in github action and deployed to github pages
 - Django 5.1 & Python 3.12
 - Installation via [uv](https://github.com/astral-sh/uv), or [Docker](https://www.docker.com/)
 - Sign in by email and password code using [allauth](https://docs.allauth.org/en/latest/)
-  - see: [Lithium starter project](https://github.com/wsvincent/lithium)
-  - User authentication--log in, sign up, password reset--via [django-allauth](https://github.com/pennersr/django-allauth)
+    - see: [Lithium starter project](https://github.com/wsvincent/lithium)
+    - User authentication--log in, sign up, password
+      reset--via [django-allauth](https://github.com/pennersr/django-allauth)
 - Static files configured with [Whitenoise](http://whitenoise.evans.io/en/stable/index.html)
 - Styling with [Bootstrap v5](https://getbootstrap.com/)
 - Debugging with [django-debug-toolbar](https://github.com/jazzband/django-debug-toolbar)
@@ -45,16 +48,17 @@
 - Internationalization (i18n) of strings in code
 - Soft Delete functionality of database records
 - has record history / versioning through django-auditlog (https://github.com/jazzband/django-auditlog), providing:
-  - provides the ability to see all of the changes to fields (except fields excluded when auditlog is registered in the model)
+    - provides the ability to see all of the changes to fields (except fields excluded when auditlog is registered in
+      the model)
 - Base HTML Template
-  - bootstrap 5
-  - sub-template blocks for pages and partial pages
-  - SCSS translation to CSS using Dart SASS
-    - [libsass is deprecated, dart sass is recommended](https://sass-lang.com/blog/libsass-is-deprecated/)
-    - [https://sass-lang.com/dart-sass/](https://sass-lang.com/documentation/cli/dart-sass/)
-  - site wide font sizing tool
-  - login with email/password using [allauth](https://docs.allauth.org/en/latest/)
-  - signup
+    - bootstrap 5
+    - sub-template blocks for pages and partial pages
+    - SCSS translation to CSS using Dart SASS
+        - [libsass is deprecated, dart sass is recommended](https://sass-lang.com/blog/libsass-is-deprecated/)
+        - [https://sass-lang.com/dart-sass/](https://sass-lang.com/documentation/cli/dart-sass/)
+    - site wide font sizing tool
+    - login with email/password using [allauth](https://docs.allauth.org/en/latest/)
+    - signup
 
 ### Starter Base Project Todo List
 
@@ -73,44 +77,54 @@ Sorry, we are just starting this.
 #### 0) Good ways to get started with this project:
 
 - Documentation Updates
-  - make a pull request with documentation updates
-  - document the process to make documentation update pull requests
+    - make a pull request with documentation updates
+    - document the process to make documentation update pull requests
 - Feature Requests
-  - Please feel free to make feature requests
-    - note we are very early in project development
+    - Please feel free to make feature requests
+        - note we are very early in project development
 - Development and Documentation standards enhancements
-  - suggestions for standards are best done earlier in project development
-  - getting QA tools working, such as MyPy or Ruff will be greatly apprecieated.
-- see: [todo items, especially the If you are looking for an issue to work on... todo list](https://tayloredwebsites.github.io/healthy-meals/todos.html#current-to-do-items-listings)
+    - suggestions for standards are best done earlier in project development
+    - getting QA tools working, such as MyPy or Ruff will be greatly apprecieated.
+- Any of the `.. todo::`
+  items [All todo item (as found in docs)](https://tayloredwebsites.github.io/healthy-meals/todos.html#all-to-do-items-from-code-and-programmers-guide)
 
+#### Major Step 1) Coming next: References Model
 
-#### Major Step 1) References Model
+Note: This is an important aspect of this app. This is provided so that any information provided by this app could
+provide the source of the information provided. This should allow all information to be transparent. This could help
+with any discussion about possible adjustments to information on the app, as appropriate. Note: It is hoped that by
+integrating a wiki with this app in the future should be able to provide a mechanism for handling the discussion and
+possible adjustment of any information provided.
 
-Note: This is an important aspect of this app.  This is provided so that any information provided by this app could provide the source of the information provided.  This should allow all information to be transparent.  This could help with any discussion about possible adjustments to information on the app, as appropriate.  Note: It is hoped that by integrating a wiki with this app in the future should be able to provide a mechanism for handling the discussion and possible adjustment of any information provided.
-
-The References Model will be used to provide references to information on any possible information provided by Healthy Meals.  For example if the nutritional value (ConsumableAspects Model) of a particular Food (Consumables Model) sample data item is added to the database, a URL and/or document that was used to provide the source of the data is provided in this model.
+The References Model will be used to provide references to information on any possible information provided by Healthy
+Meals. For example if the nutritional value (ConsumableAspects Model) of a particular Food (Consumables Model) sample
+data item is added to the database, a URL and/or document that was used to provide the source of the data is provided in
+this model.
 
 #### Major Step 2) Consumables Model
 
-- This table will be designed so that all variety of consumables such as food, supplements, herbs, medicines will be in this system.
+- This table will be designed so that all variety of consumables such as food, supplements, herbs, medicines will be in
+  this system.
 
 #### Major Step 3) Consumable Aspects Model
 
-- This table will be used to keep track of the important dietary aspects of consumables.  This can include:
-  - Vitamins
-  - Minerals
-  - Nutrients
-  - Anti-nutrients (such as oxalates).
-  - Additives
-  - Preservatives
-  - Pesticides
-  - Herbicides
-- The amounts from the aspect's sample analysis will be stored such that an average value and variance of the aspect will be available for display
+- This table will be used to keep track of the important dietary aspects of consumables. This can include:
+    - Vitamins
+    - Minerals
+    - Nutrients
+    - Anti-nutrients (such as oxalates).
+    - Additives
+    - Preservatives
+    - Pesticides
+    - Herbicides
+- The amounts from the aspect's sample analysis will be stored such that an average value and variance of the aspect
+  will be available for display
 
 #### Major Step 4) and so much more...
 
-
 ## Installation
+
+.. todo:: move this to developer docs
 
 [TOC](#table-of-contents)
 
@@ -123,13 +137,15 @@ see: [Fork a Github Repo](https://docs.github.com/en/pull-requests/collaborating
 see: [Clone a Github Repo](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 
 ### uv
+
 You can use [uv](https://docs.astral.sh/uv/) to create a dedicated virtual environment.
 
 ```
 $ uv sync
 ```
 
-Then run `migrate` to configure the initial database. The command `createsuperuser` will create a new superuser account for accessing the admin. Execute the `runserver` command to start up the local server.
+Then run `migrate` to configure the initial database. The command `createsuperuser` will create a new superuser account
+for accessing the admin. Execute the `runserver` command to start up the local server.
 
 ```
 $ uv run manage.py migrate
@@ -139,18 +155,10 @@ $ uv run manage.py runserver
 # Load the Django Admin pages @ http://127.0.0.1:8000/admin
 ```
 
-### Pip
-To use Pip, create a new virtual environment and then install all packages hosted in `requirements.txt`. Run `migrate` to configure the initial database. and `createsuperuser` to create a new superuser account for accessing the admin. Execute the `runserver` command to start up the local server.
+### 2) ASDF Installation (To Do: review this)
 
-    * Note: <code folder> is your projects parent directory
-    $ cd <code folder>
-    $ git clone git@github.com:<yourGithubUsername>/healthy-meals.git
-    $ cd healthy-meals
-    $ git remote add upstream git@github.com:tayloredwebsites/healthy-meals.git
-
-###  2) ASDF Installation (To Do: review this)
-
-See: [ASDF install](https://asdf-vm.com/guide/getting-started.html), and [ASDF configuration](https://asdf-vm.com/manage/configuration.html)
+See: [ASDF install](https://asdf-vm.com/guide/getting-started.html),
+and [ASDF configuration](https://asdf-vm.com/manage/configuration.html)
 
     $ cat .tool-versions
       * you should see (with possible version differences):
@@ -160,7 +168,6 @@ See: [ASDF install](https://asdf-vm.com/guide/getting-started.html), and [ASDF c
 ### 3) installation of venv and direnv (working with asdf) (To Do: review this)
 
 see: # [https://mdaverde.com/posts/python-venv-direnv-asdf/](https://mdaverde.com/posts/python-venv-direnv-asdf/)
-
 
     * Note: <code folder> is your projects parent directory
     $ cd <code folder>/healthy-meals  # see clone repo from github
@@ -182,9 +189,7 @@ see: # [https://mdaverde.com/posts/python-venv-direnv-asdf/](https://mdaverde.co
       * export PATH=<code folder>/healthy-meals/.venv/bin:$PATH
       * export PYTHONPATH=<code folder>/healthy-meals/.venv/bin
 
-
 ### 4) install required software into .venv
-
 
 Note: We use [nox](https://nox.thea.codes/en/stable/index.html) for automation of tasks
 
@@ -196,13 +201,13 @@ Instructions:
 
 Note: you may skip this step if you will be only using docker.
 
-for brew install on mac: [https://daily-dev-tips.com/posts/installing-postgresql-on-a-mac-with-homebrew/](https://daily-dev-tips.com/posts/installing-postgresql-on-a-mac-with-homebrew/)
+for brew install on
+mac: [https://daily-dev-tips.com/posts/installing-postgresql-on-a-mac-with-homebrew/](https://daily-dev-tips.com/posts/installing-postgresql-on-a-mac-with-homebrew/)
 
-for other installs: [https://www.enterprisedb.com/docs/supported-open-source/postgresql/installing/](https://www.enterprisedb.com/docs/supported-open-source/postgresql/installing/)
-
+for other
+installs: [https://www.enterprisedb.com/docs/supported-open-source/postgresql/installing/](https://www.enterprisedb.com/docs/supported-open-source/postgresql/installing/)
 
 Note: If you are having problems with installing postgres onto your computer, consider using docker desktop
-
 
 ### 6) install docker desktop
 
@@ -234,7 +239,46 @@ See: [https://snapcraft.io/dart-sass](https://snapcraft.io/dart-sass)
 
 Note: Our Dockerfile downloads dart-sass and adds it to the path
 
-## Development Environment Guide
+## Development Guide
+
+.. todo:: Move this to developer docs
+
+### Guide to using the tooling set up for Healthy Meals Developement
+
+#### Running the development site:
+
+1. `$ uv run manage.py createsuperuser` # create your initial user if you haven't done it already
+1. `uv run nox -s localUp` # Start up the local development server
+1. `localhost://8000` # see Healthy Meals site in browser
+1. `localhost://8000/admin` # to see the Admin site in browser
+
+#### Viewing and editing the code
+
+I strongly recommend using PyCharm for a variety of reasons, because PyCharm:
+
+1. is opinionated and forceful about code formatting, and this site uses code PyCharm formatted code. It would not be
+   acceptable to make a code change, and also have code formatting changes mixed in with it. This will obfuscate what
+   code is actually being changed, and code reviews will be unacceptably hard to do, as well as risky in regards to
+   keeping code quality up.
+1. the .idea project standards, such as Pep8 standards are in the repository, so anyone using it will automatically be
+   kept up to date with the project standards for PyCharm. Note, thus far there have been no exceptions to the standard
+   PyCharm Pep8 linting.
+1. Its free (unless you want the extra AI stuff). I find the free version more than sufficient for my needs, and has
+   help speed up my development processes).
+
+#### Testing your changes
+
+#### A typical development cycle
+
+#### Documentation
+
+See QA
+
+#### Commits and Pull Requests
+
+If you have been following the typical development cycle, there should be minimal issues. Note that I have a side roject
+mentioned in my todo items to have better controls of software pushes. Additionally I have another side project using
+xxxx to provide enhanced status messages to further minimize git and other software push issues.
 
 [TOC](#table-of-contents)
 
@@ -247,11 +291,13 @@ Note: Our Dockerfile downloads dart-sass and adds it to the path
 [TOC](#table-of-contents)
 
 Please enter issues (initially) or pull requests for the following:
+
 - Documentation issues, updates, or feature requests
 - 'starter' branch issues, updates, or feature requests
 - Application feature requests
 
-If you have any questions, or are interested in contributing to the software development, please email [David A. Taylor of Taylored Web Sites](mailto:tayloredwebsites@me.com)
+If you have any questions, or are interested in contributing to the software development, please
+email [David A. Taylor of Taylored Web Sites](mailto:tayloredwebsites@me.com)
 
 ## License
 

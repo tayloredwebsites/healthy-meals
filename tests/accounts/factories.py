@@ -3,14 +3,26 @@ from accounts import models
 import pytest
 from pytest_factoryboy import register
 
+
 @register
 class CustomUserFactory(django.DjangoModelFactory):
-    '''Create a Custom User (Account)'''
+    """Create a Custom User (Account)"""
+
+
     class Meta:
         model = models.CustomUser
-    username = Faker('user_name') # see accounts/signals.py to override this.
+
+    username = Faker('user_name')  # see accounts/signals.py to override this.
     email = Faker('email')
-    password=Faker('password')
-    last_name=Faker('first_name')
-    first_name=Faker('last_name')
+    password = Faker('password')
+    last_name = Faker('first_name')
+    first_name = Faker('last_name')
     # deleted=None
+
+class SuperUserFactory(CustomUserFactory):
+    """Make a CustomUser a superuser"""
+
+    class Meta:
+        model = models.CustomUser
+
+    is_superuser = True

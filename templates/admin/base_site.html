@@ -1,0 +1,34 @@
+{% extends "admin/base_site.html" %}
+
+{% comment %}
+Adds the hidden #xtras div to the bottom of all admin forms.
+- see: https://getbootstrap.com/docs/4.0/utilities/display/
+- see: https://docs.djangoproject.com/en/6.0/howto/overriding-templates/#extending-an-overridden-template
+{% endcomment %}
+
+{% block extrabody %}
+    <div id="xtras" style="display: none;">
+        <div>This a hidden div placed in the extrabody block in base.html. see: /templates/admin/base_site.html</div>
+        <!-- div id="user_is_superuser">{% if user.is_superuser %}True{% else %}False{% endif %}</div -->
+        {% if adminform is not None %}
+            {% comment %}
+                Loop through all fieldsets in adminform to get values from returned fields
+                - Currently getting the CustomUser.is_superuser value to be able to check the value in automated testing using beautifulsoup.  Beautifulsoup cannot get the checked attribute of checkboxes.
+            {% endcomment %}
+            {% for fieldset in adminform %}
+                {% for line in fieldset %}
+                    {% for field in line %}
+                        {% for field in line %}
+                            {% if field.field.name == "is_superuser" %}
+                                <div id="xtra_is_superuser">{{ field.field.value }}</div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+    </div>
+
+
+    {{ block.super }}
+{% endblock %}

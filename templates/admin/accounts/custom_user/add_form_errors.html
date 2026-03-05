@@ -1,0 +1,38 @@
+{% extends "admin/change_form.html" %}
+
+{% comment %} An initial attempt to add a Note at the top the admin site add CustomUser form.  delete this and rewrite to extend the add_form instead. {% endcomment %}
+
+{% comment %}
+Original add_form.html code.
+See: https://github.com/django/django/blob/main/django/contrib/admin/templates/admin/auth/user/add_form.html
+{% endcomment %}
+
+{% load i18n static %}
+
+{% block form_top %}
+    {% if not is_popup %}
+        <p>{% translate "After you’ve created a user, you’ll be able to edit more user options." %}</p>
+    {% endif %}
+{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'admin/css/unusable_password_field.css' %}">
+{% endblock %}
+
+{% comment %}
+End of original add_form.html code.
+{% endcomment %}
+
+
+{% comment %}
+Code to insert form errors into the top of the field_sets block in change_form.html
+See: django/django/contrib/admin/templates/admin/change_form.html
+{% endcomment %}
+
+{% block field_sets %}
+
+    <div id="username_note" style="font-size: large; font-weight: bold; color: darkred; line-height: 60px">NOTE: 'username' is automatically set to 'email'</div>
+
+    {{ block.super }}
+{% endblock %}
