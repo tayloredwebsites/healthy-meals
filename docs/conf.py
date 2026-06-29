@@ -46,7 +46,7 @@ extensions = [
     "sphinxcontrib_django",  # https://pypi.org/project/sphinxcontrib-django/
     "sphinx_mdinclude",  # https://pypi.org/project/sphinx_mdinclude/
     "sphinx.ext.todo",  # see: https://www.sphinx-doc.org/en/master/usage/extensions/todo.htm
-    "sphinx_js",  # https://gdevops.frama.io/documentation/sphinx/contributed_extensions/sphinx_js/sphinx_js.html
+    # "sphinx_js",  # https://gdevops.frama.io/documentation/sphinx/contributed_extensions/sphinx_js/sphinx_js.html
 ]
 
 # https://github.com/sphinx-doc/sphinx/issues/825#issuecomment-180197293

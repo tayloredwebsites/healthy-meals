@@ -154,6 +154,7 @@ def goodToGo(session):
                 "uv", "run", "nox", "-s", "onlySphinxDocs",
                 stdout=out,  # output to nox_go_log.txt
             )  # noqa: E128 # split shell commands read better
+            print('*** Good To Go - all tests passed, coverage reports generated, and docs built successfully ***')
     except Exception as ex:
         print(f'''pytest Good To Go failure: {ex}
         This code is not ready for a pull request merge.
