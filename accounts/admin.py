@@ -13,14 +13,16 @@ import logging
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 # from common.base_model_base import BaseModelBaseAdmin
-# from safedelete.admin import SafeDeleteAdmin, SafeDeleteAdminFilter, highlight_deleted
+from safedelete.admin import SafeDeleteAdmin  # , SafeDeleteAdminFilter, highlight_deleted
+from typing import Any
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import CustomUser
 
 logger = logging.getLogger(__name__)
 
-class CustomUserAdmin(UserAdmin):  # BaseModelBaseAdmin):
+@admin.register(CustomUser)
+class CustomUserAdmin(UserAdmin, SafeDeleteAdmin):
     """ Accounts (CustomUser) Administration customization
 
     Args::
@@ -110,45 +112,38 @@ class CustomUserAdmin(UserAdmin):  # BaseModelBaseAdmin):
         "f_updated_by",
     )
 
-    def f_superuser(self, obj):
+    @admin.display(boolean=True, description="Superuser")  # shorter column title
+    def f_superuser(self, obj: Any) -> bool:
         """customize the listing page is_superuser column header and fieldy"""
-        return obj.is_superuser
+        return bool(obj.is_superuser)
 
-    f_superuser.short_description = "Superuser"  # shorter column title
-
-    def f_staff(self, obj):  # pragma: no cover
+    @admin.display(boolean=True, description="Staff")  # shorter column title
+    def f_staff(self, obj: Any) -> bool:
         """customize the listing page is_staff column header and field
-        - this is not currently used
-        - when using this, also set f_staff.short_description for the column title
+        - sets f_staff.short_description for the column title
         """
-        return obj.is_staff
+        return bool(obj.is_staff)
 
-    f_staff.short_description = "Staff"  # shorter column title
-
-    def f_deleted(self, obj):
+    @admin.display(description="Deleted")  # shorter column title
+    def f_deleted(self, obj: Any) -> str:
         """customize the listing page deleted column header and field"""
-        # print(f'*cua* admin.py CustomUser id: {obj.id}, f_deleted: {obj.deleted}, f_deleted is None: {obj.deleted is None}')
         if obj.deleted is None:
             return ''
         return f'{obj.deleted.strftime("%Y-%m-%d")}'
 
-    f_deleted.short_description = "Deleted"
-
-    def f_updated_at(self, obj):
+    @admin.display(description="Updated at")  # shorter column title
+    def f_updated_at(self, obj: Any) -> str:
         """customize the listing page updated_at column header and field"""
         if obj.updated_at is None:
-            return ''  # pragma: no cover  # this should never happen, but just in case
+            return ''
         return f'{obj.updated_at.strftime("%Y-%m-%d")}'
 
-    f_updated_at.short_description = "Updated at"
-
-    def f_updated_by(self, obj):
+    @admin.display(description="Updated by")  # shorter column title
+    def f_updated_by(self, obj: Any) -> str:
         """customize the listing page updated_by column header and field"""
         if obj.updated_by is None:
             return ''  # pragma: no cover  # this should never happen, but just in case
         return f'{obj.updated_by.id}'
-
-    f_updated_by.short_description = "Updated by"
 
     ####################################################################################################################
     # save_model enhancement
@@ -167,4 +162,4 @@ class CustomUserAdmin(UserAdmin):  # BaseModelBaseAdmin):
         logger.debug("*cua* %s - after super().save_model: obj': %s", __name__, format(obj, 'detail'))
 
 
-admin.site.register(CustomUser, CustomUserAdmin)
+# admin.site.register(CustomUser, CustomUserAdmin)

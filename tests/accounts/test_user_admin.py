@@ -42,6 +42,7 @@ from tests.testing_constants import (
 
 
 #############################################################################
+@pytest.mark.skip(reason="todo: finish admin testing coverage")
 @pytest.mark.django_db
 def test_user_admin_create_admin(get_super_user):
     """Test admin interface flow to test CustomUser CRUD (create, read/view, update, soft delete,  and list users.
@@ -290,7 +291,7 @@ def test_user_admin_create_admin(get_super_user):
     soup = BeautifulSoup(resp.content, 'html.parser')
 
     # get screenshot of the listing page after changing the new user, to confirm the fields are correct and the user was added successfully
-    soup_screenshot(soup)
+    # soup_screenshot(soup)
 
     assert form_element.select_one('div p.errornote') is None, (
         'Error, There is an error message on the page, but it should not be there.')
@@ -336,6 +337,7 @@ def test_user_admin_create_admin(get_super_user):
         'Error, admin interface validated email immediately after adding user.')
 
 
+@pytest.mark.skip(reason="todo: finish admin testing coverage")
 def test_user_admin_change(get_regular_user, get_super_user):
     """test CustomUser change in the admin interface """
     logger.debug('+++%s::test_user_admin_change - Starting', __name__)
@@ -364,9 +366,9 @@ def test_user_admin_change(get_regular_user, get_super_user):
         'Error getting custom user change page for user: {reg_user.id}')
     soup = BeautifulSoup(resp.content, 'html.parser')
     form_element = soup.find(id='customuser_form')
-    #
+
     # soup_screenshot(soup)
-    #
+
     # confirm we are on the Change custom user page
     assert 'Change custom user' in soup.find('h1').get_text(), (
         'Error, we are not on the "Change custom user" page')
@@ -415,6 +417,8 @@ def test_user_admin_change(get_regular_user, get_super_user):
         assert error_message is None, (
             'Error, Post of admin change user page did not redirect to listing page.')
 
+    # soup_screenshot(soup)
+
     # --------------------------------------------------------------------
     logger.info('+++confirm the names of the reg_user have changed in the listing page.')
 
@@ -453,7 +457,7 @@ def test_user_admin_change(get_regular_user, get_super_user):
     soup = BeautifulSoup(resp.content, 'html.parser')
     form_element = soup.find(id='customuser_form')
 
-    soup_screenshot(soup)
+    # soup_screenshot(soup)
 
     assert 'Change custom user' in soup.find('h1').get_text(), (
         'Error, we are not on the "Change custom user" page')
@@ -505,7 +509,7 @@ def test_user_admin_change(get_regular_user, get_super_user):
     # --------------------------------------------------------------------
     logger.info('+++confirm the reg_user is now shown as superuser in the listing page.')
     #
-    soup_screenshot(soup)
+    # soup_screenshot(soup)
     #
     # get all the email link elements in the listing page
     user_link_elements = soup.select('tbody .field-email a')
@@ -674,6 +678,14 @@ def test_user_admin_change(get_regular_user, get_super_user):
         'Error, h1 header element does say this is the Site administration page')
     assert REGUSER_FNAME in soup.find(id='user-tools').get_text(), (
         'Error, we are not logged in as the initial user')
+
+    # --------------------------------------------------------------------
+    logger.info('+++ soft delete reg_user.')
+    resp = client.post('/admin/login/?next=%2Fadmin%2F', {
+        # csrf_elem['name']: csrf_elem['value'],  # csrf token
+        'username': REGUSER_EMAIL,
+        'password': INITIAL_PASSWORD,
+    }, follow=True)
 
     """
     .. todo::

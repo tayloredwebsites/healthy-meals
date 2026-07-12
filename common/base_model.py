@@ -5,131 +5,112 @@ Licensed under AGPL-3.0-only.  See https://opensource.org/license/agpl-v3/
 
 https://github.com/tayloredwebsites/healthy-meals - healthy_meals/base_model.py
 
-Model Dependency diagram:
 
-CustomUserManager
- \
-  |<- SafeDeleteManager
-  |<- UserManager
- /
-CustomUser
- \
-  |<- BaseModelBase <- SafeDeleteModel
- /
-BaseModel
-
-BaseModelAdmin
- \
-  |<- BaseModelBaseAdmin
-  |\
-  | |<- SafeDeleteAdmin
-  | |<- admin.ModelAdmin
-  |
-  |<- UserAdmin
- /
-CustomUserAdmin
+This base model will be the base for all models exceipt for the CustomUser model.
+The CustomUser model will inherit from BaseModelBase to avoid a circular reference with the created_by, and updated_by fields.
 
 """
-import logging
+# import logging
 
-from django.db import models
-from django.utils import timezone
+# from django.db import models
+# from django.utils import timezone
 
-from common.base_model_base import BaseModelBase, BaseModelBaseAdmin
-from accounts.models import CustomUser
+# from common.base_model_base import BaseModelBase, BaseModelBaseAdmin
+# from accounts.models import CustomUser
 
-logger = logging.getLogger(__name__)
+# logger = logging.getLogger(__name__)
 
-# class BaseModelAdmin(admin.ModelAdmin):
-class BaseModelAdmin(BaseModelBaseAdmin):
-    """ The BaseModelBase, BaseModel, BaseModelBaseAdmin, and BaseModelAdmin classes provide Soft Delete functionality, record versioning, and recording of who and when model records are added or changed.
+# # class BaseModelAdmin(admin.ModelAdmin):
+# class BaseModelAdmin(BaseModelBaseAdmin):
+#     """ The BaseModelBase, BaseModel, BaseModelBaseAdmin, and BaseModelAdmin classes provide Soft Delete functionality, record versioning, and recording of who and when model records are added or changed.
 
-    The BaseModelAdmin class is responsible for:
-        - populating the created_at, created_by, updated_at, and updated_by fields
-        - bringing in the BaseModelBaseAdmin to provide soft delete functionality administrative tools.
+#     The BaseModelAdmin class is responsible for:
+#         - populating the created_at, created_by, updated_at, and updated_by fields
+#         - bringing in the BaseModelBaseAdmin to provide soft delete functionality administrative tools.
 
-    Note::
+#     Note::
 
-        See the Note field in the BaseModelBase documentation for instruction to implement these base model classes.
+#         See the Note field in the BaseModelBase documentation for instruction to implement these base model classes.
 
-        .. todo:: testing see: https://stackoverflow.com/questions/6498488/testing-admin-modeladmin-in-django#answer-54667823
-    """
+#         .. todo:: testing see: https://stackoverflow.com/questions/6498488/testing-admin-modeladmin-in-django#answer-54667823
+#     """
 
-    def save_model(self, request, obj, form, change):
-        """ update created_at, created_by, updated_at, and updated_by fields prior to save model save
+#     def save_model(self, request, obj, form, change):
+#         """ update created_at, created_by, updated_at, and updated_by fields prior to save model save
 
-        Notes:
-            - pre and post code are in separate methods for DRY.  Used in model class, and model admin class
-        """
-        logger.debug('*** %(name)s::save - %(user_id)s is calling save_model: %(obj)s', {'name': __name__, 'user_id': request.user.id, 'obj': self})
-        #
-        # BaseModel.pre_save_call(obj, request.user)
+#         Notes:
+#             - pre and post code are in separate methods for DRY.  Used in model class, and model admin class
+#         """
+#         logger.debug('*** %(name)s::save - %(user_id)s is calling save_model: %(obj)s', {'name': __name__, 'user_id': request.user.id, 'obj': self})
+#         #
+#         # BaseModel.pre_save_call(obj, request.user)
 
-        super().save_model(request, obj, form, change)
+#         super().save_model(request, obj, form, change)
 
-        # BaseModel.post_save(obj, request.user)
+#         # BaseModel.post_save(obj, request.user)
 
 
-class BaseModel(BaseModelBase):
-    """ The BaseModel and BaseModelBase abstract classes provide Soft Delete funcionality, record versioning, and recording of who and when model records are added or changed.
+# class BaseModel(BaseModelBase):
+#     """ The BaseModel and BaseModelBase abstract classes provide Soft Delete funcionality, record versioning, and recording of who and when model records are added or changed.
 
-    The BaseModel is the base model for all model classes to inherit from (except for CustomUser - see below.)
-     class provides the created_by, and updated_by fields that could not be implemented in BaseModelBase because of a circular reference.
+#     Note:: This is commented out until another model besides accounts.CustomUser is created to inherit from this base model.
 
-    WHO AND WHEN OF RECORD CREATES AND UPDATES::
+#     The BaseModel is the base model for all model classes to inherit from (except for CustomUser - see below.)
 
-        - When changes are made are built into this BaseModelBase class.  It stores when a user has added or changed a record in the created_at, and the updated_at fields.
+#     WHO AND WHEN OF RECORD CREATES AND UPDATES::
 
-    SOFT DELETE FUNCTIONALITY
+#         - When changes are made are built into this BaseModelBase class.  It stores when a user has added or changed a record in the created_at, and the updated_at fields.
 
-        - See the BaseModelBase class which this class inherits from, which provides soft delete functionality included through django-safedelete (https://django-safedelete.readthedocs.io/en/latest/index.html)
+#     SOFT DELETE FUNCTIONALITY
 
-    AUDITLOG VERSIONING HISTORY FUNCTIONALITY
+#         - See the BaseModelBase class which this class inherits from, which provides soft delete functionality included through django-safedelete (https://django-safedelete.readthedocs.io/en/latest/index.html)
 
-        - See the BaseModelBase class which this class inherits from, which provides record history / versioning through django-auditlog (https://github.com/jazzband/django-auditlog)
+#     AUDITLOG VERSIONING HISTORY FUNCTIONALITY
 
-    Note::
+#         - See the BaseModelBase class which this class inherits from, which provides record history / versioning through django-auditlog (https://github.com/jazzband/django-auditlog)
 
-        See the Note field in the BaseModelBase documentation for instruction to implement these base model classes.
-    """
+#     Note::
 
-    class Meta:
-        abstract = True
+#         See the Note field in the BaseModelBase documentation for instruction to implement these base model classes.
+#     """
 
-    # Fields added in this abstract model
-    created_by = models.ForeignKey(
-        CustomUser,
-        related_name='base_created_by',
-        editable=False,
-        on_delete=models.PROTECT,
-        null=True,  # temporarily allow null to be sure required user exists already (issue on first user created)
-    )
-    updated_by = models.ForeignKey(
-        CustomUser,
-        related_name='base_updated_by',
-        editable=False,
-        on_delete=models.PROTECT,
-        null=True,  # temporarily allow null to be sure required user exists already (issue on first user created)
-    )
+    # class Meta:
+    #     abstract = True
 
-    # Save method override needed for the fields added
-    def save(self, *args, **kwargs):
-        """ update created_at, created_by, updated_at, and updated_by fields prior to save model save
+    # # Fields added in this abstract model
+    # created_by = models.ForeignKey(
+    #     CustomUser,
+    #     related_name='base_created_by',
+    #     editable=False,
+    #     on_delete=models.PROTECT,
+    #     null=True,  # temporarily allow null to be sure required user exists already (issue on first user created)
+    # )
+    # updated_by = models.ForeignKey(
+    #     CustomUser,
+    #     related_name='base_updated_by',
+    #     editable=False,
+    #     on_delete=models.PROTECT,
+    #     null=True,  # temporarily allow null to be sure required user exists already (issue on first user created)
+    # )
 
-        Notes:
-            - BaseModelBase does not have a save method override in it.
-            - pre and post code are in separate methods for DRY.  Used in model class, and model admin class
+    # # Save method override needed for the fields added
+    # def save(self, *args, **kwargs):
+    #     """ update created_at, created_by, updated_at, and updated_by fields prior to save model save
 
-        References:
-            - https://www.w3tutorials.net/blog/django-how-to-get-current-user-in-admin-forms/#method-3-override-save_model-for-post-save-actions
+    #     Notes:
+    #         - BaseModelBase does not have a save method override in it.
+    #         - pre and post code are in separate methods for DRY.  Used in model class, and model admin class
 
-        created_by, and updated_by fields are set to the user making the request
-        created_at, and updated_at fields are set to the exact same time.
-        """
-        logger.debug('*** %(name)s::save: %(self)s', {'name': __name__, 'self': self})
+    #     References:
+    #         - https://www.w3tutorials.net/blog/django-how-to-get-current-user-in-admin-forms/#method-3-override-save_model-for-post-save-actions
 
-        auth_user = get_user_from_request(self, self.request)
-        logger.debug('*** %(name)s::save - auth_user: %(auth_user)s', {'name': __name__, 'auth_user': auth_user})
-        BaseModel.set_created_updated_by_at_fields(auth_user)
+    #     created_by, and updated_by fields are set to the user making the request
+    #     created_at, and updated_at fields are set to the exact same time.
+    #     """
+    #     logger.debug('*** %(name)s::save: %(self)s', {'name': __name__, 'self': self})
 
-        super().save(*args, **kwargs)
+    #     auth_user = get_user_from_request(self, self.request)
+    #     logger.debug('*** %(name)s::save - auth_user: %(auth_user)s', {'name': __name__, 'auth_user': auth_user})
+    #     BaseModel.set_created_updated_by_at_fields(auth_user)
+
+    #     super().save(*args, **kwargs)

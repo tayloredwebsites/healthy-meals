@@ -74,6 +74,7 @@ dependencies = [
     "urllib3==2.6.0",
     "whitenoise ~=6.7",
     "black>=26.5.1",
+    "django-stubs>=6.0.6",
 ]
 
 [dependency-groups]

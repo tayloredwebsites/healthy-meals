@@ -5,7 +5,7 @@ Licensed under AGPL-3.0-only.  See https://opensource.org/license/agpl-v3/
 
 https://github.com/tayloredwebsites/healthy-meals
 
-tests/accounts/conftest.py file for configuration of CustomUser tests
+tests/accounts/conftest.py file for configuration of CustomUser (accounts app) tests
 
 """
 import pytest

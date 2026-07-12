@@ -4,8 +4,28 @@ Licensed under AGPL-3.0-only.  See https://opensource.org/license/agpl-v3/
 https://github.com/tayloredwebsites/healthy-meals - healthy_meals/base_model_base.py
 
 
-"""
+Model Dependency diagram:
 
+CustomUserManager
+ \
+  |<- SafeDeleteManager
+  |<- UserManager
+ /
+CustomUser
+ \
+  |<- BaseModelBase <- SafeDeleteModel
+ /
+BaseModel
+
+CustomUserAdmin
+ \
+  |<- BaseModelBaseAdmin
+  |\
+  | |<- SafeDeleteAdmin
+  | |<- admin.ModelAdmin
+  |
+  |<- UserAdmin
+"""
 import logging
 
 from django.db import models
@@ -97,17 +117,6 @@ class BaseModelBase(SafeDeleteModel):
 
     #########################################################################
     # Handy Methods for updating created_by, updated_by, created_at, and updated_at fields
-
-    def get_user_from_request(self, request):
-        """get the user from the request, or return None if there is no user in the request"""
-
-        if self.objects.count() == 0:
-            logger.debug('*** %(name)s::get_user_from_request - this is the first record, so setting user to None.', {'name': __name__})
-            req_user = None
-        else:
-            req_user = request.user if request and request.user and request.user.id else None
-            logger.debug('*** %(name)s::get_user_from_request called by %(user_id)s', {'name': __name__, 'user_id': req_user.id})
-        return req_user
 
     def set_created_updated_by_at_fields(self, req_user):
         """ update created_by, updated_by, created_at, and updated_at fields prior to save model save

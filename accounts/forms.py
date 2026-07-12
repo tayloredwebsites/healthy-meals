@@ -88,6 +88,7 @@ class CustomUserChangeForm(UserChangeForm):
             # 'created_by',
             # 'updated_at',
             # 'updated_by',
+            # 'deleted',  # FieldError: it is a non-editable field and cannot be modified in the admin interface.
         )
 
         """.. todo:: research bug in django or django_allauth that prevents the CustomUser admin forms exclude statement from working.
