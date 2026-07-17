@@ -174,14 +174,6 @@ class CustomUser(BaseModelBase, AbstractUser):  # pylint: disable=R0902
         # Fill in the created_by and updated_by fields if not set, by using the _req_user temporary field.
         logger.debug(f"*cu_s* %s::save - self - %s", __name__, format(self, 'detail'))
         auth_user = None
-        # if we have been passed a temporary _req_user field, use that as the auth_user
-        # Note: we are disabling the E1101 linting error to allow this field to be used.
-        if hasattr(self, '_req_user') and self._req_user is not None:  # pylint: disable=E1101
-            # logger.debug(f'*cu_s* {__name__}::save - self._req_user: {self._req_user}')
-            auth_user = self._req_user  # pylint: disable=E1101
-        else:
-            auth_user= None
-        logger.debug('*cu_s* auth_user: %s', auth_user)
 
         # Code to set auth_user to the request user if available, otherwise use the updated_by user if available
         # - Best Practice: set updated-by to None if updating user is unknown, so that it will be set by the request user.
