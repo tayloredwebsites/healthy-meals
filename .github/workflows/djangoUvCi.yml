@@ -111,6 +111,8 @@ jobs:
       run: mkdir -p docs/qa
     - name: Run tests and generate sphinx docs
       run: nox -s goodToGo
+    - name: Display nox good to golog
+      run: cat docs/qa/nox_go_log.txt
     - name: List files in docs/build
       run: ls -al docs/build
     - name: Setup Pages
