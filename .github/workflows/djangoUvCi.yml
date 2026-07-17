@@ -107,12 +107,12 @@ jobs:
         # should not need these for only running tests
         # uv run manage.py makemigrations
         # uv run manage.py migrate
+    - name: Create qa folder in docs for nox logging files
+      run: mkdir -p docs/qa
     - name: Run tests and generate sphinx docs
       run: nox -s goodToGo
     - name: List files in docs/build
-      run: ls -al docs
-    - name: Create qa folder in docs for nox logging files
-      run: mkdir -p docs/qa
+      run: ls -al docs/build
     - name: Setup Pages
       uses: actions/configure-pages@v5
     - name: Upload artifact
