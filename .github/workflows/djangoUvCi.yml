@@ -109,6 +109,8 @@ jobs:
         # uv run manage.py migrate
     - name: Run tests and generate sphinx docs
       run: nox -s goodToGo
+    - name: List files in docs/build
+      run: ls -al docs/build
     - name: Setup Pages
       uses: actions/configure-pages@v5
     - name: Upload artifact

@@ -60,7 +60,7 @@ class CustomUserManager(SafeDeleteManager, UserManager):
 
         This is required for this project because we are logging in by email address.
         """
-        logger.debug('*cu_m* %s::create - args: %s, kwargs: %s', __name__, args, kwargs)
+        # logger.debug('*cu_m* %s::create - args: %s, kwargs: %s', __name__, args, kwargs)
         return super(CustomUserManager, self).create(*args, **kwargs)
 
 

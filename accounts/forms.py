@@ -53,7 +53,7 @@ class CustomUserCreationForm(AdminUserCreationForm): # pylint: disable=too-many-
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
             raise ValidationError("Passwords don't match")
-        logger.debug('clean_password2 %s', self.cleaned_data["password1"])
+        # logger.debug('clean_password2 %s', self.cleaned_data["password1"])
         return password2
 
     def save(self, commit=True):
@@ -62,7 +62,7 @@ class CustomUserCreationForm(AdminUserCreationForm): # pylint: disable=too-many-
         logger.debug('save super()')
         my_password2 = self.cleaned_data["password2"]
         user.set_password(my_password2)
-        logger.debug('#cua_cucf_s# set_password: %s',my_password2)
+        # logger.debug('#cua_cucf_s# set_password: %s',my_password2)
         if commit:
             logger.debug('save for commit integrity')
             user.save()
