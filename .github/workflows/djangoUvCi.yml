@@ -111,6 +111,8 @@ jobs:
       run: nox -s goodToGo
     - name: List files in docs/build
       run: ls -al docs
+    - name: Create qa folder in docs for nox logging files
+      run: mkdir -p docs/qa
     - name: Setup Pages
       uses: actions/configure-pages@v5
     - name: Upload artifact

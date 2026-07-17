@@ -10,7 +10,14 @@ Healthy Meals Web Site
 Copyright (C) 2025 David A. Taylor of Taylored Web Sites (tayloredwebsites.com)
 Licensed under AGPL-3.0-only.  See https://opensource.org/license/agpl-v3/
 
-https://github.com/tayloredwebsites/healthy-meals - xxxxxxxx
+https://github.com/tayloredwebsites/healthy-meals - /noxfile.py
+
+automation and scripting tool configuration file for nox (https://nox.thea.codes/en/stable/)
+
+.. todo::
+
+    - consider using nox-uv (https://pypi.org/project/nox-uv/)
+    - review the use of the uv sync command in each nox session, and consider using a nox-uv session decorator instead
 """
 
 from pathlib import Path
@@ -81,6 +88,7 @@ def sphinxDocs(session):
     """Run sphinx docs without running testing and coverage reporting"""
     session.run_install("uv", "sync", "--quiet", external=True, )
     try:
+        session.run("uv", "run", "mkdir", "-p", "./docs/qa/")
         with Path('./docs/qa/nox_sphinx_log.txt').open(mode="w") as out:
             session.run(
                 "uv", "run", "nox", "-s", "setupEnv",
@@ -107,6 +115,7 @@ def allDocs(session):
     """Run sphinx docs without running testing and coverage reporting"""
     session.run_install("uv", "sync", "--quiet", external=True, )
     try:
+        session.run("uv", "run", "mkdir", "-p", "./docs/qa/")
         with Path('./docs/qa/nox_sphinx_log.txt').open(mode="w") as out:
             session.run(
                 "uv", "run", "nox", "-s", "setupEnv",
@@ -135,9 +144,11 @@ def allDocs(session):
 @nox.session(python=PYTHON_VERSION, venv_backend="none")
 def goodToGo(session):
     """Run all tests, generate docs, and see if good to go for push/commit."""
-    session.run_install("uv", "sync", "--quiet", external=True, )
+    # session.run_install("uv", "sync", "--quiet", external=True, )
     try:
+        session.run("uv", "run", "mkdir", "-p", "./docs/qa/")
         with Path('./docs/qa/nox_go_log.txt').open(mode="w") as out:
+            session.run_install("uv", "sync", "--quiet", external=True, )
             session.run(
                 "uv", "run", "nox", "-s", "setupEnv",
                 stdout=out,  # output to nox_go_log.txt
@@ -298,6 +309,7 @@ def setupEnv(session: object) -> None:
 def genNoxDocs(session: nox.Session):
     """(support function) Generate nox documentation into a file for inclusion into Sphinx."""
     # session.run_install("uv", "sync", "--quiet", external=True, )
+    session.run("uv", "run", "mkdir", "-p", "./docs/qa/")
     with Path('./docs/qa/nox_docs.txt').open(mode="w") as out:
         session.run("uv", "run", "nox", "--list")
 
@@ -404,6 +416,7 @@ def mypy(session):
     session.skip('todo:: debug nox mypy')
     """.. todo:: research getting nox mypy qa session working"""
     session.run_install("uv", "sync", "--quiet", external=True, )
+    session.run("uv", "run", "mkdir", "-p", "./docs/qa/")
     with Path("./docs/qa/mypy_run.txt").open(mode="w") as out:
         session.run(
             "mypy",
@@ -419,6 +432,7 @@ def ruff(session):
     session.skip('todo:: debug nox ruff')
     """.. todo:: research getting nox ruff qa session working"""
     session.run_install("uv", "sync", "--quiet", external=True, )
+    session.run("uv", "run", "mkdir", "-p", "./docs/qa/")
     with Path("./docs/qa/ruff_run.txt").open(mode="w") as out:
         session.run("ruff", "check", stdout=out)  # noqa: E128  # optional parameter: "--fix")
 
@@ -429,6 +443,7 @@ def flake8(session):
     session.skip('todo:: debug nox flake8 (or ruff?)')
     """.. todo:: consider getting nox flake8 qa session working"""
     session.run_install("uv", "sync", "--quiet", external=True, )
+    session.run("uv", "run", "mkdir", "-p", "./docs/qa/")
     with Path("./docs/qa/flake8_run.txt").open(mode="w") as out:
         session.run(
             "flake8",
@@ -458,6 +473,7 @@ def djlint(session):
     session.skip('todo:: debug nox djlint (or ruff?)')
     """.. todo:: consider getting nox djlint qa session working"""
     session.run_install("uv", "sync", "--quiet", external=True, )
+    session.run("uv", "run", "mkdir", "-p", "./docs/qa/")
     with Path("./docs/qa/djlint_run.txt").open(mode="w") as out:
         session.run("djlint", "./healthymeals")
 
@@ -467,5 +483,6 @@ def pylint(session):
     session.skip('todo:: debug nox pylint (or ruff?)')
     """.. todo:: consider getting nox pylint qa session working"""
     session.run_install("uv", "sync", "--quiet", external=True, )
+    session.run("uv", "run", "mkdir", "-p", "./docs/qa/")
     with Path("./docs/qa/pylint_run.txt").open(mode="w") as out:
         session.run("pylint", "./healthymeals")
