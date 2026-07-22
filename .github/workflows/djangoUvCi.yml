@@ -107,8 +107,11 @@ jobs:
         # should not need these for only running tests
         # uv run manage.py makemigrations
         # uv run manage.py migrate
-    - name: Create qa folder in docs for nox logging files
-      run: mkdir -p docs/qa
+    - name: Set up docs folders
+      run: |
+        ls -al docs
+        mkdir -p docs/qa
+        mkdir -p docs/build
     - name: Run tests and generate sphinx docs
       run: nox -s goodToGo
     - name: Display nox good to golog
