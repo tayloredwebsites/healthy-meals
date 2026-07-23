@@ -86,7 +86,7 @@ jobs:
         curl -OL https://github.com/sass/dart-sass/releases/download/1.101.6/dart-sass-1.101.6-linux-x64.tar.gz \
           && tar -xzf dart-sass-1.101.6-linux-x64.tar.gz \
           && rm -rf dart-sass-1.101.6-linux-x64.tar.gz
-        ENV PATH=$PATH:./dart-sass
+        echo "./dart-sass" >> $GITHUB_PATH
         sass --version
 
     - name: Set up nox
