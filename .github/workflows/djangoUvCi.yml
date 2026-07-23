@@ -82,8 +82,7 @@ jobs:
       # Install curl and Dart Sass
       # note lastest version of dart sass is 1.101.3 as of 2026-07-23 (https://sass-lang.com/dart-sass/)
       run: |
-        apt-get update && apt-get install -y curl \
-          && curl -OL https://github.com/sass/dart-sass/releases/download/1.101.3/dart-sass-1.101.3-linux-x64.tar.gz \
+        curl -OL https://github.com/sass/dart-sass/releases/download/1.101.3/dart-sass-1.101.3-linux-x64.tar.gz \
           && tar -xzf dart-sass-1.101.3-linux-x64.tar.gz \
           && rm -rf dart-sass-1.101.3-linux-x64.tar.gz
         ENV PATH=$PATH:./dart-sass
