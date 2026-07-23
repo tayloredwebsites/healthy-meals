@@ -73,10 +73,10 @@ jobs:
     #   # Run robinraju/release-downloader@v1 returns error:
     #   # Error: Asset not found: No asset matching 'dart-sass-*-linux-x64.tar.gz' found in release. Available assets: (no assets in release)
 
-    - name: Setup dart sass
-      # Setting up dart sass using https://github.com/marketplace/actions/setup-dart-sdk
-      run: |
-        dart pub get
+    # - name: Setup dart sass
+    #   # Setting up dart sass using https://github.com/marketplace/actions/setup-dart-sdk
+    #   run: |
+    #     dart pub get
 
     - name: curl dart sass from releases
       # Install curl and Dart Sass
