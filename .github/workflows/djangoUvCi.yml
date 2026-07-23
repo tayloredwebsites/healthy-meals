@@ -53,7 +53,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - uses: dart-lang/setup-dart@v1
 
     - name: Install UV
       # https://docs.astral.sh/uv/guides/integration/github/#installation
@@ -78,6 +77,17 @@ jobs:
       # Setting up dart sass using https://github.com/marketplace/actions/setup-dart-sdk
       run: |
         dart pub get
+
+    - name: curl dart sass from releases
+      # Install curl and Dart Sass
+      # note lastest version of dart sass is 1.101.3 as of 2026-07-23 (https://sass-lang.com/dart-sass/)
+      run: |
+        apt-get update && apt-get install -y curl \
+          && curl -OL https://github.com/sass/dart-sass/releases/download/1.101.3/dart-sass-1.101.3-linux-x64.tar.gz \
+          && tar -xzf dart-sass-1.101.3-linux-x64.tar.gz \
+          && rm -rf dart-sass-1.101.3-linux-x64.tar.gz
+        ENV PATH=$PATH:./dart-sass
+        sass --version
 
     - name: Set up nox
       # https://nox.thea.codes/en/stable/tutorial.html
@@ -125,10 +135,10 @@ jobs:
     - name: Run tests and generate sphinx docs
       run: nox -s goodToGo
 
-    - name: Display nox good to golog
+    - name: Display nox goodToGo log
       run: cat docs/qa/nox_go_log.txt
 
-    - name: List files in docs/build
+    - name: List files in docs/build from nox goodToGo
       run: ls -al docs/build
 
     - name: Setup Pages
