@@ -67,9 +67,28 @@ jobs:
       run: |
         uv sync # --locked --all-extras --dev
 
-    - name: install dart sass
-      # https://github.com/marketplace/actions/dart-sass
-      uses: dw-labs-org/dart-sass-gha@v1
+    # - name: install dart sass
+    #   # https://github.com/marketplace/actions/dart-sass
+    #   uses: dw-labs-org/dart-sass-gha@v1
+    #   # Run robinraju/release-downloader@v1 returns error:
+    #   # Error: Asset not found: No asset matching 'dart-sass-*-linux-x64.tar.gz' found in release. Available assets: (no assets in release)
+
+    # - name: Setup dart sass
+    #   # Setting up dart sass using https://github.com/marketplace/actions/setup-dart-sdk
+    #   run: |
+    #     dart pub get
+
+    - name: curl dart sass from releases
+      # Install curl and Dart Sass
+      # note lastest downloadable version of dart sass is 1.101.6 as of 2026-07-23 (https://github.com/sass/dart-sass/releases)
+      # pulling
+      run: |
+        curl -OL https://github.com/sass/dart-sass/releases/download/1.101.6/dart-sass-1.101.6-linux-x64.tar.gz \
+          && tar -xzf dart-sass-1.101.6-linux-x64.tar.gz \
+          && rm -rf dart-sass-1.101.6-linux-x64.tar.gz
+        echo "./dart-sass" >> $GITHUB_PATH
+        ls -al
+        sass --version
 
     - name: Set up nox
       # https://nox.thea.codes/en/stable/tutorial.html
@@ -79,7 +98,6 @@ jobs:
       # see: https://edward-jazzhands.github.io/posts/python-testing-with-nox-and-uv/
       #  - name: Setup Nox
       #    uses: wntrblm/nox@2025.05.01
-
 
     - name: Confirm nox is installed
       run: nox --version
@@ -94,6 +112,7 @@ jobs:
         echo "DATABASE_HOST=localhost" >> .env
         echo "DATABASE_PORT=5433" >> .env
         cat .env
+
     - name: Set up Database
       run: |
         # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md
@@ -107,15 +126,31 @@ jobs:
         # should not need these for only running tests
         # uv run manage.py makemigrations
         # uv run manage.py migrate
+
+    - name: Set up docs folders
+      run: |
+        ls -al docs
+        mkdir -p docs/qa
+        mkdir -p docs/build
+
     - name: Run tests and generate sphinx docs
       run: nox -s goodToGo
+
+    - name: Display nox goodToGo log
+      run: cat docs/qa/nox_go_log.txt
+
+    - name: List files in docs/build from nox goodToGo
+      run: ls -al docs/build
+
     - name: Setup Pages
       uses: actions/configure-pages@v5
+
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
         # Upload docs built documentation and QA reports
         path: 'docs/build'
+
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4

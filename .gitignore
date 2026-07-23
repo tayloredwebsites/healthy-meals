@@ -12,28 +12,33 @@ staticfiles/*
 # Backup files #
 *.bak
 
-# If you are using PyCharm #
-# User-specific stuff
-.idea/**/workspace.xml
-.idea/**/tasks.xml
-.idea/**/usage.statistics.xml
-.idea/**/dictionaries
-.idea/**/shelf
+# # If you are using PyCharm #
+# # User-specific stuff
+# .idea/**/workspace.xml
+# .idea/**/tasks.xml
+# .idea/**/usage.statistics.xml
+# .idea/**/dictionaries
+# .idea/**/shelf
 
-# AWS User-specific
-.idea/**/aws.xml
+# # AWS User-specific
+# .idea/**/aws.xml
 
-# Generated files
-.idea/**/contentModel.xml
+# # Generated files
+# .idea/**/contentModel.xml
 
-# Sensitive or high-churn files
-.idea/**/dataSources/
-.idea/**/dataSources.ids
-.idea/**/dataSources.local.xml
-.idea/**/sqlDataSources.xml
-.idea/**/dynamic.xml
-.idea/**/uiDesigner.xml
-.idea/**/dbnavigator.xml
+# # Sensitive or high-churn files
+# .idea/**/dataSources/
+# .idea/**/dataSources.ids
+# .idea/**/dataSources.local.xml
+# .idea/**/sqlDataSources.xml
+# .idea/**/dynamic.xml
+# .idea/**/uiDesigner.xml
+# .idea/**/dbnavigator.xml
+.idea
+
+# nox venvs
+.nox
+
 
 # Gradle
 .idea/**/gradle.xml
@@ -96,7 +101,6 @@ pip-delete-this-directory.txt
 # - note: the source directory will be built from the following steps:
 #   - the "sphinx-apidoc" command will create the rst files from the project source files into the "source" directory.
 #   - also the nox "sphinxDocs" session will copy all of the files in the "sphinx_src" directory into the "source" directory
-
 docs/build
 docs/qa
 docs/source
@@ -126,6 +130,7 @@ ENV/
 env.bak/
 venv.bak/
 .direnv
+.tool-versions
 
 # mkdocs documentation
 /site
@@ -163,3 +168,8 @@ GitHub.sublime-settings
 
 # Screencast
 Lithium_Demo_2025.mp4
+
+# Temporary Files
+tmp/**
+
+node_modules

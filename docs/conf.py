@@ -40,12 +40,13 @@ Add any Sphinx extension module names here, as strings. They can be extensions
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
-    "sphinx.ext.napoleon", # https://sphinxcontrib-napoleon.readthedocs.io/en/latest/
-    "sphinx.ext.intersphinx", # provides links to other .rst files
+    "sphinx.ext.napoleon",  # https://sphinxcontrib-napoleon.readthedocs.io/en/latest/
+    "sphinx.ext.intersphinx",  # provides links to other .rst files
     "sphinx.ext.viewcode",
-    "sphinxcontrib_django", # https://pypi.org/project/sphinxcontrib-django/
-    "sphinx_mdinclude", # https://pypi.org/project/sphinx_mdinclude/
-    "sphinx.ext.todo", # see: https://www.sphinx-doc.org/en/master/usage/extensions/todo.htm
+    "sphinxcontrib_django",  # https://pypi.org/project/sphinxcontrib-django/
+    "sphinx_mdinclude",  # https://pypi.org/project/sphinx_mdinclude/
+    "sphinx.ext.todo",  # see: https://www.sphinx-doc.org/en/master/usage/extensions/todo.htm
+    # "sphinx_js",  # https://gdevops.frama.io/documentation/sphinx/contributed_extensions/sphinx_js/sphinx_js.html
 ]
 
 # https://github.com/sphinx-doc/sphinx/issues/825#issuecomment-180197293
@@ -65,7 +66,7 @@ https://pypi.org/project/sphinx-rtd-theme/
 '''
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
-html_css_files = ['css/custom.css'] # custom css for full width pages
+html_css_files = ['css/custom.css']  # custom css for full width pages
 
 '''Other settings'''
 templates_path = ['_templates']
@@ -73,8 +74,10 @@ exclude_patterns = ["**/healthy_meals"]
 # include_patterns = ['**', '/README.md'] # doesn't seem to work - https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-include_patterns
 autosummary_generate = True
 # Include the database table names of Django models
-django_show_db_tables = True                # Boolean, default: False
+django_show_db_tables = True  # Boolean, default: False
 # Add abstract database tables names (only takes effect if django_show_db_tables is True)
-django_show_db_tables_abstract = True       # Boolean, default: False
-todo_include_todos = True   # see: https://www.sphinx-doc.org/en/master/usage/extensions/todo.htm
+django_show_db_tables_abstract = True  # Boolean, default: False
+todo_include_todos = True  # see: https://www.sphinx-doc.org/en/master/usage/extensions/todo.htm
 # todo_emit_warnings = False   # see: https://github.com/sphinx-doc/sphinx/issues/2680
+
+js_source_path = '../static/js'

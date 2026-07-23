@@ -1,51 +1,139 @@
-Documentation Guide
-===================
+Documentation Guide (for Sphinx documentation tool usage).
+==========================================================
 
+Sphinx is the chosen tool to generate documentation from restructured text from both code and from the docs folder.
 
-Code Documentation Philosophy
------------------------------
+Google Docs Style Docstrings
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The philosophy of documentation in the Healthy Meals project is to have the documentation be part of what is being documented (aka: `Docs as Code <https://www.writethedocs.org/guide/docs-as-code/>`_).
-
-The choice to use the google style documentation was motivated by an sphinx article on `napoleon legible docstrings <https://sphinxcontrib-napoleon.readthedocs.io/en/latest/#google-vs-numpy>`_.  It is recommended to use one style through out a project, and the `google style <https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html>`_ seems to be more popular, especially for non-scientific applications.
+The choice to use the google style documentation was motivated by an sphinx article on `napoleon legible docstrings <https://sphinxcontrib-napoleon.readthedocs.io/en/latest/#google-vs-numpy>`_.  It is recommended to use one style through out a project I have chosen the `google style <https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html>`_ which seems to be more popular, especially for non-scientific applications.
 
 Using docstrings for code documentation:
 
-- `Google Style Python Docstrings <https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html>`_.
-- `Describing code in Sphinx <https://www.sphinx-doc.org/en/master/tutorial/describing-code.html>`_.
+  - Use `Google Style Python Docstrings <https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html>`_.
+  - See `Describing code in Sphinx <https://www.sphinx-doc.org/en/master/tutorial/describing-code.html>`_.
+  - The Sphinx toolset recognizes `NumPy <https://numpy.org/doc/stable/>`_ , `Google <https://google.github.io/styleguide/pyguide.html>`_ , and `rst <https://peps.python.org/pep-0287/>`_ code documentation standards.
+  - The `Napoleon <https://sphinxcontrib-napoleon.readthedocs.io/en/latest/>`_ extension to Sphinx extension us used allows us to use the `Google Python Style Guide <http://google.github.io/styleguide/pyguide.html>`_.
+  - When code has docstrings appropriately placed within it, Sphinx will automatically pull them into the documentation in the docs directory.
+  - The healthy-meals github repository has been set up to automatically deliver the documentation to a `github pages site on the internet <https://tayloredwebsites.github.io/healthy-meals/build/index.html>`_.
 
 
-Code Documentation Process Overview
------------------------------------
-
-Code is being documented using the `Sphinx <https://www.sphinx-doc.org/>`_ toolset, which is the defacto standard tool for documenting django/python.  The Sphinx toolset recognizes `NumPy <https://numpy.org/doc/stable/>`_ , `Google <https://google.github.io/styleguide/pyguide.html>`_ , and `rst <https://peps.python.org/pep-0287/>`_ code documentation standards.  This is achieved by using the `Napoleon <https://sphinxcontrib-napoleon.readthedocs.io/en/latest/>`_ extension to Sphinx.  When code has docstrings appropriately placed within it, Sphinx will automatically pull them into the documentation in the docs directory.  The healthy-meals github repository has been set up to automatically deliver the documentation to a `github pages site on the internet <https://tayloredwebsites.github.io/healthy-meals/build/index.html>`_.
-
-
-Example Google Style Docstring for a function:
+Example Google Style Docstrings:
 ----------------------------------------------
 
-def example_function(param1, param2):
- """Summary of the function.
+This demonstrates documentation as specified by the `Google Style Python Style Guide <http://google.github.io/styleguide/pyguide.html>`_.
 
-    Detailed description of the function.
 
-    Args:
-        param1 (int): Description of the first parameter.
+Docstrings In General:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        param2 (str): Description of the second parameter.
+.. code-block:: python
 
-    Returns:
-        bool: Description of the return value.
+    '''Summary of docstring.
 
-    Raises:
-        ValueError: If param1 is negative.
+    Docstrings may extend over multiple lines.
+    Sections are created with a section header and a colon followed by a block of indented text.
 
-    Examples:
-        
-          $ example_function(1, "test")
+    Literal Text Block::
 
-          True
-    """
+        Literal Text blocks are created by indenting following a line ending with DOUBLE colons, and a blank line.
+        They may be continued with lines at the same indentation, even after blank lines.
+
+    .. code-block:: python
+
+        # this is a code block to contain python code.
+        res = aFunction(something, goes, in)
+        print(res.avalue)
+
+    Todo:
+        * For module TODOs
+        * You have to also use ``sphinx.ext.todo`` extension
+    '''
+
+
+
+Example Class Docstring:
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+    class ExampleClass(object):
+        '''Summary of Class functionality.
+
+        Detail description of the class functionality.
+
+        Attributes:
+            module_level_variable1 (int): Module level variables are preferably documented in
+                the ``Attributes`` section of the class docstring.
+        ''''
+        @property
+        def readonly_property(self):
+            """str: Properties should be documented in their getter method."""
+            return 'readonly_property'
+
+        @property
+        def readwrite_property(self):
+            """:obj:`list` of :obj:`str`: Properties with both a getter and setter
+            should only be documented in their getter method.
+
+            If the setter method contains notable behavior, it should be
+            mentioned here.
+            """
+            return ['readwrite_property']
+
+        @readwrite_property.setter
+        def readwrite_property(self, value):
+            value
+
+
+Example Method Docstring:
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+    def example_function(param1: int, param2: str):
+        """Summary of the function.
+
+        Detailed description of the function.
+
+        Args:
+            param1 (int): Description of the first parameter.
+            param2 (str): Description of the second parameter.
+
+        Note::
+
+            - We assume that parameters will be typed for readability and code quality.
+            - We do not put self in the Args section for Class level functions
+
+        Returns:
+            bool: True if successful, False otherwise.
+
+            The ``Returns`` section may span multiple lines and paragraphs.
+
+            The ``Returns`` section supports any reStructuredText formatting,
+            including literal blocks::
+
+                {
+                    'param1': param1,
+                    'param2': param2
+                }
+
+        Raises:
+            AttributeError: The ``Raises`` section is a list of all exceptions
+                that are relevant to the interface.
+            ValueError: If param1 is not 42.
+
+        Examples:
+
+              $ example_function(1, "test")
+
+              True
+        """
+        if param1 != 42:
+            raise ValueError('param1 must be 42')
+        return True
+
+
 Generation of the Documentation.
 ----------------------------------
 
@@ -166,32 +254,33 @@ It has a table of contents that looks like:
 
 .. code-block:: rst
 
-  Table of Contents
-  -----------------
+    Table of Contents
+    -----------------
 
-  .. toctree::
-    :maxdepth: 2
-    :caption: Contents:
+    .. toctree::
+        :maxdepth: 2
+        :caption: Contents:
 
-    Quality Assurance</qa>
-    Index<genindex>
-    Module Index<modindex>
-    User Accounts Module</accounts>
-    Misc. Pages Module</pages>
-    Tests Module</tests>
-    Programmers Guide<prog_guide>
-    Documentation Guide</docs_guide>
+        Quality Assurance</qa>
+        Index<genindex>
+        Module Index<modindex>
+        Modules</modules>
+        Programmers Guide<prog_guide>
+        Testing Guide<testing_guide>
+        Documentation Guide</docs_guide>
+
+
 
 The Table of Contents (TOC) is what shows up in the sidebar navigation.  It has been customized in the following ways:
 
 - the custom ``qa`` tool (labeled ``Quality Assurance``) has been placed at the top to provide access to the testing reports.
 - the ``genindex`` tool (labeled ``Index``) standard utility to provide an index to the entire project.
 - the ``modindex`` tool (labeled ``Module Index``) standard utility to provide an index to all modules of the project.
-- the ``/accounts`` apidoc generated file (``User Accounts``) module for the Custom User accounts.
-- the ``/pages`` apidoc generated file (``Misc. Pages``) module for simple pages such as home, or about.
-- the ``/tests`` apidoc generated file (``Tests``, automated testing doc strings generated documentation.
+- the ``/modules`` apidoc generated file (``healthy-meals``) modules / apps for the Healthy Meals project.
+    - The modules detailed here are: {accounts - CustomUser; common; noxfile; pages; and tests}
 - the custom ``/prog_guide`` (`Programmers Guide`) includes many technical details about how this project has been programmed, philosophy, standards, and the To Do list pulled from the code base and documentation.
-- the custom ``/docs_guide`` (this Documentation Guide file) is added to introduce the documentation philosophy of healthy-meals, and provide a step by step breakdown of the documentation process.
+- the custom ``/testing_guide`` is added to introduce the testing philosophy of healthy-meals, and provide a step by step breakdown of the documentation process.
+- the custom ``/docs_guide`` (this Documentation Guide file) is added to introduce the documentation philosophy of healthy-meals, and describe the tools, and processes used.
 
 Note: the format of the entries in the TOC is as follows:  "The Name With Spaces<[optional /]rst_filename_without_extension>"
 
