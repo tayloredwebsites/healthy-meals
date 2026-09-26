@@ -173,3 +173,10 @@ Lithium_Demo_2025.mp4
 tmp/**
 
 node_modules
+
+# dart sass downloaded from releases
+dart-sass*
+src/LICENSE
+src/dart
+src/sass.snapshot
+sass

@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "safedelete",
     "compressor",  # https://www.accordbox.com/blog/how-use-scss-sass-your-django-project-python-way/
     "auditlog",  # https://django-auditlog.readthedocs.io/en/latest/installation.html
+    "django_dart_sass",  # https://github.com/hmcqueen/django-dart-sass
     # Local
     "accounts",
     "pages",
@@ -308,4 +309,17 @@ LOGGING = {
             "propagate": False,
         },
     },
+}
+
+# https://github.com/hmcqueen/django-dart-sass
+# Optional: Additional Sass load paths
+SASS_LOAD_PATHS = [
+    BASE_DIR / 'assets' / 'sass',
+    BASE_DIR / 'components',
+]
+
+# Optional: Sass compilation options
+SASS_DART_OPTIONS = {
+    'style': 'compressed',
+    'source_map': True,
 }
