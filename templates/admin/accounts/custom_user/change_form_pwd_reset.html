@@ -1,0 +1,21 @@
+{% extends 'admin/change_form.html' %}
+
+{% comment %}
+insert the following code into the change_form.html
+This adds the button to send the password reset email in the admin site change CustomUser form.
+{% endcomment %}
+
+{% block after_field_sets %}
+    <div class="form-row">
+        <div class="flex-container aligned" style="margin-bottom: 20px; line-height: 30px">
+            <label for="validate_email"><strong>Validate Email:</strong></label>
+            <a class="button" role="button" id="validate_email" href="/admin/account/emailaddress/add/">Add and Validate Email</a>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="flex-container aligned" style="margin-bottom: 20px; line-height: 30px">
+            <label for="email_reset_pwd"><strong>Email Password Reset:</strong></label>
+            <a class="button" role="button" id="email_reset_pwd" href="/accounts/password/reset">Email Password Reset</a>
+        </div>
+    </div>
+{% endblock %}

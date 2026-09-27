@@ -1,0 +1,17 @@
+{% extends 'admin/change_form.html' %}
+
+{% comment %}
+insert the following code into the change_form.html
+This adds the button to send the password reset email in the admin site change CustomUser form.
+{% endcomment %}
+
+{% block after_fields %}
+    {% if TESTING %}
+
+        {% if True %} {% comment %} use actual value here! {% endcomment %}
+            <input type='hidden' name='hidden_is_superuser' value='True'>
+        {% else %}
+            <input type='hidden' name='hidden_is_superuser' value='False'>
+        {% endif %}
+    {% endif %}
+{% endblock %}

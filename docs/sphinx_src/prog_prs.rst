@@ -58,11 +58,11 @@ Programmers Guide To Do Items:
 .. ToDo:: Starter or Introduction items todo list:
 
   - ongoing enhancements to documentation
-    - Helpful developer guidance
-    - better coverage
-    - improved developer setup instructions
-      - pip tools being used with UV?
-      - replace asdf with UV 
+      - Helpful developer guidance
+      - better coverage
+      - improved developer setup instructions
+          - pip tools being used with UV?
+          - replace asdf with UV 
   - getting MyPy QA/lint tool working
   - getting Ruff QA/lint tool working
   - getting any other worthwhile QA tools working
@@ -79,12 +79,12 @@ Programmers Guide To Do Items:
   - turn on circle CI validation
   - consider turning on other CI
   - nox automated testing coverage
-    - confirm all scripts have a returncode of 0
-    - note slow docker scripts!
+      - confirm all scripts have a returncode of 0
+      - note slow docker scripts!
   - nox "status" script to validate git environment
-    - remotes set up properly
-    - current local branch up to date for pull requests
-    - main branch up to date for pull requests
-    - warning to not do pull request if automated testing errors
-    - warning to not do pull request if coverage below a certain percentage
-    - handle updates to new "starter" branch
+      - remotes set up properly
+      - current local branch up to date for pull requests
+      - main branch up to date for pull requests
+      - warning to not do pull request if automated testing errors
+      - warning to not do pull request if coverage below a certain percentage
+      - handle updates to new "starter" branch

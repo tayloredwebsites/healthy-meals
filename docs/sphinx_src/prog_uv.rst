@@ -1,4 +1,4 @@
-UV - Ffast Python Package and Project Manager
+UV - Fast Python Package and Project Manager
 =============================================
 
 

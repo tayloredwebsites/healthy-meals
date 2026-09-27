@@ -1,0 +1,5 @@
+use asdf
+export VIRTUAL_ENV=~/works/python/healthy-meals/.venv
+export PATH=~/works/python/healthy-meals/.venv/bin:$PATH
+export PYTHONPATH=~/works/python/healthy-meals
+export DJANGO_SETTINGS_MODULE=healthy_meals.settings

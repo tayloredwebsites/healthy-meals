@@ -1,3 +1,5 @@
+import logging
+logger = logging.getLogger(__name__)
 
 from subprocess import run
 import pytest
@@ -53,42 +55,42 @@ def test_nox_docker_scripts():
     if not config('RUN_DOCKER_TESTS', default=False, cast=bool):
         pytest.skip("Not running Docker Tests")
 
-    print('***    Starting tests/nox/test_local_nox.py::test_docker_bg_run')
+    logger.debug('***    Starting tests/nox/test_local_nox.py::test_docker_bg_run')
 
-    print('*** 1 - confirm the docker containers are both down')
+    logger.debug('*** 1 - confirm the docker containers are both down')
 
     # show starting message
-    print('*** 2 - Start by running docker in the background (dockerUpBg)')
+    logger.debug('*** 2 - Start by running docker in the background (dockerUpBg)')
     ret = run(["nox", "-s", "dockerUpBg"])
     assert ret.returncode == 0, 'Error running dockerUpBg'
 
-    print('*** 3 - confirm both docker containers are up')
+    logger.debug('*** 3 - confirm both docker containers are up')
 
-    print('*** 4 - run the ensure up, and confirm they are both still up (dockerUpBg).')
+    logger.debug('*** 4 - run the ensure up, and confirm they are both still up (dockerUpBg).')
     ret = run(["nox", "-s", "dockerEnsureUp"])
     assert ret.returncode == 0, 'Error running dockerEnsureUp'
 
-    print('*** 5 - ??? do a curl command and confirm it has some correct text in it')
+    logger.debug('*** 5 - ??? do a curl command and confirm it has some correct text in it')
 
-    print('*** 6 - open shell in web container (dockerExecSh).')
+    logger.debug('*** 6 - open shell in web container (dockerExecSh).')
     ret = run(["nox", "-s", "dockerExecSh"])
     assert ret.returncode == 0, 'Error running dockerExecSh'
 
-    print('*** 7 - exit the web container shell')
+    logger.debug('*** 7 - exit the web container shell')
     ret = run(["echo", "exit()"])
     assert ret.returncode == 0, 'Error exiting dockerExecSh'
 
-    print('*** 8 - open shell in database container (dockerExecPsql).')
+    logger.debug('*** 8 - open shell in database container (dockerExecPsql).')
     ret = run(["nox", "-s", "dockerExecPsql"])
     assert ret.returncode == 0, 'Error running dockerExecPsql'
 
-    print('*** 9 - exit the database container shell')
+    logger.debug('*** 9 - exit the database container shell')
     ret = run(["echo", "exit()"])
     assert ret.returncode == 0, 'Error exiting dockerExecPsql'
 
-    print('*** 10 - run the docker down command, and confirm they are both down')
+    logger.debug('*** 10 - run the docker down command, and confirm they are both down')
 
-    print('*** 11 - run the docker testing command')
+    logger.debug('*** 11 - run the docker testing command')
 
-    print('*** 12 - run the docker dockerSphinxDocs command')
+    logger.debug('*** 12 - run the docker dockerSphinxDocs command')
 

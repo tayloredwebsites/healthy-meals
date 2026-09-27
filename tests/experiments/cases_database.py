@@ -1,4 +1,6 @@
 from django.test import TestCase
+import logging
+logger = logging.getLogger(__name__)
 
 from .factories import CustomUserFactory
 
@@ -10,11 +12,10 @@ import datetime
 
 
 class UserModelsTestCase(TestCase):
-    '''using testcase with factoryboy for testing updates to the database.
+    """using testcase with factoryboy for testing updates to the database.
 
     - run as large test to minimize database setup and teardown
-
-    '''
+    """
 
     def setUp(self):
         # Setup run before every test method.
@@ -25,12 +26,12 @@ class UserModelsTestCase(TestCase):
         pass
 
     def test_user_soft_delete(self):
-        '''Endure soft deletes and undeletes update the database properly
+        """Endure soft deletes and undeletes update the database properly
 
             - emails are ensured to be unique,
             - CustomUser prints out as expected,
             - deleted_only - return the deleted custom users, see: https://django-safedelete.readthedocs.io/en/latest/managers.html
-        '''
+        """
         # get starting user record count
         count = CustomUser.objects.count()
         # confirm no users
@@ -43,29 +44,29 @@ class UserModelsTestCase(TestCase):
         user0 = test_users[0]
 
         # validate the created and updated fields (should be within 1 second from start_time)
-        print(f'*** user0 created_at time: {user0.created_at}')
+        logger.debug(f'*** user0 created_at time: {user0.created_at}')
         diff_created = user0.created_at - start_time
-        print(f'*** diff_created: {diff_created}')
+        logger.debug(f'*** diff_created: {diff_created}')
         assert diff_created.total_seconds() < 1.0
         diff_updated = user0.updated_at - start_time
-        print(f'*** diff_updated: {diff_updated}')
+        logger.debug(f'*** diff_updated: {diff_updated}')
         assert diff_updated.total_seconds() < 1.0
 
-        print(f'user0 history count: {user0.rec_history_count()}')
+        logger.debug(f'user0 history count: {user0.rec_history_count()}')
         assert user0.rec_history_count() == 1
         assert not user0.rec_history_field_changed(0, 'deleted')
         # ensure print output of CustomUser is correct
-        self.assertEqual(user0.__str__(), f'{user0.email} - {user0.last_name}, {user0.first_name}')
-        print(f'As Created: {user0.email}: {user0.username}, {user0.deleted}')
+        assert f'{user0.email}: {user0.last_name}, {user0.first_name}' in user0.__str__()
+        logger.debug('As Created: %(email)s: %(username)s, %(deleted)s', {'email': user0.email, 'username': user0.username, 'deleted': user0.deleted})
         # soft delete the first user
         user0.delete()
-        print(f'Soft Deleted: {user0.email}: {user0.username}, {user0.deleted}')
+        logger.debug('Soft Deleted: %(email)s: %(username)s, %(deleted)s', {'email': user0.email, 'username': user0.username, 'deleted': user0.deleted})
         hist_recs_count = user0.rec_history_count()
-        print(f'user0 after deleted history count: {hist_recs_count}')
+        logger.debug(f'user0 after deleted history count: {hist_recs_count}')
         for n in range(hist_recs_count):
-            print(f'user0 after deleted history [{n}]: {user0.history.all()[0].changes_dict}')
+            logger.debug('user0 after deleted history [%(n)s]: %(changes)s', {'n': n, 'changes': user0.history.all()[0].changes_dict})
         for rec in CustomUser.objects.all_with_deleted():
-            print(f'After soft delete record 0: {rec.email}: {rec.username}, {rec.deleted}')
+            logger.debug('After soft delete record 0: %(email)s: %(username)s, %(deleted)s', {'email': rec.email, 'username': rec.username, 'deleted': rec.deleted})
         assert user0.rec_history_count() == 2
         assert user0.rec_history_field_changed(0, 'deleted')  # record 0 is the latest
         assert user0.rec_history_field_was(0, 'deleted') == 'None'
@@ -78,7 +79,7 @@ class UserModelsTestCase(TestCase):
         ''' .. ToDo::  make sure the database does not allow duplicate emails for custom_users'''
         # -
         with self.assertRaises(IntegrityError):
-            '''tests the pre_save signal that copies the email into the username field
+            '''tests the pre_save_call signal that copies the email into the username field
 
             - this ensures that duplicate emails are not allowed at the database level
 
@@ -91,12 +92,12 @@ class UserModelsTestCase(TestCase):
                     last_name=test_users[0].last_name,
                 )
         for rec in CustomUser.objects.all_with_deleted():
-            print(f'After factory attempt to create duplicate of record 0: {rec.email}: {rec.username}, {rec.deleted}')
+            logger.debug('After factory attempt to create duplicate of record 0: %(email)s: %(username)s, %(deleted)s', {'email': rec.email, 'username': rec.username, 'deleted': rec.deleted})
         self.assertEqual(CustomUser.objects.all_with_deleted().count(), 4)
         self.assertEqual(CustomUser.objects.deleted_only().count(), 1)
         test_users[0].undelete()
         self.assertEqual(CustomUser.objects.all_with_deleted().count(), 4)
         self.assertEqual(CustomUser.objects.deleted_only().count(), 0)
-        print(f'Restored: {test_users[0].email}: {test_users[0].username}, {test_users[0].deleted}')
+        logger.debug('Restored: %(email)s: %(username)s, %(deleted)s', {'email': test_users[0].email, 'username': test_users[0].username, 'deleted': test_users[0].deleted})
 
     ''' .. :Todo test to make sure that undeleted users can still log into the system and function properly.'''

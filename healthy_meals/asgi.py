@@ -1,3 +1,13 @@
+"""
+Healthy Meals Web Site
+Copyright (C) 2026 David A. Taylor of Taylored Web Sites (tayloredwebsites.com)
+Licensed under AGPL-3.0-only.  See https://opensource.org/license/agpl-v3/
+
+https://github.com/tayloredwebsites/healthy-meals
+
+healthy_meals/asgi.py - ASGI config.
+"""
+
 import os
 
 from django.core.asgi import get_asgi_application
